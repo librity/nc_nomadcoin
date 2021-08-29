@@ -53,8 +53,9 @@ $ go build -race
 ## Docs <a name = "docs"></a>
 
 - https://golang.org/doc/
-- https://golang.org/ref/spec#Variables
 - https://pkg.go.dev/std
+- https://golang.org/ref/spec#Variables
+- https://golang.org/ref/spec#Pointer_types
 
 ## Resources <a name = "resources"></a>
 
