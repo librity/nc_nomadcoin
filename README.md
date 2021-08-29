@@ -20,6 +20,7 @@ Nomad Coders - Nomad Coin - A fully-featured blockchain and cryptocurrency in GO
 
 - [Take the course too!](https://nomadcoders.co/nomadcoin)
 - [Certificate of Completion]()
+- [Original code](https://github.com/nomadcoders/nomadcoin)
 
 ## Getting Started <a name = "getting_started"></a>
 
@@ -49,6 +50,10 @@ $ go build -race
 
 ## Docs <a name = "docs"></a>
 
-- https://golang.org/pkg/
+- https://golang.org/doc/
+- https://golang.org/ref/spec#Variables
+- https://pkg.go.dev/std
 
 ## Resources <a name = "resources"></a>
+
+- https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
