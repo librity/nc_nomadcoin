@@ -10,8 +10,13 @@ const NAME2 string = "Garmonbozia"
 
 func main() {
 	string1()
+	fmt.Println("---")
+
 	string2()
+	fmt.Println("---")
+
 	string3()
+	fmt.Println("---")
 }
 
 func string1() {
