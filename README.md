@@ -16,7 +16,17 @@
 
 ## About <a name = "about"></a>
 
-Nomad Coders - Nomad Coin - A fully-featured blockchain and cryptocurrency in GO.
+A fully-featured blockchain and cryptocurrency using the Go programming language.
+
+    Features:
+    - [ ] Mining
+    - [ ] Transactions
+    - [ ] Database Backend
+    - [ ] Wallets
+    - [ ] REST API
+    - [ ] HTML Explorer
+    - [ ] P2P (Websockets)
+    - [ ] Unit Testing
 
 - [Take the course too!](https://nomadcoders.co/nomadcoin)
 - [Certificate of Completion]()
