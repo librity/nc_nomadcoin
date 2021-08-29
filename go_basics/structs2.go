@@ -33,6 +33,13 @@ func (p person) sayHelloInKorean() {
 }
 
 func main() {
+
+	demo1()
+	fmt.Println("---")
+
+}
+
+func demo1() {
 	Bolívar := person{name: "Simón Bolívar", birthYear: 1810}
 
 	Bolívar.sayHello()
