@@ -18,19 +18,20 @@
 
 A fully-featured blockchain and cryptocurrency using the Go programming language.
 
-    Features:
-    - [ ] Mining
-    - [ ] Transactions
-    - [ ] Database Backend
-    - [ ] Wallets
-    - [ ] REST API
-    - [ ] HTML Explorer
-    - [ ] P2P (Websockets)
-    - [ ] Unit Testing
-
 - [Take the course too!](https://nomadcoders.co/nomadcoin)
 - [Certificate of Completion]()
 - [Original code](https://github.com/nomadcoders/nomadcoin)
+
+### Features
+
+- [ ] Mining
+- [ ] Transactions
+- [ ] Database Backend
+- [ ] Wallets
+- [ ] REST API
+- [ ] HTML Explorer
+- [ ] P2P (Websockets)
+- [ ] Unit Testing
 
 ## Getting Started <a name = "getting_started"></a>
 
@@ -56,6 +57,24 @@ $ go build -race
 
 ## Notes <a name = "notes"></a>
 
+### One-way hash functions
+
+```go
+hashFunction("sexy") => "dsdj21321wq0wjdw0jw9djcosaniqij0"
+hashFunction("sexy") => "dsdj21321wq0wjdw0jw9djcosaniqij0"
+hashFunction("sexyy") => "ri3j9rj2302j0ginvin0n00ivwn0inv0u"
+hashFunction("ri3j9rj2302j0ginvin0n00ivwn0inv0u") => UNDEFINED
+```
+
+### Blockchain
+
+```go
+newBlockHash := hashFunction(data + previousBlockHash)
+```
+
+`data` could be anything. Any alteration to a previous block's data will
+avalanche obvious changes to the next blocks' hashes.
+
 ## Libs <a name = "libs"></a>
 
 - https://pkg.go.dev/fmt@go1.17
@@ -69,4 +88,10 @@ $ go build -race
 
 ## Resources <a name = "resources"></a>
 
+- https://github.com/LarryRuane/minesim
+- https://mining-simulator.netlify.app/
+- https://www.youtube.com/playlist?list=PL7jH19IHhOLOJfXeVqjtiawzNQLxOgTdq
 - https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
+- https://en.wikipedia.org/wiki/Cryptographic_hash_function
+- https://en.wikipedia.org/wiki/SHA-2
+- https://en.wikipedia.org/wiki/Public-key_cryptography
