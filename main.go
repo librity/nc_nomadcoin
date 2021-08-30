@@ -11,10 +11,13 @@ type block struct {
 	previousHash string
 }
 
+type blockchain struct {
+	blocks []block
+}
+
 func main() {
 	welcome()
-	// hashDemo()
-	bootstrap()
+	demo()
 }
 
 func welcome() {
@@ -22,42 +25,48 @@ func welcome() {
 	fmt.Println("---")
 }
 
-func bootstrap() {
-	genesisBlock := block{
-		data:         "노마드 코인 - Fírst blóck in the chain",
-		hash:         "",
-		previousHash: ""}
-
-	// inspectString(genesisBlock.data)
-	genesisBlock.hash = hash(genesisBlock)
-	fmt.Println(genesisBlock)
+func demo() {
+	chain := blockchain{}
+	chain.addBlock("Genesis block.")
+	chain.addBlock("Second block.")
+	chain.addBlock("Third block.")
+	chain.listBlocks()
 }
 
-func inspectString(str string) {
-	for _, character := range str {
-		fmt.Printf("%b ", character)
+func (b *blockchain) isFirstBlock() bool {
+	return len(b.blocks) == 0
+}
+
+func (b *blockchain) getLastHash() string {
+	if b.isFirstBlock() {
+		return ""
 	}
-	fmt.Println()
-	fmt.Println("---")
+
+	lastBlockIndex := len(b.blocks) - 1
+	lastHash := b.blocks[lastBlockIndex].hash
+	return lastHash
 }
 
-func hashDemo() {
-	sum := sha256.Sum256([]byte("hello world\n"))
-	fmt.Printf("%x\n", sum)
-	fmt.Printf("%X\n", sum)
-	fmt.Println("---")
+func (b *blockchain) addBlock(data string) {
+	newBlock := block{data, "", b.getLastHash()}
+	newBlock.setHash()
+	// Find previous hash
+
 }
 
-func hash(b block) string {
+func (b *blockchain) listBlocks() {
+
+}
+
+func (b *block) setHash() {
+	b.hash = b.generateHash()
+}
+
+func (b *block) generateHash() string {
 	preHash := b.data + b.previousHash
 	preHashBytes := []byte(preHash)
 	rawHash := sha256.Sum256(preHashBytes)
 	hexHash := fmt.Sprintf("%x", rawHash)
-
-	fmt.Println(rawHash)
-	fmt.Println("---")
-	fmt.Println(hexHash)
-	fmt.Println("---")
 
 	return hexHash
 }
