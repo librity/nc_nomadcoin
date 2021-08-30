@@ -7,8 +7,8 @@ import (
 
 type block struct {
 	data         string
-	hash         string
 	previousHash string
+	hash         string
 }
 
 type blockchain struct {
@@ -48,14 +48,20 @@ func (b *blockchain) getLastHash() string {
 }
 
 func (b *blockchain) addBlock(data string) {
-	newBlock := block{data, "", b.getLastHash()}
+	newBlock := block{data, b.getLastHash(), ""}
 	newBlock.setHash()
-	// Find previous hash
+	b.blocks = append(b.blocks, newBlock)
 
 }
 
 func (b *blockchain) listBlocks() {
-
+	for index, block := range b.blocks {
+		fmt.Printf("Block number: %d\n", index+1)
+		fmt.Printf("Data: %s\n", block.data)
+		fmt.Printf("Previous hash: %s\n", block.previousHash)
+		fmt.Printf("Hash: %s\n", block.hash)
+		fmt.Println("---")
+	}
 }
 
 func (b *block) setHash() {
