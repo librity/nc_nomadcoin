@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 
@@ -44,6 +45,15 @@ func serverDemo() {
 
 }
 
+type homeData struct {
+	PageTitle string
+	Blocks    []*blockchain.Block
+}
+
 func home(rw http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(rw, "Welcome to nomad coin 1.0!")
+	tmpl := template.Must(template.ParseFiles("templates/home.html"))
+	chain := blockchain.GetBlockchain()
+	data := homeData{"Welcome to Nomad Coin 1.0!", chain.GetAllBlocks()}
+
+	tmpl.Execute(rw, data)
 }

@@ -5,18 +5,18 @@ import (
 	"fmt"
 )
 
-type block struct {
-	data         string
-	previousHash string
-	hash         string
+type Block struct {
+	Data         string
+	PreviousHash string
+	Hash         string
 }
 
-func (b *block) setHash() {
-	b.hash = b.generateHash()
+func (b *Block) setHash() {
+	b.Hash = b.generateHash()
 }
 
-func (b *block) generateHash() string {
-	preHash := b.data + b.previousHash
+func (b *Block) generateHash() string {
+	preHash := b.Data + b.PreviousHash
 	preHashBytes := []byte(preHash)
 	rawHash := sha256.Sum256(preHashBytes)
 	hexHash := fmt.Sprintf("%x", rawHash)
@@ -24,8 +24,8 @@ func (b *block) generateHash() string {
 	return hexHash
 }
 
-func (b *block) listBlock() {
-	fmt.Printf("Data: %s\n", b.data)
-	fmt.Printf("Previous hash: %s\n", b.previousHash)
-	fmt.Printf("Hash: %s\n", b.hash)
+func (b *Block) listBlock() {
+	fmt.Printf("Data: %s\n", b.Data)
+	fmt.Printf("Previous hash: %s\n", b.PreviousHash)
+	fmt.Printf("Hash: %s\n", b.Hash)
 }

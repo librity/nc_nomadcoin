@@ -6,7 +6,7 @@ import (
 )
 
 type blockchain struct {
-	blocks []*block
+	blocks []*Block
 }
 
 var b *blockchain
@@ -32,13 +32,17 @@ func (b *blockchain) ListBlocks() {
 	}
 }
 
+func (b *blockchain) GetAllBlocks() []*Block {
+	return b.blocks
+}
+
 func initializeBlockchain() {
 	b = &blockchain{}
 	b.AddBlock("Genesis block.")
 }
 
-func createBlock(data string) *block {
-	newBlock := block{data, getLastHash(), ""}
+func createBlock(data string) *Block {
+	newBlock := Block{data, getLastHash(), ""}
 	newBlock.setHash()
 	return &newBlock
 }
@@ -50,7 +54,7 @@ func getLastHash() string {
 	}
 
 	lastBlockIndex := len(b.blocks) - 1
-	lastHash := b.blocks[lastBlockIndex].hash
+	lastHash := b.blocks[lastBlockIndex].Hash
 	return lastHash
 }
 

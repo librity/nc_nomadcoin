@@ -85,6 +85,8 @@ avalanche obvious changes to the next blocks' hashes.
 - https://pkg.go.dev/net/http@go1.17#HandleFunc
 - https://pkg.go.dev/net/http@go1.17#ListenAndServe
 - https://pkg.go.dev/log@go1.17#Fatal
+- https://pkg.go.dev/html/template@go1.17#ParseFiles
+- https://pkg.go.dev/html/template@go1.17#Must
 
 ## Docs <a name = "docs"></a>
 
