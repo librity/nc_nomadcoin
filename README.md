@@ -77,8 +77,14 @@ avalanche obvious changes to the next blocks' hashes.
 
 ## Libs <a name = "libs"></a>
 
-- https://pkg.go.dev/fmt@go1.17
-- https://pkg.go.dev/sync@go1.17
+- https://pkg.go.dev/fmt@go1.17#Printf
+- https://pkg.go.dev/fmt@go1.17#Sprintf
+- https://pkg.go.dev/fmt@go1.17#Fprint
+- https://pkg.go.dev/sync@go1.17#Once
+- https://pkg.go.dev/sync@go1.17#Do
+- https://pkg.go.dev/net/http@go1.17#HandleFunc
+- https://pkg.go.dev/net/http@go1.17#ListenAndServe
+- https://pkg.go.dev/log@go1.17#Fatal
 
 ## Docs <a name = "docs"></a>
 

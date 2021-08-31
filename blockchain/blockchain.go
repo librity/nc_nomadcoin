@@ -43,10 +43,6 @@ func createBlock(data string) *block {
 	return &newBlock
 }
 
-func (b *blockchain) isFirstBlock() bool {
-	return len(b.blocks) == 0
-}
-
 func getLastHash() string {
 	b := GetBlockchain()
 	if b.isFirstBlock() {
@@ -56,4 +52,8 @@ func getLastHash() string {
 	lastBlockIndex := len(b.blocks) - 1
 	lastHash := b.blocks[lastBlockIndex].hash
 	return lastHash
+}
+
+func (b *blockchain) isFirstBlock() bool {
+	return len(b.blocks) == 0
 }
