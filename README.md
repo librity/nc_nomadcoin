@@ -78,6 +78,7 @@ avalanche obvious changes to the next blocks' hashes.
 ## Libs <a name = "libs"></a>
 
 - https://pkg.go.dev/fmt@go1.17
+- https://pkg.go.dev/sync@go1.17
 
 ## Docs <a name = "docs"></a>
 

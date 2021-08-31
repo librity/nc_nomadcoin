@@ -1,16 +1,20 @@
 package blockchain
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 type blockchain struct {
 	blocks []block
 }
 
 var b *blockchain
+var once sync.Once
 
 func GetBlockchain() *blockchain {
 	if b == nil {
-		b = &blockchain{}
+		once.Do(initializeBlockchain)
 	}
 	return b
 }
@@ -27,6 +31,10 @@ func (b *blockchain) ListBlocks() {
 		block.listBlock()
 		fmt.Println("---")
 	}
+}
+
+func initializeBlockchain() {
+	b = &blockchain{}
 }
 
 func (b *blockchain) isFirstBlock() bool {
