@@ -18,9 +18,12 @@ func welcome() {
 
 func demo() {
 	chain := blockchain.GetBlockchain()
-	chain.AddBlock("Genesis block.")
 	chain.AddBlock("Second block.")
 	chain = blockchain.GetBlockchain()
 	chain.AddBlock("Third block.")
+	chain.AddBlock("4th block.")
+	chain.AddBlock("5th block.")
+	chain = blockchain.GetBlockchain()
+	chain.AddBlock("6th block.")
 	chain.ListBlocks()
 }

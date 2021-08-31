@@ -6,7 +6,7 @@ import (
 )
 
 type blockchain struct {
-	blocks []block
+	blocks []*block
 }
 
 var b *blockchain
@@ -20,8 +20,7 @@ func GetBlockchain() *blockchain {
 }
 
 func (b *blockchain) AddBlock(data string) {
-	newBlock := block{data, b.getLastHash(), ""}
-	newBlock.setHash()
+	newBlock := createBlock(data)
 	b.blocks = append(b.blocks, newBlock)
 }
 
@@ -35,13 +34,21 @@ func (b *blockchain) ListBlocks() {
 
 func initializeBlockchain() {
 	b = &blockchain{}
+	b.blocks = append(b.blocks, createBlock("Genesis block."))
+}
+
+func createBlock(data string) *block {
+	newBlock := block{data, getLastHash(), ""}
+	newBlock.setHash()
+	return &newBlock
 }
 
 func (b *blockchain) isFirstBlock() bool {
 	return len(b.blocks) == 0
 }
 
-func (b *blockchain) getLastHash() string {
+func getLastHash() string {
+	b := GetBlockchain()
 	if b.isFirstBlock() {
 		return ""
 	}
