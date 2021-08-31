@@ -34,7 +34,7 @@ func (b *blockchain) ListBlocks() {
 
 func initializeBlockchain() {
 	b = &blockchain{}
-	b.blocks = append(b.blocks, createBlock("Genesis block."))
+	b.AddBlock("Genesis block.")
 }
 
 func createBlock(data string) *block {
