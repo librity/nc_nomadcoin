@@ -102,16 +102,19 @@ avalanche obvious changes to the next blocks' hashes.
 - https://github.com/LarryRuane/minesim
 - https://mining-simulator.netlify.app/
 - https://www.youtube.com/playlist?list=PL7jH19IHhOLOJfXeVqjtiawzNQLxOgTdq
-- https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
 - https://stackoverflow.com/questions/29762118/range-over-array-index-in-templates
 - https://andybrewer.github.io/mvp/?ref=producthunt
+- https://www.digitalocean.com/community/tutorials/how-to-add-a-favicon-to-your-website-with-html
+
+### Go
+
+- https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
 - https://stackoverflow.com/questions/25161774/what-are-conventions-for-filenames-in-go
-
-### Cryptograhy
-
-- https://en.wikipedia.org/wiki/Cryptographic_hash_function
-- https://en.wikipedia.org/wiki/SHA-2
-- https://en.wikipedia.org/wiki/Public-key_cryptography
+- https://jogendra.dev/import-cycles-in-golang-and-how-to-deal-with-them
+- https://hackthedeveloper.com/golang-server-static-files/
+- https://stackoverflow.com/questions/19239449/how-do-i-reverse-an-array-in-go
+- https://stackoverflow.com/questions/54858529/golang-reverse-a-arbitrary-slice
+- https://github.com/golang/go/wiki/SliceTricks#reversing
 
 ### Go templates
 
@@ -120,6 +123,12 @@ avalanche obvious changes to the next blocks' hashes.
 - https://stackoverflow.com/questions/25689829/arithmetic-in-go-templates
 - https://stackoverflow.com/questions/17843311/template-and-custom-function-panic-function-not-defined
 - https://stackoverflow.com/questions/38686583/golang-parse-all-templates-in-directory-and-subdirectories
+
+### Cryptograhy
+
+- https://en.wikipedia.org/wiki/Cryptographic_hash_function
+- https://en.wikipedia.org/wiki/SHA-2
+- https://en.wikipedia.org/wiki/Public-key_cryptography
 
 ### Favicons
 

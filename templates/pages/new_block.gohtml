@@ -1,4 +1,5 @@
 {{ define "new_block" }}
+
 <!DOCTYPE html>
 <html lang="en">
   {{ template "head" .PageTitle }}
@@ -6,19 +7,20 @@
     {{ template "header" .PageTitle }}
 
     <main>
-      <form action="">
+      <form method="POST" action="/blocks">
         <input
           type="text"
-          name="data"
-          id="data"
+          name="blockData"
           placeholder="Data for your block"
           required
         />
-        <input type="submit" value="" />
+
+        <button>Add Block</button>
       </form>
     </main>
 
     {{ template "footer" }}
   </body>
 </html>
+
 {{ end }}

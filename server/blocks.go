@@ -12,8 +12,25 @@ type blocksData struct {
 }
 
 func blocks(rw http.ResponseWriter, r *http.Request) {
-	chain := blockchain.GetBlockchain()
-	data := blocksData{"Blocks", chain.GetAllBlocks()}
+	switch r.Method {
+	case "GET":
+		blocksIndex(rw, r)
+	case "POST":
+		createBlock(rw, r)
+	}
+}
+
+func blocksIndex(rw http.ResponseWriter, r *http.Request) {
+	blocks := blockchain.GetBlockchain().GetAllBlocks()
+	data := blocksData{"Blocks", blocks}
 
 	templates.ExecuteTemplate(rw, "blocks", data)
+}
+
+func createBlock(rw http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	data := r.Form.Get("blockData")
+	blockchain.GetBlockchain().AddBlock(data)
+
+	http.Redirect(rw, r, "/blocks", http.StatusFound)
 }
