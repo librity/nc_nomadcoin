@@ -2,14 +2,10 @@ package main
 
 import (
 	"fmt"
-	"html/template"
-	"log"
-	"net/http"
 
 	"github.com/librity/nc_nomadcoin/blockchain"
+	"github.com/librity/nc_nomadcoin/server"
 )
-
-const port string = ":4000"
 
 func main() {
 	welcome()
@@ -38,22 +34,5 @@ func blockchainDemo() {
 }
 
 func serverDemo() {
-	http.HandleFunc("/", home)
-
-	fmt.Printf("Listening on http://localhost%s\n", port)
-	log.Fatal(http.ListenAndServe(port, nil))
-
-}
-
-type homeData struct {
-	PageTitle string
-	Blocks    []*blockchain.Block
-}
-
-func home(rw http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/home.html"))
-	chain := blockchain.GetBlockchain()
-	data := homeData{"Welcome to Nomad Coin 1.0!", chain.GetAllBlocks()}
-
-	tmpl.Execute(rw, data)
+	server.Start()
 }
