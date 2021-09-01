@@ -4,13 +4,13 @@ import (
 	"fmt"
 
 	"github.com/librity/nc_nomadcoin/blockchain"
-	"github.com/librity/nc_nomadcoin/server"
+	"github.com/librity/nc_nomadcoin/explorer"
 )
 
 func main() {
 	welcome()
 	blockchainDemo()
-	serverDemo()
+	htmlExplorerDemo()
 }
 
 func welcome() {
@@ -33,6 +33,6 @@ func blockchainDemo() {
 	chain.ListBlocks()
 }
 
-func serverDemo() {
-	server.Start()
+func htmlExplorerDemo() {
+	explorer.Start()
 }

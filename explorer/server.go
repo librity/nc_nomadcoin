@@ -1,4 +1,4 @@
-package server
+package explorer
 
 import (
 	"fmt"
@@ -7,7 +7,9 @@ import (
 )
 
 const (
-	port string = ":4000"
+	port        string = ":4000"
+	staticDir   string = "explorer/static"
+	staticRoute string = "/static/"
 )
 
 func Start() {
@@ -22,8 +24,8 @@ func loadHandlers() {
 }
 
 func loadFileServer() {
-	fileServer := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
+	fileServer := http.FileServer(http.Dir(staticDir))
+	http.Handle(staticRoute, http.StripPrefix(staticRoute, fileServer))
 }
 
 func loadRoutes() {

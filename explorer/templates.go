@@ -1,9 +1,9 @@
-package server
+package explorer
 
 import "text/template"
 
 const (
-	templatesDir string = "templates/"
+	templatesDir string = "explorer/templates/"
 )
 
 var templates *template.Template

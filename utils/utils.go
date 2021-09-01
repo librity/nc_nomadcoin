@@ -2,6 +2,7 @@ package utils
 
 import "reflect"
 
+// Source: https://stackoverflow.com/questions/54858529/golang-reverse-a-arbitrary-slice
 func Reverse(slice interface{}) {
 	s := reflect.ValueOf(slice)
 

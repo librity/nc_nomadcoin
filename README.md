@@ -101,6 +101,7 @@ avalanche obvious changes to the next blocks' hashes.
 
 - https://github.com/LarryRuane/minesim
 - https://mining-simulator.netlify.app/
+- https://www.blockchain.com/explorer
 - https://www.youtube.com/playlist?list=PL7jH19IHhOLOJfXeVqjtiawzNQLxOgTdq
 - https://stackoverflow.com/questions/29762118/range-over-array-index-in-templates
 - https://andybrewer.github.io/mvp/?ref=producthunt
