@@ -6,6 +6,8 @@ const (
 	templatesDir string = "templates/"
 )
 
+var templates *template.Template
+
 var templateFunctions template.FuncMap = template.FuncMap{
 	"increment": func(number int) int {
 		return number + 1
@@ -17,7 +19,20 @@ var templateFunctions template.FuncMap = template.FuncMap{
 }
 
 func loadTemplates() {
-	templates = template.Must(template.New("dsada").Funcs(templateFunctions).ParseGlob(templatesDir + "pages/*.gohtml"))
-	templates = template.Must(templates.ParseGlob(templatesDir + "partials/*.gohtml"))
-	// templates = templates.
+	loadPages()
+	loadPartials()
+}
+
+func loadPages() {
+	templates = template.Must(
+		template.
+			New("templates").
+			Funcs(templateFunctions).
+			ParseGlob(templatesDir + "pages/*.gohtml"))
+}
+
+func loadPartials() {
+	templates = template.Must(
+		templates.
+			ParseGlob(templatesDir + "partials/*.gohtml"))
 }

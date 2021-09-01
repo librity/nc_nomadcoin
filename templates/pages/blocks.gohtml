@@ -1,4 +1,4 @@
-{{ define "home" }}
+{{ define "blocks" }}
 <!DOCTYPE html>
 <html lang="en">
   {{ template "head" .PageTitle }}
@@ -7,7 +7,11 @@
     {{ template "header" .PageTitle }}
 
     <main>
-      Welcome to Nomad Coin 1.0!
+      {{ range.Blocks }}
+
+      {{ template "block" . }}
+
+      {{ end }}
     </main>
 
     {{ template "footer" }}

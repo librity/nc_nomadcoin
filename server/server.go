@@ -4,14 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"text/template"
 )
 
 const (
 	port string = ":4000"
 )
-
-var templates *template.Template
 
 func Start() {
 	loadTemplates()
@@ -20,7 +17,19 @@ func Start() {
 }
 
 func loadHandlers() {
+	loadFileServer()
+	loadRoutes()
+}
+
+func loadFileServer() {
+	fileServer := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
+}
+
+func loadRoutes() {
 	http.HandleFunc("/", home)
+	http.HandleFunc("/blocks", blocks)
+	http.HandleFunc("/blocks/new", newBlock)
 }
 
 func listenOrDie() {

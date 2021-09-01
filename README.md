@@ -88,6 +88,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://pkg.go.dev/text/template#hdr-Actions
 - https://pkg.go.dev/html/template@go1.17#ParseFiles
 - https://pkg.go.dev/html/template@go1.17#Must
+- https://pkg.go.dev/path/filepath@go1.17#Match
 
 ## Docs <a name = "docs"></a>
 
