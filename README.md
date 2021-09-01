@@ -85,6 +85,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://pkg.go.dev/net/http@go1.17#HandleFunc
 - https://pkg.go.dev/net/http@go1.17#ListenAndServe
 - https://pkg.go.dev/log@go1.17#Fatal
+- https://pkg.go.dev/text/template#hdr-Actions
 - https://pkg.go.dev/html/template@go1.17#ParseFiles
 - https://pkg.go.dev/html/template@go1.17#Must
 
@@ -104,3 +105,8 @@ avalanche obvious changes to the next blocks' hashes.
 - https://en.wikipedia.org/wiki/Cryptographic_hash_function
 - https://en.wikipedia.org/wiki/SHA-2
 - https://en.wikipedia.org/wiki/Public-key_cryptography
+- https://stackoverflow.com/questions/29762118/range-over-array-index-in-templates
+- https://gowebexamples.com/templates/
+- https://blog.gopheracademy.com/advent-2017/using-go-templates/
+- https://stackoverflow.com/questions/25689829/arithmetic-in-go-templates
+- https://stackoverflow.com/questions/17843311/template-and-custom-function-panic-function-not-defined

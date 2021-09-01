@@ -12,10 +12,24 @@ type homeData struct {
 	Blocks    []*blockchain.Block
 }
 
+var templateFunctions template.FuncMap = template.FuncMap{
+	"increment": func(number int) int {
+		return number + 1
+	},
+
+	"add": func(a, b int) int {
+		return a + b
+	},
+}
+
 func home(rw http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/home.html"))
 	chain := blockchain.GetBlockchain()
 	data := homeData{"Welcome to Nomad Coin 1.0!", chain.GetAllBlocks()}
 
+	tmpl := template.Must(
+		template.
+			New("home.gohtml").
+			Funcs(templateFunctions).
+			ParseFiles("templates/home.gohtml"))
 	tmpl.Execute(rw, data)
 }
