@@ -30,6 +30,6 @@ func home(rw http.ResponseWriter, r *http.Request) {
 		template.
 			New("home.gohtml").
 			Funcs(templateFunctions).
-			ParseFiles("templates/home.gohtml"))
+			ParseFiles("templates/pages/home.gohtml"))
 	tmpl.Execute(rw, data)
 }

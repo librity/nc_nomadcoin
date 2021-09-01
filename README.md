@@ -102,11 +102,27 @@ avalanche obvious changes to the next blocks' hashes.
 - https://mining-simulator.netlify.app/
 - https://www.youtube.com/playlist?list=PL7jH19IHhOLOJfXeVqjtiawzNQLxOgTdq
 - https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
+- https://stackoverflow.com/questions/29762118/range-over-array-index-in-templates
+- https://andybrewer.github.io/mvp/?ref=producthunt
+
+### Cryptograhy
+
 - https://en.wikipedia.org/wiki/Cryptographic_hash_function
 - https://en.wikipedia.org/wiki/SHA-2
 - https://en.wikipedia.org/wiki/Public-key_cryptography
-- https://stackoverflow.com/questions/29762118/range-over-array-index-in-templates
+
+### Go templates
+
 - https://gowebexamples.com/templates/
 - https://blog.gopheracademy.com/advent-2017/using-go-templates/
 - https://stackoverflow.com/questions/25689829/arithmetic-in-go-templates
 - https://stackoverflow.com/questions/17843311/template-and-custom-function-panic-function-not-defined
+
+### Favicons
+
+- https://favicon.io/emoji-favicons/coin/
+- https://www.freefavicon.com/
+- https://icons8.com/icons/set/coin--animated
+- https://www.ionos.com/tools/favicon-generator
+- https://www.favicon-generator.org/search/---/Coin
+- https://www.favicon.cc/?action=icon&file_id=138923
