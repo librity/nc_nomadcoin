@@ -89,6 +89,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://pkg.go.dev/html/template@go1.17#ParseFiles
 - https://pkg.go.dev/html/template@go1.17#Must
 - https://pkg.go.dev/path/filepath@go1.17#Match
+- https://pkg.go.dev/encoding/json#Marshal
 
 ## Docs <a name = "docs"></a>
 
@@ -106,6 +107,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://stackoverflow.com/questions/29762118/range-over-array-index-in-templates
 - https://andybrewer.github.io/mvp/?ref=producthunt
 - https://www.digitalocean.com/community/tutorials/how-to-add-a-favicon-to-your-website-with-html
+- https://en.wikipedia.org/wiki/Marshalling_(computer_science)
 
 ### Go
 

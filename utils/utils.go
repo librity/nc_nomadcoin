@@ -1,6 +1,15 @@
 package utils
 
-import "reflect"
+import (
+	"log"
+	"reflect"
+)
+
+func HandleError(err error) {
+	if err != nil {
+		log.Panic(err)
+	}
+}
 
 // Source: https://stackoverflow.com/questions/54858529/golang-reverse-a-arbitrary-slice
 func Reverse(slice interface{}) {

@@ -5,12 +5,14 @@ import (
 
 	"github.com/librity/nc_nomadcoin/blockchain"
 	"github.com/librity/nc_nomadcoin/explorer"
+	"github.com/librity/nc_nomadcoin/rest"
 )
 
 func main() {
 	welcome()
 	blockchainDemo()
-	htmlExplorerDemo()
+	// htmlExplorerDemo()
+	restApiDemo()
 }
 
 func welcome() {
@@ -35,4 +37,8 @@ func blockchainDemo() {
 
 func htmlExplorerDemo() {
 	explorer.Start()
+}
+
+func restApiDemo() {
+	rest.Start()
 }
