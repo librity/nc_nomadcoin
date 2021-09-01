@@ -1,3 +1,4 @@
+{{ define "head" }}
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -5,5 +6,6 @@
 
   <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
 
-  <title>Nomad Coin</title>
+  <title>{{ . }} | Nomad Coin</title>
 </head>
+{{ end }}

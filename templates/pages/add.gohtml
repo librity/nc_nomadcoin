@@ -1,20 +1,24 @@
+{{ define "add" }}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
-
-    <title>Nomad Coin</title>
-  </head>
-
+  {{ template "head" .PageTitle }}
   <body>
-    <header>
-      <h1>{{.PageTitle}}</h1>
-    </header>
+    {{ template "header" .PageTitle }}
 
-    <main></main>
+    <main>
+      <form action="">
+        <input
+          type="text"
+          name="data"
+          id="data"
+          placeholder="Data for your block"
+          required
+        />
+        <input type="submit" value="" />
+      </form>
+    </main>
+
+    {{ template "footer" }}
   </body>
 </html>
+{{ end }}

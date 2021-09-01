@@ -104,6 +104,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
 - https://stackoverflow.com/questions/29762118/range-over-array-index-in-templates
 - https://andybrewer.github.io/mvp/?ref=producthunt
+- https://stackoverflow.com/questions/25161774/what-are-conventions-for-filenames-in-go
 
 ### Cryptograhy
 
@@ -117,6 +118,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://blog.gopheracademy.com/advent-2017/using-go-templates/
 - https://stackoverflow.com/questions/25689829/arithmetic-in-go-templates
 - https://stackoverflow.com/questions/17843311/template-and-custom-function-panic-function-not-defined
+- https://stackoverflow.com/questions/38686583/golang-parse-all-templates-in-directory-and-subdirectories
 
 ### Favicons
 

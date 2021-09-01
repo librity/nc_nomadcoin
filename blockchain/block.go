@@ -6,6 +6,7 @@ import (
 )
 
 type Block struct {
+	Number       int
 	Data         string
 	PreviousHash string
 	Hash         string
@@ -25,6 +26,7 @@ func (b *Block) generateHash() string {
 }
 
 func (b *Block) listBlock() {
+	fmt.Printf("Block number: %d\n", b.Number)
 	fmt.Printf("Data: %s\n", b.Data)
 	fmt.Printf("Previous hash: %s\n", b.PreviousHash)
 	fmt.Printf("Hash: %s\n", b.Hash)

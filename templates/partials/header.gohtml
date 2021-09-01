@@ -1,3 +1,19 @@
+{{ define "header" }}
 <header>
-  <h1>{{.PageTitle}}</h1>
+  <nav>
+    <a href="/"><h1>Nomad Coin</h1></a>
+
+    <ul>
+      <li>
+        <a href="/">Home</a>
+      </li>
+
+      <li>
+        <a href="/add">Add</a>
+      </li>
+    </ul>
+  </nav>
+
+  <h1>{{ . }}</h1>
 </header>
+{{ end }}

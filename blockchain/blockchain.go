@@ -25,8 +25,7 @@ func (b *blockchain) AddBlock(data string) {
 }
 
 func (b *blockchain) ListBlocks() {
-	for index, block := range b.blocks {
-		fmt.Printf("Block number: %d\n", index+1)
+	for _, block := range b.blocks {
 		block.listBlock()
 		fmt.Println("---")
 	}
@@ -42,7 +41,7 @@ func initializeBlockchain() {
 }
 
 func createBlock(data string) *Block {
-	newBlock := Block{data, getLastHash(), ""}
+	newBlock := Block{getBlockNumber(), data, getLastHash(), ""}
 	newBlock.setHash()
 	return &newBlock
 }
@@ -56,6 +55,10 @@ func getLastHash() string {
 	lastBlockIndex := len(b.blocks) - 1
 	lastHash := b.blocks[lastBlockIndex].Hash
 	return lastHash
+}
+
+func getBlockNumber() int {
+	return len(b.blocks) + 1
 }
 
 func (b *blockchain) isFirstBlock() bool {

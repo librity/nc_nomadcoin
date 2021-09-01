@@ -1,0 +1,20 @@
+{{ define "block" }}
+
+<div>
+  <ul>
+    <li><b>Block number:</b> {{ .Number }}</li>
+
+    <li><b>Data:</b> {{ .Data }}</li>
+
+    {{ if .PreviousHash }}
+    <li><b>Previous hash:</b> {{ .PreviousHash }}</li>
+    {{
+      end
+    }}
+
+    <li><b>Hash:</b> {{ .Hash }}</li>
+  </ul>
+</div>
+<hr />
+
+{{ end }}
