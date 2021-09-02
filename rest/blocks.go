@@ -18,7 +18,6 @@ type newBlockBody struct {
 func blocksIndex(rw http.ResponseWriter, r *http.Request) {
 	blocks := blockchain.GetBlockchain().GetAllBlocks()
 
-	rw.Header().Add("Content-Type", "application/json")
 	json.NewEncoder(rw).Encode(blocks)
 }
 

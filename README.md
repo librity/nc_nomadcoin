@@ -118,6 +118,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://www.digitalocean.com/community/tutorials/how-to-add-a-favicon-to-your-website-with-html
 - https://en.wikipedia.org/wiki/Marshalling_(computer_science)
 - https://swagger.io/specification/
+- https://en.wikipedia.org/wiki/Adapter_pattern
 
 ### Go
 
@@ -132,6 +133,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://golangdocs.com/golang-mux-router
 - https://stackoverflow.com/questions/40478027/what-is-an-http-request-multiplexer
 - https://golangdocs.com/maps-in-golang
+- https://golang.org/src/strconv/atoi.go?h=Atoi
 
 ### Go templates
 

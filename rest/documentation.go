@@ -49,7 +49,6 @@ var data = []endpointDescription{
 }
 
 func documentation(rw http.ResponseWriter, r *http.Request) {
-	rw.Header().Add("Content-Type", "application/json")
 	json.NewEncoder(rw).Encode(data)
 }
 
@@ -57,6 +56,5 @@ func deprecated(rw http.ResponseWriter, r *http.Request) {
 	bytes, err := json.Marshal(data)
 	utils.HandleError(err)
 
-	rw.Header().Add("Content-Type", "application/json")
 	fmt.Fprintf(rw, "%s", bytes)
 }

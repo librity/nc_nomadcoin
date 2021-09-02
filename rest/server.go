@@ -8,10 +8,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type errorResponse struct {
-	ErrorMessage string `json:"errorMessage"`
-}
-
 var (
 	port    string      = ":5000"
 	baseURL string      = "http://localhost" + port
@@ -29,6 +25,7 @@ func StartCustom(portNum int) {
 
 func loadAndListen() {
 	loadHandlers()
+	loadMiddlewares()
 	listenOrDie()
 }
 
@@ -43,6 +40,10 @@ func loadHandlers() {
 	router.HandleFunc("/blocks", blocksIndex).Methods("GET")
 	router.HandleFunc("/blocks", createBlock).Methods("POST")
 	router.HandleFunc("/blocks/{height:[0-9]+}", block).Methods("GET")
+}
+
+func loadMiddlewares() {
+	router.Use(jsonContentTypeMiddleware)
 }
 
 func listenOrDie() {
