@@ -41,6 +41,7 @@ Install the latest version of `Go`, then install external dependencies:
 
 ```bash
 go get -u github.com/gorilla/mux
+go get -u github.com/boltdb/bolt
 ```
 
 ### Installing
@@ -62,7 +63,9 @@ $ go build -race
 ### CLI
 
 ```bash
-$ go run main.go rest --port 5000
+$ go run main.go rest -port=PORT                # Start the REST API (recommended)
+$ go run main.go explorer -port=PORT            # Start the HTLM Explorer
+$ go run main.go both -ePort=PORT -rPort=PORT   # Start both REST API and HTML Explorer
 ```
 
 ## Notes <a name = "notes"></a>
@@ -103,8 +106,10 @@ avalanche obvious changes to the next blocks' hashes.
 - https://pkg.go.dev/encoding/json#Marshal
 - https://pkg.go.dev/encoding#TextMarshaler
 - https://pkg.go.dev/strconv#Atoi
-- https://pkg.go.dev/flag
+- https://pkg.go.dev/flag#NewFlagSet
+- https://pkg.go.dev/flag#Parse
 - https://github.com/gorilla/mux
+- https://github.com/boltdb/bolt
 
 ## Docs <a name = "docs"></a>
 
@@ -126,10 +131,14 @@ avalanche obvious changes to the next blocks' hashes.
 - https://en.wikipedia.org/wiki/Marshalling_(computer_science)
 - https://swagger.io/specification/
 - https://en.wikipedia.org/wiki/Adapter_pattern
+- https://github.com/google/leveldb
+- https://github.com/LMDB/lmdb
 
 ### Go
 
 - https://www.gorillatoolkit.org/
+- https://dbdb.io/db/boltdb
+- https://github.com/etcd-io/bbolt
 - https://cobra.dev/
 - https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
 - https://stackoverflow.com/questions/25161774/what-are-conventions-for-filenames-in-go

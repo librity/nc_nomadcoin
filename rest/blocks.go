@@ -16,7 +16,7 @@ type newBlockBody struct {
 }
 
 func blocksIndex(rw http.ResponseWriter, r *http.Request) {
-	blocks := blockchain.GetBlockchain().GetAllBlocks()
+	blocks := blockchain.Get().AllBlocks()
 
 	json.NewEncoder(rw).Encode(blocks)
 }
@@ -26,7 +26,7 @@ func createBlock(rw http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&newBlock)
 	utils.HandleError(err)
 
-	blockchain.GetBlockchain().AddBlock(newBlock.Data)
+	blockchain.Get().AddBlock(newBlock.Data)
 	rw.WriteHeader(http.StatusCreated)
 }
 
@@ -36,7 +36,7 @@ func block(rw http.ResponseWriter, r *http.Request) {
 	utils.HandleError(err)
 
 	encoder := json.NewEncoder(rw)
-	block, err := blockchain.GetBlockchain().GetBlock(height)
+	block, err := blockchain.Get().GetBlock(height)
 	if err == blockchain.ErrNotFound {
 		rw.WriteHeader(http.StatusNotFound)
 		message := fmt.Sprint(err)

@@ -21,7 +21,7 @@ func blocks(rw http.ResponseWriter, r *http.Request) {
 }
 
 func blocksIndex(rw http.ResponseWriter, r *http.Request) {
-	blocks := blockchain.GetBlockchain().GetAllBlocks()
+	blocks := blockchain.Get().AllBlocks()
 	data := blocksData{"Blocks", blocks}
 
 	templates.ExecuteTemplate(rw, "blocks", data)
@@ -30,7 +30,7 @@ func blocksIndex(rw http.ResponseWriter, r *http.Request) {
 func createBlock(rw http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	blockData := r.Form.Get("blockData")
-	blockchain.GetBlockchain().AddBlock(blockData)
+	blockchain.Get().AddBlock(blockData)
 
 	http.Redirect(rw, r, "/blocks", http.StatusFound)
 }

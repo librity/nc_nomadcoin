@@ -14,10 +14,12 @@ type blockchain struct {
 	blocks []*Block
 }
 
-var b *blockchain
-var once sync.Once
+var (
+	b    *blockchain
+	once sync.Once
+)
 
-func GetBlockchain() *blockchain {
+func Get() *blockchain {
 	if b == nil {
 		once.Do(initializeBlockchain)
 	}
@@ -36,7 +38,7 @@ func (b *blockchain) ListBlocks() {
 	}
 }
 
-func (b *blockchain) GetAllBlocks() []*Block {
+func (b *blockchain) AllBlocks() []*Block {
 	return b.blocks
 }
 
@@ -53,7 +55,7 @@ func (b *blockchain) GetBlock(height int) (*Block, error) {
 
 func initializeBlockchain() {
 	b = &blockchain{}
-	b.AddBlock("Genesis block.")
+	b.AddBlock("The Times 03/Jan/2009 Chancellor on brink of second bailout for banks")
 }
 
 func createBlock(data string) *Block {
@@ -63,7 +65,7 @@ func createBlock(data string) *Block {
 }
 
 func getLastHash() string {
-	b := GetBlockchain()
+	b := Get()
 	if b.isFirstBlock() {
 		return ""
 	}
