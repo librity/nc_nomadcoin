@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"crypto/sha256"
+	"fmt"
 	"log"
 	"reflect"
 )
@@ -23,4 +25,12 @@ func Reverse(slice interface{}) {
 	for i, j := 0, s.Len()-1; i < j; i, j = i+1, j-1 {
 		swap(i, j)
 	}
+}
+
+func HexHash(data string) string {
+	dataBytes := []byte(data)
+	rawHash := sha256.Sum256(dataBytes)
+	hexHash := fmt.Sprintf("%x", rawHash)
+
+	return hexHash
 }

@@ -2,11 +2,8 @@ package rest
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
-	"strconv"
 
-	"github.com/gorilla/mux"
 	"github.com/librity/nc_nomadcoin/blockchain"
 	"github.com/librity/nc_nomadcoin/utils"
 )
@@ -15,11 +12,11 @@ type newBlockBody struct {
 	Data string
 }
 
-func blocksIndex(rw http.ResponseWriter, r *http.Request) {
-	blocks := blockchain.Get().AllBlocks()
+// func blocksIndex(rw http.ResponseWriter, r *http.Request) {
+// 	blocks := blockchain.Get().AllBlocks()
 
-	json.NewEncoder(rw).Encode(blocks)
-}
+// 	json.NewEncoder(rw).Encode(blocks)
+// }
 
 func createBlock(rw http.ResponseWriter, r *http.Request) {
 	var newBlock newBlockBody
@@ -30,19 +27,19 @@ func createBlock(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusCreated)
 }
 
-func block(rw http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	height, err := strconv.Atoi(params["height"])
-	utils.HandleError(err)
+// func block(rw http.ResponseWriter, r *http.Request) {
+// 	params := mux.Vars(r)
+// 	height, err := strconv.Atoi(params["height"])
+// 	utils.HandleError(err)
 
-	encoder := json.NewEncoder(rw)
-	block, err := blockchain.Get().GetBlock(height)
-	if err == blockchain.ErrNotFound {
-		rw.WriteHeader(http.StatusNotFound)
-		message := fmt.Sprint(err)
-		encoder.Encode(errorResponse{message})
-		return
-	}
+// 	encoder := json.NewEncoder(rw)
+// 	block, err := blockchain.Get().GetBlock(height)
+// 	if err == blockchain.ErrNotFound {
+// 		rw.WriteHeader(http.StatusNotFound)
+// 		message := fmt.Sprint(err)
+// 		encoder.Encode(errorResponse{message})
+// 		return
+// 	}
 
-	encoder.Encode(block)
-}
+// 	encoder.Encode(block)
+// }

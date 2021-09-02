@@ -37,9 +37,9 @@ func setEnvVars(portNum int) {
 func loadHandlers() {
 	router.HandleFunc("/", documentation).Methods("GET")
 
-	router.HandleFunc("/blocks", blocksIndex).Methods("GET")
+	// router.HandleFunc("/blocks", blocksIndex).Methods("GET")
 	router.HandleFunc("/blocks", createBlock).Methods("POST")
-	router.HandleFunc("/blocks/{height:[0-9]+}", block).Methods("GET")
+	// router.HandleFunc("/blocks/{height:[0-9]+}", block).Methods("GET")
 }
 
 func loadMiddlewares() {

@@ -9,7 +9,7 @@ import (
 
 const (
 	dbName       = "blockchain.db"
-	dataBucket   = "data"
+	chainBucket  = "chain"
 	blocksBucket = "blocks"
 )
 
@@ -39,7 +39,7 @@ func openDB() {
 
 func createBuckets() {
 	err := db.Update(func(transaction *bolt.Tx) error {
-		_, err := transaction.CreateBucketIfNotExists([]byte(dataBucket))
+		_, err := transaction.CreateBucketIfNotExists([]byte(chainBucket))
 		utils.HandleError(err)
 		_, err = transaction.CreateBucketIfNotExists([]byte(blocksBucket))
 

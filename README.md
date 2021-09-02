@@ -108,6 +108,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://pkg.go.dev/strconv#Atoi
 - https://pkg.go.dev/flag#NewFlagSet
 - https://pkg.go.dev/flag#Parse
+- https://pkg.go.dev/encoding/gob
 - https://github.com/gorilla/mux
 - https://github.com/boltdb/bolt
 
