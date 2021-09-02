@@ -24,12 +24,12 @@ A fully-featured blockchain and cryptocurrency using the Go programming language
 
 ### Features
 
+- [x] HTML Explorer
+- [ ] REST API
+- [ ] Database Backend
 - [ ] Mining
 - [ ] Transactions
-- [ ] Database Backend
 - [ ] Wallets
-- [ ] REST API
-- [ ] HTML Explorer
 - [ ] P2P (Websockets)
 - [ ] Unit Testing
 
@@ -77,19 +77,21 @@ avalanche obvious changes to the next blocks' hashes.
 
 ## Libs <a name = "libs"></a>
 
-- https://pkg.go.dev/fmt@go1.17#Printf
-- https://pkg.go.dev/fmt@go1.17#Sprintf
-- https://pkg.go.dev/fmt@go1.17#Fprint
-- https://pkg.go.dev/sync@go1.17#Once
-- https://pkg.go.dev/sync@go1.17#Do
-- https://pkg.go.dev/net/http@go1.17#HandleFunc
-- https://pkg.go.dev/net/http@go1.17#ListenAndServe
-- https://pkg.go.dev/log@go1.17#Fatal
+- https://pkg.go.dev/fmt#Printf
+- https://pkg.go.dev/fmt#Sprintf
+- https://pkg.go.dev/fmt#Fprint
+- https://pkg.go.dev/fmt#Stringer
+- https://pkg.go.dev/sync#Once
+- https://pkg.go.dev/sync#Do
+- https://pkg.go.dev/net/http#HandleFunc
+- https://pkg.go.dev/net/http#ListenAndServe
+- https://pkg.go.dev/log#Fatal
 - https://pkg.go.dev/text/template#hdr-Actions
-- https://pkg.go.dev/html/template@go1.17#ParseFiles
-- https://pkg.go.dev/html/template@go1.17#Must
-- https://pkg.go.dev/path/filepath@go1.17#Match
+- https://pkg.go.dev/html/template#ParseFiles
+- https://pkg.go.dev/html/template#Must
+- https://pkg.go.dev/path/filepath#Match
 - https://pkg.go.dev/encoding/json#Marshal
+- https://pkg.go.dev/encoding#TextMarshaler
 
 ## Docs <a name = "docs"></a>
 
@@ -97,6 +99,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://pkg.go.dev/std
 - https://golang.org/ref/spec#Variables
 - https://golang.org/ref/spec#Pointer_types
+- https://tour.golang.org/methods/17
 
 ## Resources <a name = "resources"></a>
 
@@ -108,6 +111,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://andybrewer.github.io/mvp/?ref=producthunt
 - https://www.digitalocean.com/community/tutorials/how-to-add-a-favicon-to-your-website-with-html
 - https://en.wikipedia.org/wiki/Marshalling_(computer_science)
+- https://swagger.io/specification/
 
 ### Go
 

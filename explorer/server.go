@@ -8,6 +8,7 @@ import (
 
 const (
 	port        string = ":4000"
+	baseURL     string = "http://localhost" + port
 	staticDir   string = "explorer/static"
 	staticRoute string = "/static/"
 )
@@ -35,6 +36,6 @@ func loadRoutes() {
 }
 
 func listenOrDie() {
-	fmt.Printf("HTML Explorer listening on http://localhost%s\n", port)
+	fmt.Printf("HTML Explorer listening on %s\n", baseURL)
 	log.Fatal(http.ListenAndServe(port, nil))
 }

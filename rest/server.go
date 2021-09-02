@@ -7,7 +7,8 @@ import (
 )
 
 const (
-	port string = ":5000"
+	port    string = ":5000"
+	baseURL string = "http://localhost" + port
 )
 
 func Start() {
@@ -20,6 +21,6 @@ func loadHandlers() {
 }
 
 func listenOrDie() {
-	fmt.Printf("REST API listening on http://localhost%s\n", port)
+	fmt.Printf("REST API listening on %s\n", baseURL)
 	log.Fatal(http.ListenAndServe(port, nil))
 }

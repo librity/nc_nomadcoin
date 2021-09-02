@@ -26,8 +26,8 @@ func (b *blockchain) AddBlock(data string) {
 
 func (b *blockchain) ListBlocks() {
 	for _, block := range b.blocks {
-		block.listBlock()
-		fmt.Println("---")
+		// block.listBlock()
+		fmt.Print(block)
 	}
 }
 

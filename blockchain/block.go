@@ -25,9 +25,25 @@ func (b *Block) generateHash() string {
 	return hexHash
 }
 
+// Stringer interface: https://pkg.go.dev/fmt#Stringer
+func (b Block) String() string {
+	s := fmt.Sprintln("Block number:", fmt.Sprint(b.Number)) +
+		fmt.Sprintln("Data:", b.Data)
+	if b.PreviousHash != "" {
+		s = s + fmt.Sprintln("Previous hash:", b.PreviousHash)
+	}
+	s = s + fmt.Sprintln("Hash:", b.Hash) +
+		fmt.Sprintln("---")
+
+	return s
+}
+
 func (b *Block) listBlock() {
 	fmt.Printf("Block number: %d\n", b.Number)
 	fmt.Printf("Data: %s\n", b.Data)
-	fmt.Printf("Previous hash: %s\n", b.PreviousHash)
+	if b.PreviousHash != "" {
+		fmt.Printf("Previous hash: %s\n", b.PreviousHash)
+	}
 	fmt.Printf("Hash: %s\n", b.Hash)
+	fmt.Println("---")
 }
