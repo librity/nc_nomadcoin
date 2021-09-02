@@ -6,14 +6,28 @@ import (
 	"net/http"
 )
 
-const (
+var (
 	port    string = ":5000"
 	baseURL string = "http://localhost" + port
 )
 
 func Start() {
+	loadAndListen()
+}
+
+func StartCustom(portNum int) {
+	setEnvVars(portNum)
+	loadAndListen()
+}
+
+func loadAndListen() {
 	loadHandlers()
 	listenOrDie()
+}
+
+func setEnvVars(portNum int) {
+	port = fmt.Sprintf(":%d", portNum)
+	baseURL = "http://localhost" + port
 }
 
 func loadHandlers() {

@@ -6,6 +6,10 @@ http://localhost:5000/blocks
 
 ###
 
+http://localhost:5000/blocks/1
+
+###
+
 POST http://localhost:5000/blocks
 
 {

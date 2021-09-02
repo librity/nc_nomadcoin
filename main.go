@@ -11,8 +11,8 @@ import (
 func main() {
 	welcome()
 	blockchainDemo()
-	// htmlExplorerDemo()
-	restApiDemo()
+	htmlExplorerDemo()
+	// restApiDemo()
 }
 
 func welcome() {
@@ -36,9 +36,11 @@ func blockchainDemo() {
 }
 
 func htmlExplorerDemo() {
-	explorer.Start()
+	// rest.Start()
+	explorer.StartCustom(4000)
 }
 
 func restApiDemo() {
-	rest.Start()
+	// rest.Start()
+	rest.StartCustom(5000)
 }

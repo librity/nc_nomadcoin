@@ -7,21 +7,35 @@ import (
 )
 
 const (
-	port        string = ":4000"
-	baseURL     string = "http://localhost" + port
 	staticDir   string = "explorer/static"
 	staticRoute string = "/static/"
 )
 
+var (
+	port    string = ":4000"
+	baseURL string = "http://localhost" + port
+)
+
 func Start() {
-	loadTemplates()
-	loadHandlers()
-	listenOrDie()
+	loadAndListen()
 }
 
-func loadHandlers() {
+func StartCustom(portNum int) {
+	setEnvVars(portNum)
+	loadAndListen()
+}
+
+func setEnvVars(portNum int) {
+	port = fmt.Sprintf(":%d", portNum)
+	baseURL = "http://localhost" + port
+}
+
+func loadAndListen() {
+	loadTemplates()
 	loadFileServer()
 	loadRoutes()
+
+	listenOrDie()
 }
 
 func loadFileServer() {

@@ -8,7 +8,7 @@ import (
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
-type NewBlockBody struct {
+type newBlockBody struct {
 	Data string
 }
 
@@ -29,10 +29,10 @@ func blocksIndex(rw http.ResponseWriter, r *http.Request) {
 }
 
 func createBlock(rw http.ResponseWriter, r *http.Request) {
-	var newBlockBody NewBlockBody
-	err := json.NewDecoder(r.Body).Decode(&newBlockBody)
+	var newBlock newBlockBody
+	err := json.NewDecoder(r.Body).Decode(&newBlock)
 	utils.HandleError(err)
 
-	blockchain.GetBlockchain().AddBlock(newBlockBody.Data)
+	blockchain.GetBlockchain().AddBlock(newBlock.Data)
 	rw.WriteHeader(http.StatusCreated)
 }

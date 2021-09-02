@@ -6,10 +6,10 @@ import (
 )
 
 type Block struct {
-	Number       int
-	Data         string
-	PreviousHash string
-	Hash         string
+	Number       int    `json:"number"`
+	Data         string `json:"data"`
+	PreviousHash string `json:"previousHash,omitempty"`
+	Hash         string `json:"hash"`
 }
 
 func (b *Block) setHash() {
