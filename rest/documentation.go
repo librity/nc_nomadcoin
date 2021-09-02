@@ -42,7 +42,7 @@ var data = []endpointDescription{
 		Payload: "data:string",
 	},
 	{
-		URL:     url("/blocks/:id"),
+		URL:     url("/blocks/{height}"),
 		Method:  "GET",
 		Details: "Read a block.",
 	},

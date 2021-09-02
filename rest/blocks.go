@@ -2,8 +2,8 @@ package rest
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/librity/nc_nomadcoin/blockchain"
@@ -32,5 +32,9 @@ func createBlock(rw http.ResponseWriter, r *http.Request) {
 
 func block(rw http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	fmt.Println(params)
+	height, err := strconv.Atoi(params["height"])
+	utils.HandleError(err)
+
+	block := blockchain.GetBlockchain().GetBlock(height)
+	json.NewEncoder(rw).Encode(block)
 }

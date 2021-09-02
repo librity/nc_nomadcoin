@@ -35,13 +35,17 @@ func (b *blockchain) GetAllBlocks() []*Block {
 	return b.blocks
 }
 
+func (b *blockchain) GetBlock(height int) *Block {
+	return b.blocks[height-1]
+}
+
 func initializeBlockchain() {
 	b = &blockchain{}
 	b.AddBlock("Genesis block.")
 }
 
 func createBlock(data string) *Block {
-	newBlock := Block{getBlockNumber(), data, getLastHash(), ""}
+	newBlock := Block{getBlockHeight(), data, getLastHash(), ""}
 	newBlock.setHash()
 	return &newBlock
 }
@@ -57,7 +61,7 @@ func getLastHash() string {
 	return lastHash
 }
 
-func getBlockNumber() int {
+func getBlockHeight() int {
 	return len(b.blocks) + 1
 }
 

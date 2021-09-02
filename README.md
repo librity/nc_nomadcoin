@@ -96,6 +96,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://pkg.go.dev/path/filepath#Match
 - https://pkg.go.dev/encoding/json#Marshal
 - https://pkg.go.dev/encoding#TextMarshaler
+- https://pkg.go.dev/strconv#Atoi
 - https://github.com/gorilla/mux
 
 ## Docs <a name = "docs"></a>
@@ -130,6 +131,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://github.com/golang/go/wiki/SliceTricks#reversing
 - https://golangdocs.com/golang-mux-router
 - https://stackoverflow.com/questions/40478027/what-is-an-http-request-multiplexer
+- https://golangdocs.com/maps-in-golang
 
 ### Go templates
 
