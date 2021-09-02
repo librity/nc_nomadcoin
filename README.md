@@ -59,6 +59,12 @@ $ go build -race
 
 ## Usage <a name = "usage"></a>
 
+### CLI
+
+```bash
+$ go run main.go rest --port 5000
+```
+
 ## Notes <a name = "notes"></a>
 
 ### One-way hash functions
@@ -97,6 +103,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://pkg.go.dev/encoding/json#Marshal
 - https://pkg.go.dev/encoding#TextMarshaler
 - https://pkg.go.dev/strconv#Atoi
+- https://pkg.go.dev/flag
 - https://github.com/gorilla/mux
 
 ## Docs <a name = "docs"></a>
@@ -123,6 +130,7 @@ avalanche obvious changes to the next blocks' hashes.
 ### Go
 
 - https://www.gorillatoolkit.org/
+- https://cobra.dev/
 - https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
 - https://stackoverflow.com/questions/25161774/what-are-conventions-for-filenames-in-go
 - https://jogendra.dev/import-cycles-in-golang-and-how-to-deal-with-them

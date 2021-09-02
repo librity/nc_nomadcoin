@@ -1,23 +1,17 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/librity/nc_nomadcoin/blockchain"
+	"github.com/librity/nc_nomadcoin/cli"
 	"github.com/librity/nc_nomadcoin/explorer"
 	"github.com/librity/nc_nomadcoin/rest"
 )
 
 func main() {
-	welcome()
-	blockchainDemo()
-	go htmlExplorerDemo()
-	restApiDemo()
-}
-
-func welcome() {
-	fmt.Println("Welcome to Nomad Coin!")
-	fmt.Println("---")
+	cliDemo()
+	// blockchainDemo()
+	// go htmlExplorerDemo()
+	// restApiDemo()
 }
 
 func blockchainDemo() {
@@ -43,4 +37,8 @@ func htmlExplorerDemo() {
 func restApiDemo() {
 	// rest.Start()
 	rest.StartCustom(5000)
+}
+
+func cliDemo() {
+	cli.Start()
 }
