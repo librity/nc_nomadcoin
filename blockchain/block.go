@@ -1,8 +1,6 @@
 package blockchain
 
 import (
-	"bytes"
-	"encoding/gob"
 	"fmt"
 
 	"github.com/librity/nc_nomadcoin/db"
@@ -25,7 +23,7 @@ func createBlock(data string, prevHash string, height int) *Block {
 
 func newBlock(data string, prevHash string, height int) *Block {
 	block := Block{
-		Height:       height + 1,
+		Height:       height,
 		Data:         data,
 		PreviousHash: prevHash,
 		Hash:         ""}
@@ -35,17 +33,7 @@ func newBlock(data string, prevHash string, height int) *Block {
 }
 
 func (b *Block) save() {
-	db.SaveBlock(b.Hash, b.toBytes())
-}
-
-func (b *Block) toBytes() []byte {
-	var blockBuffer bytes.Buffer
-
-	encoder := gob.NewEncoder(&blockBuffer)
-	err := encoder.Encode(b)
-	utils.HandleError(err)
-
-	return blockBuffer.Bytes()
+	db.SaveBlock(b.Hash, utils.ToBytes(b))
 }
 
 func (b *Block) setHash() {

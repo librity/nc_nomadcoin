@@ -42,6 +42,7 @@ Install the latest version of `Go`, then install external dependencies:
 ```bash
 go get -u github.com/gorilla/mux
 go get -u github.com/boltdb/bolt
+go get -u github.com/evnix/boltdbweb
 ```
 
 ### Installing
@@ -134,6 +135,8 @@ avalanche obvious changes to the next blocks' hashes.
 - https://en.wikipedia.org/wiki/Adapter_pattern
 - https://github.com/google/leveldb
 - https://github.com/LMDB/lmdb
+- https://github.com/evnix/boltdbweb
+- https://github.com/br0xen/boltbrowser
 
 ### Go
 
@@ -152,6 +155,8 @@ avalanche obvious changes to the next blocks' hashes.
 - https://stackoverflow.com/questions/40478027/what-is-an-http-request-multiplexer
 - https://golangdocs.com/maps-in-golang
 - https://golang.org/src/strconv/atoi.go?h=Atoi
+- https://gist.github.com/miguelmota/2a0c0e96c22bccc8740819d5d64ff8d0
+- https://stackoverflow.com/questions/14121422/de-and-encode-interface-with-gob
 
 ### Go templates
 

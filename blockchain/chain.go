@@ -3,6 +3,9 @@ package blockchain
 import (
 	"errors"
 	"sync"
+
+	"github.com/librity/nc_nomadcoin/db"
+	"github.com/librity/nc_nomadcoin/utils"
 )
 
 var (
@@ -28,10 +31,8 @@ func Get() *blockchain {
 }
 
 func (b *blockchain) AddBlock(data string) {
-	block := createBlock(data, b.LastHash, b.Height)
-
-	b.LastHash = block.Hash
-	b.Height = block.Height
+	block := createBlock(data, b.LastHash, b.Height+1)
+	b.mine(block)
 }
 
 func (b *blockchain) ListBlocks() {
@@ -47,4 +48,14 @@ func (b *blockchain) GetBlock(height int) {
 func initializeBlockchain() {
 	b = &blockchain{"", 0}
 	b.AddBlock("The Times 03/Jan/2009 Chancellor on brink of second bailout for banks")
+}
+
+func (b *blockchain) mine(block *Block) {
+	b.LastHash = block.Hash
+	b.Height = block.Height
+	b.save()
+}
+
+func (b *blockchain) save() {
+	db.SaveChain(utils.ToBytes(b))
 }

@@ -1,7 +1,9 @@
 package utils
 
 import (
+	"bytes"
 	"crypto/sha256"
+	"encoding/gob"
 	"fmt"
 	"log"
 	"reflect"
@@ -33,4 +35,14 @@ func HexHash(data string) string {
 	hexHash := fmt.Sprintf("%x", rawHash)
 
 	return hexHash
+}
+
+func ToBytes(i interface{}) []byte {
+	var buffer bytes.Buffer
+
+	encoder := gob.NewEncoder(&buffer)
+	err := encoder.Encode(i)
+	HandleError(err)
+
+	return buffer.Bytes()
 }
