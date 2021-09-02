@@ -1,0 +1,23 @@
+http://localhost:5000
+
+###
+
+http://localhost:5000/blocks
+
+###
+
+POST http://localhost:5000/blocks
+
+{
+    "data": "19 BTC from aefc2b9a41b4bda580a01d6ab5e580e to dc5ceb3f31b53a851d3357ed52b336b14b."
+}
+
+###
+
+POST http://localhost:5000/blocks
+
+{
+    "bad": "bad."
+}
+
+###

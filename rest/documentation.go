@@ -27,13 +27,24 @@ var data = []EndpointDescription{
 	{
 		URL:     URL("/"),
 		Method:  "GET",
-		Details: "Browse API documentation.",
+		Details: "Read API documentation.",
+	},
+
+	{
+		URL:     URL("/blocks"),
+		Method:  "GET",
+		Details: "Read all blocks.",
 	},
 	{
 		URL:     URL("/blocks"),
 		Method:  "POST",
 		Details: "Create a block.",
 		Payload: "data:string",
+	},
+	{
+		URL:     URL("/blocks/:id"),
+		Method:  "GET",
+		Details: "Read a block.",
 	},
 }
 

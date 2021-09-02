@@ -18,6 +18,7 @@ func Start() {
 
 func loadHandlers() {
 	http.HandleFunc("/", documentation)
+	http.HandleFunc("/blocks", blocks)
 }
 
 func listenOrDie() {

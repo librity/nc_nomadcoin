@@ -1,14 +1,15 @@
-package explorer
+package rest
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/librity/nc_nomadcoin/blockchain"
+	"github.com/librity/nc_nomadcoin/utils"
 )
 
-type blocksData struct {
-	PageTitle string
-	Blocks    []*blockchain.Block
+type NewBlockBody struct {
+	Data string
 }
 
 func blocks(rw http.ResponseWriter, r *http.Request) {
@@ -22,15 +23,16 @@ func blocks(rw http.ResponseWriter, r *http.Request) {
 
 func blocksIndex(rw http.ResponseWriter, r *http.Request) {
 	blocks := blockchain.GetBlockchain().GetAllBlocks()
-	data := blocksData{"Blocks", blocks}
 
-	templates.ExecuteTemplate(rw, "blocks", data)
+	rw.Header().Add("Content-Type", "application/json")
+	json.NewEncoder(rw).Encode(blocks)
 }
 
 func createBlock(rw http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	blockData := r.Form.Get("blockData")
-	blockchain.GetBlockchain().AddBlock(blockData)
+	var newBlockBody NewBlockBody
+	err := json.NewDecoder(r.Body).Decode(&newBlockBody)
+	utils.HandleError(err)
 
-	http.Redirect(rw, r, "/blocks", http.StatusFound)
+	blockchain.GetBlockchain().AddBlock(newBlockBody.Data)
+	rw.WriteHeader(http.StatusCreated)
 }
