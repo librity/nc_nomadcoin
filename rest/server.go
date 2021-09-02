@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 var (
-	port    string         = ":5000"
-	baseURL string         = "http://localhost" + port
-	handler *http.ServeMux = http.NewServeMux()
+	port    string      = ":5000"
+	baseURL string      = "http://localhost" + port
+	router  *mux.Router = mux.NewRouter()
 )
 
 func Start() {
@@ -32,11 +34,14 @@ func setEnvVars(portNum int) {
 }
 
 func loadHandlers() {
-	handler.HandleFunc("/", documentation)
-	handler.HandleFunc("/blocks", blocks)
+	router.HandleFunc("/", documentation).Methods("GET")
+
+	router.HandleFunc("/blocks", blocksIndex).Methods("GET")
+	router.HandleFunc("/blocks", createBlock).Methods("POST")
+	router.HandleFunc("/blocks/{id:[0-9]+}", block).Methods("GET")
 }
 
 func listenOrDie() {
 	fmt.Printf("REST API listening on %s\n", baseURL)
-	log.Fatal(http.ListenAndServe(port, handler))
+	log.Fatal(http.ListenAndServe(port, router))
 }

@@ -37,7 +37,11 @@ A fully-featured blockchain and cryptocurrency using the Go programming language
 
 ### Prerequisites
 
-You need to hace `GO` installed in your computer.
+Install the latest version of `Go`, then install external dependencies:
+
+```bash
+go get -u github.com/gorilla/mux
+```
 
 ### Installing
 
@@ -92,6 +96,7 @@ avalanche obvious changes to the next blocks' hashes.
 - https://pkg.go.dev/path/filepath#Match
 - https://pkg.go.dev/encoding/json#Marshal
 - https://pkg.go.dev/encoding#TextMarshaler
+- https://github.com/gorilla/mux
 
 ## Docs <a name = "docs"></a>
 
@@ -115,6 +120,7 @@ avalanche obvious changes to the next blocks' hashes.
 
 ### Go
 
+- https://www.gorillatoolkit.org/
 - https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
 - https://stackoverflow.com/questions/25161774/what-are-conventions-for-filenames-in-go
 - https://jogendra.dev/import-cycles-in-golang-and-how-to-deal-with-them
@@ -147,7 +153,6 @@ avalanche obvious changes to the next blocks' hashes.
 - https://www.ionos.com/tools/favicon-generator
 - https://www.favicon-generator.org/search/---/Coin
 - https://www.favicon.cc/?action=icon&file_id=138923
-
 
 <p align="center">
     <img src=".github/golang_multiplexer.png" />

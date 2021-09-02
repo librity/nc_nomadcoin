@@ -2,23 +2,16 @@ package rest
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/librity/nc_nomadcoin/blockchain"
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
 type newBlockBody struct {
 	Data string
-}
-
-func blocks(rw http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case "GET":
-		blocksIndex(rw, r)
-	case "POST":
-		createBlock(rw, r)
-	}
 }
 
 func blocksIndex(rw http.ResponseWriter, r *http.Request) {
@@ -35,4 +28,9 @@ func createBlock(rw http.ResponseWriter, r *http.Request) {
 
 	blockchain.GetBlockchain().AddBlock(newBlock.Data)
 	rw.WriteHeader(http.StatusCreated)
+}
+
+func block(rw http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	fmt.Println(params)
 }
