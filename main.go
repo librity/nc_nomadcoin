@@ -3,15 +3,11 @@ package main
 import (
 	"github.com/librity/nc_nomadcoin/blockchain"
 	"github.com/librity/nc_nomadcoin/cli"
-	"github.com/librity/nc_nomadcoin/explorer"
-	"github.com/librity/nc_nomadcoin/rest"
 )
 
 func main() {
-	cliDemo()
 	// blockchainDemo()
-	// go htmlExplorerDemo()
-	// restApiDemo()
+	cliDemo()
 }
 
 func blockchainDemo() {
@@ -27,16 +23,6 @@ func blockchainDemo() {
 	chain.AddBlock("20 BTC from c65992d074b7de15d22677bf1b6ca6d02bfd47be7b39f017cc4aacc52dd2d40a to 2fa0890f810e5f6529b875857614d6cd2c8419ce573961984a5e4e4acc1fcfd0.")
 
 	chain.ListBlocks()
-}
-
-func htmlExplorerDemo() {
-	// rest.Start()
-	explorer.StartCustom(4000)
-}
-
-func restApiDemo() {
-	// rest.Start()
-	rest.StartCustom(5000)
 }
 
 func cliDemo() {

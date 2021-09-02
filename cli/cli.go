@@ -1,37 +1,31 @@
 package cli
 
 import (
-	"fmt"
 	"os"
 )
 
 func Start() {
-	if len(os.Args) < 2 {
-		printUsageAndDie()
-	}
+	checkArgs()
+	handleCommand()
+}
 
-	command := os.Args[1]
-	switch command {
-	case "explorer":
-		fmt.Println("Start Explorer")
-	case "rest":
-		fmt.Println("Start REST API")
-	default:
+func checkArgs() {
+	if len(os.Args) < 2 {
 		printUsageAndDie()
 	}
 }
 
-const usage string = `Welcome to the Nomad Coin CLI!
+func handleCommand() {
+	command := os.Args[1]
 
-Please use one of the following commands:
-
-explorer PORT	Start the HTLM Explorer
-rest PORT		Start the REST API (recommended)
-
----
-`
-
-func printUsageAndDie() {
-	fmt.Print(usage)
-	os.Exit(0)
+	switch command {
+	case "explorer":
+		handleExplorer()
+	case "rest":
+		handleRest()
+	case "both":
+		handleBoth()
+	default:
+		printUsageAndDie()
+	}
 }
