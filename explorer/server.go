@@ -12,8 +12,9 @@ const (
 )
 
 var (
-	port    string = ":4000"
-	baseURL string = "http://localhost" + port
+	port    string         = ":4000"
+	baseURL string         = "http://localhost" + port
+	handler *http.ServeMux = http.NewServeMux()
 )
 
 func Start() {
@@ -40,16 +41,16 @@ func loadAndListen() {
 
 func loadFileServer() {
 	fileServer := http.FileServer(http.Dir(staticDir))
-	http.Handle(staticRoute, http.StripPrefix(staticRoute, fileServer))
+	handler.Handle(staticRoute, http.StripPrefix(staticRoute, fileServer))
 }
 
 func loadRoutes() {
-	http.HandleFunc("/", home)
-	http.HandleFunc("/blocks", blocks)
-	http.HandleFunc("/blocks/new", newBlock)
+	handler.HandleFunc("/", home)
+	handler.HandleFunc("/blocks", blocks)
+	handler.HandleFunc("/blocks/new", newBlock)
 }
 
 func listenOrDie() {
 	fmt.Printf("HTML Explorer listening on %s\n", baseURL)
-	log.Fatal(http.ListenAndServe(port, nil))
+	log.Fatal(http.ListenAndServe(port, handler))
 }

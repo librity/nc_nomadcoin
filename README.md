@@ -122,6 +122,8 @@ avalanche obvious changes to the next blocks' hashes.
 - https://stackoverflow.com/questions/19239449/how-do-i-reverse-an-array-in-go
 - https://stackoverflow.com/questions/54858529/golang-reverse-a-arbitrary-slice
 - https://github.com/golang/go/wiki/SliceTricks#reversing
+- https://golangdocs.com/golang-mux-router
+- https://stackoverflow.com/questions/40478027/what-is-an-http-request-multiplexer
 
 ### Go templates
 
@@ -145,3 +147,8 @@ avalanche obvious changes to the next blocks' hashes.
 - https://www.ionos.com/tools/favicon-generator
 - https://www.favicon-generator.org/search/---/Coin
 - https://www.favicon.cc/?action=icon&file_id=138923
+
+
+<p align="center">
+    <img src=".github/golang_multiplexer.png" />
+</p>

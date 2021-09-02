@@ -11,8 +11,8 @@ import (
 func main() {
 	welcome()
 	blockchainDemo()
-	htmlExplorerDemo()
-	// restApiDemo()
+	go htmlExplorerDemo()
+	restApiDemo()
 }
 
 func welcome() {

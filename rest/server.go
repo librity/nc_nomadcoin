@@ -7,8 +7,9 @@ import (
 )
 
 var (
-	port    string = ":5000"
-	baseURL string = "http://localhost" + port
+	port    string         = ":5000"
+	baseURL string         = "http://localhost" + port
+	handler *http.ServeMux = http.NewServeMux()
 )
 
 func Start() {
@@ -31,11 +32,11 @@ func setEnvVars(portNum int) {
 }
 
 func loadHandlers() {
-	http.HandleFunc("/", documentation)
-	http.HandleFunc("/blocks", blocks)
+	handler.HandleFunc("/", documentation)
+	handler.HandleFunc("/blocks", blocks)
 }
 
 func listenOrDie() {
 	fmt.Printf("REST API listening on %s\n", baseURL)
-	log.Fatal(http.ListenAndServe(port, nil))
+	log.Fatal(http.ListenAndServe(port, handler))
 }
