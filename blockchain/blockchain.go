@@ -1,8 +1,13 @@
 package blockchain
 
 import (
+	"errors"
 	"fmt"
 	"sync"
+)
+
+var (
+	ErrNotFound = errors.New("block not found")
 )
 
 type blockchain struct {
@@ -35,8 +40,15 @@ func (b *blockchain) GetAllBlocks() []*Block {
 	return b.blocks
 }
 
-func (b *blockchain) GetBlock(height int) *Block {
-	return b.blocks[height-1]
+func (b *blockchain) GetBlock(height int) (*Block, error) {
+	if height > len(b.blocks) {
+		return nil, ErrNotFound
+	}
+	if height < 1 {
+		return nil, ErrNotFound
+	}
+
+	return b.blocks[height-1], nil
 }
 
 func initializeBlockchain() {

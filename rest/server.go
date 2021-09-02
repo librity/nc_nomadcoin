@@ -8,6 +8,10 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type errorResponse struct {
+	ErrorMessage string `json:"errorMessage"`
+}
+
 var (
 	port    string      = ":5000"
 	baseURL string      = "http://localhost" + port

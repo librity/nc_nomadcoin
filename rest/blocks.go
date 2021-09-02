@@ -2,6 +2,7 @@ package rest
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -35,6 +36,14 @@ func block(rw http.ResponseWriter, r *http.Request) {
 	height, err := strconv.Atoi(params["height"])
 	utils.HandleError(err)
 
-	block := blockchain.GetBlockchain().GetBlock(height)
-	json.NewEncoder(rw).Encode(block)
+	encoder := json.NewEncoder(rw)
+	block, err := blockchain.GetBlockchain().GetBlock(height)
+	if err == blockchain.ErrNotFound {
+		rw.WriteHeader(http.StatusNotFound)
+		message := fmt.Sprint(err)
+		encoder.Encode(errorResponse{message})
+		return
+	}
+
+	encoder.Encode(block)
 }
