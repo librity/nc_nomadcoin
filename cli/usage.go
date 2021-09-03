@@ -2,7 +2,7 @@ package cli
 
 import (
 	"fmt"
-	"os"
+	"runtime"
 )
 
 const usage string = `Welcome to the Nomad Coin CLI!
@@ -19,5 +19,5 @@ Examples:
 
 func printUsageAndDie() {
 	fmt.Print(usage)
-	os.Exit(0)
+	runtime.Goexit()
 }

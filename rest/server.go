@@ -37,7 +37,7 @@ func setEnvVars(portNum int) {
 func loadHandlers() {
 	router.HandleFunc("/", documentation).Methods("GET")
 
-	// router.HandleFunc("/blocks", blocksIndex).Methods("GET")
+	router.HandleFunc("/blocks", blocksIndex).Methods("GET")
 	router.HandleFunc("/blocks", createBlock).Methods("POST")
 	router.HandleFunc("/blocks/{hash:[0-9a-f]+}", block).Methods("GET")
 }

@@ -21,6 +21,10 @@ var (
 	once sync.Once
 )
 
+func Close() {
+	getDB().Close()
+}
+
 func getDB() *bolt.DB {
 	if db == nil {
 		once.Do(initializeDB)

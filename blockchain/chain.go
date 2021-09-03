@@ -9,7 +9,7 @@ import (
 )
 
 type blockchain struct {
-	LastHash string `json:"newestHash"`
+	LastHash string `json:"lastHash"`
 	Height   int    `json:"height"`
 }
 
@@ -31,10 +31,28 @@ func (b *blockchain) AddBlock(data string) {
 	b.mine(block)
 }
 
-func (b *blockchain) ListBlocks() {
+func (b *blockchain) Blocks() []*Block {
+	var blocks []*Block
+	currentHash := b.LastHash
+
+	for {
+		block, _ := FindBlock(currentHash)
+		blocks = append(blocks, block)
+		currentHash = block.PreviousHash
+
+		if block.PreviousHash == "" {
+			break
+		}
+	}
+
+	return blocks
 }
 
-func (b *blockchain) AllBlocks() {
+func (b *blockchain) ListBlocks() {
+	blocks := b.Blocks()
+	for _, block := range blocks {
+		fmt.Print(block)
+	}
 }
 
 func initializeBlockchain() {
@@ -67,7 +85,7 @@ func (b blockchain) String() string {
 	s := fmt.Sprintln("=== Blockchain ===") +
 		fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +
 		fmt.Sprintln("Last Hash:", b.LastHash) +
-		"---"
+		fmt.Sprintln("---")
 
 	return s
 }

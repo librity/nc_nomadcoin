@@ -14,11 +14,11 @@ type newBlockBody struct {
 	Data string
 }
 
-// func blocksIndex(rw http.ResponseWriter, r *http.Request) {
-// 	blocks := blockchain.Get().AllBlocks()
+func blocksIndex(rw http.ResponseWriter, r *http.Request) {
+	blocks := blockchain.Get().Blocks()
 
-// 	json.NewEncoder(rw).Encode(blocks)
-// }
+	json.NewEncoder(rw).Encode(blocks)
+}
 
 func createBlock(rw http.ResponseWriter, r *http.Request) {
 	var newBlock newBlockBody
