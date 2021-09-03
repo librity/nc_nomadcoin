@@ -13,6 +13,10 @@ type blockchain struct {
 	Height   int    `json:"height"`
 }
 
+const (
+	difficulty int = 2
+)
+
 var (
 	b    *blockchain
 	once sync.Once
@@ -40,7 +44,7 @@ func (b *blockchain) Blocks() []*Block {
 		blocks = append(blocks, block)
 		currentHash = block.PreviousHash
 
-		if block.PreviousHash == "" {
+		if currentHash == "" {
 			break
 		}
 	}
@@ -49,10 +53,14 @@ func (b *blockchain) Blocks() []*Block {
 }
 
 func (b *blockchain) ListBlocks() {
+	fmt.Println("=== Blocks ===")
+
 	blocks := b.Blocks()
 	for _, block := range blocks {
 		fmt.Print(block)
 	}
+
+	fmt.Println("")
 }
 
 func initializeBlockchain() {
@@ -85,7 +93,7 @@ func (b blockchain) String() string {
 	s := fmt.Sprintln("=== Blockchain ===") +
 		fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +
 		fmt.Sprintln("Last Hash:", b.LastHash) +
-		fmt.Sprintln("---")
+		fmt.Sprintln("")
 
 	return s
 }

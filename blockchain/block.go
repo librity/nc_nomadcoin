@@ -17,6 +17,8 @@ type Block struct {
 	Data         string `json:"data"`
 	PreviousHash string `json:"previousHash,omitempty"`
 	Hash         string `json:"hash"`
+	Difficulty   int    `json:"difficulty"`
+	NOnce        int    `json:"nOnce"`
 }
 
 func FindBlock(hash string) (*Block, error) {
@@ -70,23 +72,15 @@ func blockFromBytes(encoded []byte) *Block {
 
 // Stringer interface: https://pkg.go.dev/fmt#Stringer
 func (b Block) String() string {
-	s := fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +
+	s := fmt.Sprintln("Height:", b.Height) +
 		fmt.Sprintln("Data:", b.Data)
 	if b.PreviousHash != "" {
 		s = s + fmt.Sprintln("Previous hash:", b.PreviousHash)
 	}
 	s = s + fmt.Sprintln("Hash:", b.Hash) +
+		fmt.Sprintln("Difficulty:", b.Difficulty) +
+		fmt.Sprintln("NOnce:", b.NOnce) +
 		fmt.Sprintln("---")
 
 	return s
-}
-
-func (b *Block) listBlock() {
-	fmt.Printf("Height: %d\n", b.Height)
-	fmt.Printf("Data: %s\n", b.Data)
-	if b.PreviousHash != "" {
-		fmt.Printf("Previous hash: %s\n", b.PreviousHash)
-	}
-	fmt.Printf("Hash: %s\n", b.Hash)
-	fmt.Println("---")
 }
