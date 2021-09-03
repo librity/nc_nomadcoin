@@ -27,7 +27,7 @@ A fully-featured blockchain and cryptocurrency using the Go programming language
 - [x] HTML Explorer
 - [x] REST API
 - [x] CLI
-- [ ] Database Backend
+- [x] Database Backend
 - [ ] Mining
 - [ ] Transactions
 - [ ] Wallets
@@ -158,6 +158,8 @@ avalanche obvious changes to the next blocks' hashes.
 - https://golang.org/src/strconv/atoi.go?h=Atoi
 - https://gist.github.com/miguelmota/2a0c0e96c22bccc8740819d5d64ff8d0
 - https://stackoverflow.com/questions/14121422/de-and-encode-interface-with-gob
+- https://golangdocs.com/generate-random-string-in-golang
+- https://stackoverflow.com/questions/22892120/how-to-generate-a-random-string-of-a-fixed-length-in-go
 
 ### Go templates
 
