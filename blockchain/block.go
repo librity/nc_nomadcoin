@@ -1,8 +1,6 @@
 package blockchain
 
 import (
-	"bytes"
-	"encoding/gob"
 	"errors"
 	"fmt"
 
@@ -23,7 +21,6 @@ type Block struct {
 
 func FindBlock(hash string) (*Block, error) {
 	rawBlock := db.LoadBlock(hash)
-	fmt.Println(rawBlock)
 	if rawBlock == nil {
 		return nil, ErrBlockNotFound
 	}
@@ -64,6 +61,13 @@ func (b *Block) generateHash() string {
 	return utils.HexHash(signature)
 }
 
+func blockFromBytes(encoded []byte) *Block {
+	block := &Block{}
+	utils.FromBytes(block, encoded)
+
+	return block
+}
+
 // Stringer interface: https://pkg.go.dev/fmt#Stringer
 func (b Block) String() string {
 	s := fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +
@@ -85,14 +89,4 @@ func (b *Block) listBlock() {
 	}
 	fmt.Printf("Hash: %s\n", b.Hash)
 	fmt.Println("---")
-}
-
-func blockFromBytes(encoded []byte) *Block {
-	block := &Block{}
-	buffer := bytes.NewReader(encoded)
-	decoder := gob.NewDecoder(buffer)
-	err := decoder.Decode(block)
-	utils.HandleError(err)
-
-	return block
 }

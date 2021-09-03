@@ -32,8 +32,8 @@ func createBlock(rw http.ResponseWriter, r *http.Request) {
 func block(rw http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	hash := params["hash"]
-
 	encoder := json.NewEncoder(rw)
+
 	block, err := blockchain.FindBlock(hash)
 	if err == blockchain.ErrBlockNotFound {
 		rw.WriteHeader(http.StatusNotFound)

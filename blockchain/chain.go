@@ -1,8 +1,7 @@
 package blockchain
 
 import (
-	"bytes"
-	"encoding/gob"
+	"fmt"
 	"sync"
 
 	"github.com/librity/nc_nomadcoin/db"
@@ -61,12 +60,14 @@ func (b *blockchain) save() {
 }
 
 func (b *blockchain) restore(encoded []byte) {
-	// Either one works:
-	// buffer := bytes.NewBuffer(encoded)
-	buffer := bytes.NewReader(encoded)
-	// I prefer reader because it's more restrictive and specific.
+	utils.FromBytes(b, encoded)
+}
 
-	decoder := gob.NewDecoder(buffer)
-	err := decoder.Decode(b)
-	utils.HandleError(err)
+func (b blockchain) String() string {
+	s := fmt.Sprintln("=== Blockchain ===") +
+		fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +
+		fmt.Sprintln("Last Hash:", b.LastHash) +
+		"---"
+
+	return s
 }
