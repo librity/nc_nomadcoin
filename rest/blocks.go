@@ -2,8 +2,10 @@ package rest
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/librity/nc_nomadcoin/blockchain"
 	"github.com/librity/nc_nomadcoin/utils"
 )
@@ -27,19 +29,18 @@ func createBlock(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusCreated)
 }
 
-// func block(rw http.ResponseWriter, r *http.Request) {
-// 	params := mux.Vars(r)
-// 	height, err := strconv.Atoi(params["height"])
-// 	utils.HandleError(err)
+func block(rw http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	hash := params["hash"]
 
-// 	encoder := json.NewEncoder(rw)
-// 	block, err := blockchain.Get().GetBlock(height)
-// 	if err == blockchain.ErrNotFound {
-// 		rw.WriteHeader(http.StatusNotFound)
-// 		message := fmt.Sprint(err)
-// 		encoder.Encode(errorResponse{message})
-// 		return
-// 	}
+	encoder := json.NewEncoder(rw)
+	block, err := blockchain.FindBlock(hash)
+	if err == blockchain.ErrBlockNotFound {
+		rw.WriteHeader(http.StatusNotFound)
+		message := fmt.Sprint(err)
+		encoder.Encode(errorResponse{message})
+		return
+	}
 
-// 	encoder.Encode(block)
-// }
+	encoder.Encode(block)
+}

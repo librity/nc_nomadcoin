@@ -1,10 +1,17 @@
 package blockchain
 
 import (
+	"bytes"
+	"encoding/gob"
+	"errors"
 	"fmt"
 
 	"github.com/librity/nc_nomadcoin/db"
 	"github.com/librity/nc_nomadcoin/utils"
+)
+
+var (
+	ErrBlockNotFound = errors.New("block not found")
 )
 
 type Block struct {
@@ -12,6 +19,17 @@ type Block struct {
 	Data         string `json:"data"`
 	PreviousHash string `json:"previousHash,omitempty"`
 	Hash         string `json:"hash"`
+}
+
+func FindBlock(hash string) (*Block, error) {
+	rawBlock := db.LoadBlock(hash)
+	fmt.Println(rawBlock)
+	if rawBlock == nil {
+		return nil, ErrBlockNotFound
+	}
+
+	block := blockFromBytes(rawBlock)
+	return block, nil
 }
 
 func createBlock(data string, prevHash string, height int) *Block {
@@ -67,4 +85,14 @@ func (b *Block) listBlock() {
 	}
 	fmt.Printf("Hash: %s\n", b.Hash)
 	fmt.Println("---")
+}
+
+func blockFromBytes(encoded []byte) *Block {
+	block := &Block{}
+	buffer := bytes.NewReader(encoded)
+	decoder := gob.NewDecoder(buffer)
+	err := decoder.Decode(block)
+	utils.HandleError(err)
+
+	return block
 }

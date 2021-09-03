@@ -6,8 +6,7 @@ import (
 )
 
 func SaveCheckpoint(chain []byte) {
-	database := Get()
-	err := database.Update(func(transaction *bolt.Tx) error {
+	err := getDB().Update(func(transaction *bolt.Tx) error {
 		bucket := transaction.Bucket([]byte(chainBucket))
 		err := bucket.Put([]byte(chainCheckpoint), chain)
 
@@ -20,8 +19,7 @@ func SaveCheckpoint(chain []byte) {
 func LoadCheckpoint() []byte {
 	var chain []byte
 
-	database := Get()
-	err := database.View(func(transaction *bolt.Tx) error {
+	err := getDB().View(func(transaction *bolt.Tx) error {
 		bucket := transaction.Bucket([]byte(chainBucket))
 		chain = bucket.Get([]byte(chainCheckpoint))
 		return nil

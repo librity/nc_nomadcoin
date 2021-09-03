@@ -21,7 +21,7 @@ var (
 	once sync.Once
 )
 
-func Get() *bolt.DB {
+func getDB() *bolt.DB {
 	if db == nil {
 		once.Do(initializeDB)
 	}

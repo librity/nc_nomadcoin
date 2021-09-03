@@ -3,15 +3,10 @@ package blockchain
 import (
 	"bytes"
 	"encoding/gob"
-	"errors"
 	"sync"
 
 	"github.com/librity/nc_nomadcoin/db"
 	"github.com/librity/nc_nomadcoin/utils"
-)
-
-var (
-	ErrNotFound = errors.New("block not found")
 )
 
 type blockchain struct {
@@ -41,10 +36,6 @@ func (b *blockchain) ListBlocks() {
 }
 
 func (b *blockchain) AllBlocks() {
-}
-
-func (b *blockchain) GetBlock(height int) {
-
 }
 
 func initializeBlockchain() {

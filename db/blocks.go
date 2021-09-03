@@ -6,8 +6,7 @@ import (
 )
 
 func SaveBlock(hash string, data []byte) {
-	database := Get()
-	err := database.Update(func(transaction *bolt.Tx) error {
+	err := getDB().Update(func(transaction *bolt.Tx) error {
 		bucket := transaction.Bucket([]byte(blocksBucket))
 		err := bucket.Put([]byte(hash), data)
 
@@ -15,4 +14,17 @@ func SaveBlock(hash string, data []byte) {
 	})
 
 	utils.HandleError(err)
+}
+
+func LoadBlock(hash string) []byte {
+	var rawBlock []byte
+
+	err := getDB().View(func(transaction *bolt.Tx) error {
+		bucket := transaction.Bucket([]byte(blocksBucket))
+		rawBlock = bucket.Get([]byte(hash))
+		return nil
+	})
+	utils.HandleError(err)
+
+	return rawBlock
 }
