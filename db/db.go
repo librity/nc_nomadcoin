@@ -8,8 +8,11 @@ import (
 )
 
 const (
-	dbName       = "blockchain.db"
-	chainBucket  = "chain"
+	dbName = "blockchain.db"
+
+	chainBucket     = "chain"
+	chainCheckpoint = "checkpoint"
+
 	blocksBucket = "blocks"
 )
 

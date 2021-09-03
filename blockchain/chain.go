@@ -1,6 +1,8 @@
 package blockchain
 
 import (
+	"bytes"
+	"encoding/gob"
 	"errors"
 	"sync"
 
@@ -47,7 +49,14 @@ func (b *blockchain) GetBlock(height int) {
 
 func initializeBlockchain() {
 	b = &blockchain{"", 0}
-	b.AddBlock("The Times 03/Jan/2009 Chancellor on brink of second bailout for banks")
+
+	checkpoint := db.LoadCheckpoint()
+	if checkpoint == nil {
+		b.AddBlock("The Times 03/Jan/2009 Chancellor on brink of second bailout for banks")
+		return
+	}
+
+	b.restore(checkpoint)
 }
 
 func (b *blockchain) mine(block *Block) {
@@ -57,5 +66,16 @@ func (b *blockchain) mine(block *Block) {
 }
 
 func (b *blockchain) save() {
-	db.SaveChain(utils.ToBytes(b))
+	db.SaveCheckpoint(utils.ToBytes(b))
+}
+
+func (b *blockchain) restore(encoded []byte) {
+	// Either one works:
+	// buffer := bytes.NewBuffer(encoded)
+	buffer := bytes.NewReader(encoded)
+	// I prefer reader because it's more restrictive and specific.
+
+	decoder := gob.NewDecoder(buffer)
+	err := decoder.Decode(b)
+	utils.HandleError(err)
 }
