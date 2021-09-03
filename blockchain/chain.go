@@ -57,7 +57,7 @@ func (b *blockchain) ListBlocks() {
 
 	blocks := b.Blocks()
 	for _, block := range blocks {
-		fmt.Print(block)
+		block.inspect()
 	}
 
 	fmt.Println("")
@@ -89,6 +89,7 @@ func (b *blockchain) restore(encoded []byte) {
 	utils.FromBytes(b, encoded)
 }
 
+// Stringer interface: https://pkg.go.dev/fmt#Stringer
 func (b blockchain) String() string {
 	s := fmt.Sprintln("=== Blockchain ===") +
 		fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +

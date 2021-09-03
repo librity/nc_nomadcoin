@@ -3,6 +3,7 @@ package blockchain
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/librity/nc_nomadcoin/db"
 	"github.com/librity/nc_nomadcoin/utils"
@@ -33,6 +34,7 @@ func FindBlock(hash string) (*Block, error) {
 
 func createBlock(data string, prevHash string, height int) *Block {
 	block := newBlock(data, prevHash, height)
+	block.mine()
 	block.save()
 
 	return block
@@ -43,8 +45,9 @@ func newBlock(data string, prevHash string, height int) *Block {
 		Height:       height,
 		Data:         data,
 		PreviousHash: prevHash,
-		Hash:         ""}
-	block.setHash()
+		Hash:         "",
+		Difficulty:   difficulty,
+		NOnce:        0}
 
 	return &block
 }
@@ -53,14 +56,20 @@ func (b *Block) save() {
 	db.SaveBlock(b.Hash, utils.ToBytes(b))
 }
 
-func (b *Block) setHash() {
-	b.Hash = b.generateHash()
-}
+func (b *Block) mine() {
+	target := strings.Repeat("0", b.Difficulty)
 
-func (b *Block) generateHash() string {
-	signature := b.Data + b.PreviousHash + fmt.Sprint(b.Height)
+	for {
+		attempt := fmt.Sprint(b)
+		attempt = utils.HexHash(attempt)
 
-	return utils.HexHash(signature)
+		if strings.HasPrefix(attempt, target) {
+			b.Hash = attempt
+			break
+		}
+
+		b.NOnce++
+	}
 }
 
 func blockFromBytes(encoded []byte) *Block {
@@ -70,17 +79,14 @@ func blockFromBytes(encoded []byte) *Block {
 	return block
 }
 
-// Stringer interface: https://pkg.go.dev/fmt#Stringer
-func (b Block) String() string {
-	s := fmt.Sprintln("Height:", b.Height) +
-		fmt.Sprintln("Data:", b.Data)
+func (b *Block) inspect() {
+	fmt.Println("Height:", b.Height)
+	fmt.Println("Data:", b.Data)
 	if b.PreviousHash != "" {
-		s = s + fmt.Sprintln("Previous hash:", b.PreviousHash)
+		fmt.Println("Previous hash:", b.PreviousHash)
 	}
-	s = s + fmt.Sprintln("Hash:", b.Hash) +
-		fmt.Sprintln("Difficulty:", b.Difficulty) +
-		fmt.Sprintln("NOnce:", b.NOnce) +
-		fmt.Sprintln("---")
-
-	return s
+	fmt.Println("Hash:", b.Hash)
+	fmt.Println("Difficulty:", b.Difficulty)
+	fmt.Println("NOnce:", b.NOnce)
+	fmt.Println("---")
 }
