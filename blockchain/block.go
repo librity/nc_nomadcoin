@@ -20,6 +20,7 @@ type Block struct {
 	Hash         string `json:"hash"`
 	Difficulty   int    `json:"difficulty"`
 	NOnce        int    `json:"nOnce"`
+	Timestamp    int    `json:"timestamp"`
 }
 
 func FindBlock(hash string) (*Block, error) {
@@ -46,7 +47,7 @@ func newBlock(data string, prevHash string, height int) *Block {
 		Data:         data,
 		PreviousHash: prevHash,
 		Hash:         "",
-		Difficulty:   difficulty,
+		Difficulty:   Get().difficulty(),
 		NOnce:        0}
 
 	return &block
@@ -60,8 +61,8 @@ func (b *Block) mine() {
 	target := strings.Repeat("0", b.Difficulty)
 
 	for {
-		attempt := fmt.Sprint(b)
-		attempt = utils.HexHash(attempt)
+		b.Timestamp = utils.Now()
+		attempt := utils.HexHash(b)
 
 		if strings.HasPrefix(attempt, target) {
 			b.Hash = attempt
@@ -88,5 +89,6 @@ func (b *Block) inspect() {
 	fmt.Println("Hash:", b.Hash)
 	fmt.Println("Difficulty:", b.Difficulty)
 	fmt.Println("NOnce:", b.NOnce)
+	fmt.Println("Timestamp:", b.Timestamp)
 	fmt.Println("---")
 }

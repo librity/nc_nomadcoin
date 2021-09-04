@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"time"
 )
 
 func HandleError(err error) {
@@ -29,7 +30,13 @@ func Reverse(slice interface{}) {
 	}
 }
 
-func HexHash(data string) string {
+func HexHash(data interface{}) string {
+	defaultFormat := fmt.Sprintf("%v", data)
+
+	return HexHashStr(defaultFormat)
+}
+
+func HexHashStr(data string) string {
 	dataBytes := []byte(data)
 	rawHash := sha256.Sum256(dataBytes)
 	hexHash := fmt.Sprintf("%x", rawHash)
@@ -52,4 +59,8 @@ func FromBytes(target interface{}, encoded []byte) {
 	decoder := gob.NewDecoder(buffer)
 	err := decoder.Decode(target)
 	HandleError(err)
+}
+
+func Now() int {
+	return int(time.Now().Unix())
 }

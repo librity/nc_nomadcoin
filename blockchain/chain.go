@@ -9,18 +9,25 @@ import (
 )
 
 type blockchain struct {
-	LastHash string `json:"lastHash"`
-	Height   int    `json:"height"`
+	LastHash         string `json:"lastHash"`
+	Height           int    `json:"height"`
+	CurrentDificulty int    `json:"currentDifficulty"`
 }
-
-const (
-	difficulty int = 2
-)
 
 var (
 	b    *blockchain
 	once sync.Once
 )
+
+// Stringer interface: https://pkg.go.dev/fmt#Stringer
+func (b blockchain) String() string {
+	s := fmt.Sprintln("=== Blockchain ===") +
+		fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +
+		fmt.Sprintln("Last Hash:", b.LastHash) +
+		fmt.Sprintln("")
+
+	return s
+}
 
 func Get() *blockchain {
 	if b == nil {
@@ -32,39 +39,11 @@ func Get() *blockchain {
 
 func (b *blockchain) AddBlock(data string) {
 	block := createBlock(data, b.LastHash, b.Height+1)
-	b.mine(block)
-}
-
-func (b *blockchain) Blocks() []*Block {
-	var blocks []*Block
-	currentHash := b.LastHash
-
-	for {
-		block, _ := FindBlock(currentHash)
-		blocks = append(blocks, block)
-		currentHash = block.PreviousHash
-
-		if currentHash == "" {
-			break
-		}
-	}
-
-	return blocks
-}
-
-func (b *blockchain) ListBlocks() {
-	fmt.Println("=== Blocks ===")
-
-	blocks := b.Blocks()
-	for _, block := range blocks {
-		block.inspect()
-	}
-
-	fmt.Println("")
+	b.reference(block)
 }
 
 func initializeBlockchain() {
-	b = &blockchain{"", 0}
+	b = &blockchain{Height: 0}
 
 	checkpoint := db.LoadCheckpoint()
 	if checkpoint == nil {
@@ -75,9 +54,10 @@ func initializeBlockchain() {
 	b.restore(checkpoint)
 }
 
-func (b *blockchain) mine(block *Block) {
+func (b *blockchain) reference(block *Block) {
 	b.LastHash = block.Hash
 	b.Height = block.Height
+	b.CurrentDificulty = block.Difficulty
 	b.save()
 }
 
@@ -87,14 +67,4 @@ func (b *blockchain) save() {
 
 func (b *blockchain) restore(encoded []byte) {
 	utils.FromBytes(b, encoded)
-}
-
-// Stringer interface: https://pkg.go.dev/fmt#Stringer
-func (b blockchain) String() string {
-	s := fmt.Sprintln("=== Blockchain ===") +
-		fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +
-		fmt.Sprintln("Last Hash:", b.LastHash) +
-		fmt.Sprintln("")
-
-	return s
 }
