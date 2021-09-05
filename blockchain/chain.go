@@ -37,8 +37,8 @@ func Get() *blockchain {
 	return b
 }
 
-func (b *blockchain) AddBlock(data string) {
-	block := createBlock(data, b.LastHash, b.Height+1)
+func (b *blockchain) AddBlock() {
+	block := createBlock(b.LastHash, b.Height+1)
 	b.reference(block)
 }
 
@@ -47,7 +47,7 @@ func initializeBlockchain() {
 
 	checkpoint := db.LoadCheckpoint()
 	if checkpoint == nil {
-		b.AddBlock("The Times 03/Jan/2009 Chancellor on brink of second bailout for banks")
+		b.AddBlock()
 		return
 	}
 

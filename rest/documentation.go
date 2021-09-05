@@ -2,10 +2,7 @@ package rest
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
-
-	"github.com/librity/nc_nomadcoin/utils"
 )
 
 type url string
@@ -58,9 +55,11 @@ func documentation(rw http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(rw).Encode(data)
 }
 
+/*
 func deprecated(rw http.ResponseWriter, r *http.Request) {
 	bytes, err := json.Marshal(data)
 	utils.HandleError(err)
 
 	fmt.Fprintf(rw, "%s", bytes)
 }
+*/

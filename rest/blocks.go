@@ -7,12 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/librity/nc_nomadcoin/blockchain"
-	"github.com/librity/nc_nomadcoin/utils"
 )
-
-type newBlockBody struct {
-	Data string
-}
 
 func blocksIndex(rw http.ResponseWriter, r *http.Request) {
 	blocks := blockchain.Get().Blocks()
@@ -21,11 +16,7 @@ func blocksIndex(rw http.ResponseWriter, r *http.Request) {
 }
 
 func createBlock(rw http.ResponseWriter, r *http.Request) {
-	var newBlock newBlockBody
-	err := json.NewDecoder(r.Body).Decode(&newBlock)
-	utils.HandleError(err)
-
-	blockchain.Get().AddBlock(newBlock.Data)
+	blockchain.Get().AddBlock()
 	rw.WriteHeader(http.StatusCreated)
 }
 

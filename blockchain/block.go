@@ -15,12 +15,12 @@ var (
 
 type Block struct {
 	Height       int    `json:"height"`
-	Data         string `json:"data"`
 	PreviousHash string `json:"previousHash,omitempty"`
 	Hash         string `json:"hash"`
 	Difficulty   int    `json:"difficulty"`
 	NOnce        int    `json:"nOnce"`
 	Timestamp    int    `json:"timestamp"`
+	Transactions []*Tx  `json:"transactions"`
 }
 
 func FindBlock(hash string) (*Block, error) {
@@ -33,22 +33,23 @@ func FindBlock(hash string) (*Block, error) {
 	return block, nil
 }
 
-func createBlock(data string, prevHash string, height int) *Block {
-	block := newBlock(data, prevHash, height)
+func createBlock(prevHash string, height int) *Block {
+	block := newBlock(prevHash, height)
 	block.mine()
 	block.save()
 
 	return block
 }
 
-func newBlock(data string, prevHash string, height int) *Block {
+func newBlock(prevHash string, height int) *Block {
 	block := Block{
 		Height:       height,
-		Data:         data,
 		PreviousHash: prevHash,
 		Hash:         "",
 		Difficulty:   Get().difficulty(),
-		NOnce:        0}
+		NOnce:        0,
+		Transactions: []*Tx{makeCoinbaseTx("lior")},
+	}
 
 	return &block
 }
@@ -82,7 +83,6 @@ func blockFromBytes(encoded []byte) *Block {
 
 func (b *Block) inspect() {
 	fmt.Println("Height:", b.Height)
-	fmt.Println("Data:", b.Data)
 	if b.PreviousHash != "" {
 		fmt.Println("Previous hash:", b.PreviousHash)
 	}
@@ -90,5 +90,6 @@ func (b *Block) inspect() {
 	fmt.Println("Difficulty:", b.Difficulty)
 	fmt.Println("NOnce:", b.NOnce)
 	fmt.Println("Timestamp:", b.Timestamp)
+	fmt.Println("Transactions:", b.Transactions)
 	fmt.Println("---")
 }

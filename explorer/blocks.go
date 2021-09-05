@@ -28,9 +28,7 @@ func blocksIndex(rw http.ResponseWriter, r *http.Request) {
 }
 
 func createBlock(rw http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	blockData := r.Form.Get("blockData")
-	blockchain.Get().AddBlock(blockData)
+	blockchain.Get().AddBlock()
 
 	http.Redirect(rw, r, "/blocks", http.StatusFound)
 }
