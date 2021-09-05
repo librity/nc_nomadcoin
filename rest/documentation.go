@@ -31,6 +31,12 @@ var data = []endpointDescription{
 	},
 
 	{
+		URL:     url("/blokchain/status"),
+		Method:  "GET",
+		Details: "See the status of the blockchain.",
+	},
+
+	{
 		URL:     url("/blocks"),
 		Method:  "GET",
 		Details: "Read all blocks.",

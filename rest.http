@@ -1,14 +1,20 @@
+### Documentation
+
 http://localhost:5000
 
-###
+### Blockchain status
+
+http://localhost:5000/blockchain/status
+
+### Blocks index
 
 http://localhost:5000/blocks
 
-###
+### Block details
 
 http://localhost:5000/blocks/d02cbd2d697ec0e804b4527d36162c47643c9b890e4450da8b728bf8c139eaf3
 
-###
+### Block creation
 
 POST http://localhost:5000/blocks
 
@@ -16,7 +22,7 @@ POST http://localhost:5000/blocks
     "data": "19 BTC from aefc2b9a41b4bda580a01d6ab5e580e to dc5ceb3f31b53a851d3357ed52b336b14b."
 }
 
-###
+### Block creation error
 
 POST http://localhost:5000/blocks
 

@@ -37,8 +37,8 @@ func (b *blockchain) recalculateDifficulty() int {
 func (b *blockchain) timeSinceLastRecalc() int {
 	blocks := b.LastNBlocks(blocksPerRecalc)
 	lastBlock := blocks[0]
-	lastRecalculatedBlock := blocks[blocksPerRecalc-1]
-	actualTime := lastBlock.Timestamp - lastRecalculatedBlock.Timestamp
+	lastRecalcBlock := blocks[blocksPerRecalc-1]
+	actualTime := lastBlock.Timestamp - lastRecalcBlock.Timestamp
 	actualTime = actualTime / 60
 
 	return actualTime

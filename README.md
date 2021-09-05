@@ -28,7 +28,7 @@ A fully-featured blockchain and cryptocurrency using the Go programming language
 - [x] REST API
 - [x] CLI
 - [x] Database Backend
-- [ ] Mining
+- [x] Mining
 - [ ] Transactions
 - [ ] Wallets
 - [ ] P2P (Websockets)
