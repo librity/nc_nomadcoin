@@ -90,6 +90,45 @@ newBlockHash := hashFunction(data + previousBlockHash)
 `data` could be anything. Any alteration to a previous block's data will
 avalanche obvious changes to the next blocks' hashes.
 
+### Accounting & Transactions
+
+We use the UTXO (Unspent Transaction Output) accounting model,
+the same one used in BitCoin and Cardano.
+
+Transactions have multiple inputs and outputs.
+Input is the money you have before the transaction.
+Output is the money everyone has by the end of the transaction.
+
+```go
+type Transaction struct {
+	Input  []string
+	Output []string
+}
+
+txs := []Transaction{}
+txs = append(txs, Transaction{
+	Input:  []string{"$10(lior)"},
+	Output: []string{"$1(drugDealer)", "$9(lior)"},
+})
+txs = append(txs, Transaction{
+	Input:  []string{"$9(lior)"},
+	Output: []string{"$2(landLord)", "$7(lior)"},
+})
+txs = append(txs, Transaction{
+	Input:  []string{"$7(lior)"},
+	Output: []string{"$7(waiFu)"},
+})
+```
+
+Inputs are created by a special type of transaction: The Coinbase Transaction.
+
+```go
+coinbaseTx = Transaction{
+	Input:  []string{"$10(blockchain)"},
+	Output: []string{"$10(miner)"},
+}
+```
+
 ## Libs <a name = "libs"></a>
 
 - https://pkg.go.dev/fmt#Printf
@@ -174,6 +213,13 @@ avalanche obvious changes to the next blocks' hashes.
 - https://en.wikipedia.org/wiki/Cryptographic_hash_function
 - https://en.wikipedia.org/wiki/SHA-2
 - https://en.wikipedia.org/wiki/Public-key_cryptography
+
+### Accounting models
+
+- https://academy.horizen.io/technology/advanced/the-utxo-model/
+- https://phemex.com/academy/what-are-utxo-unspent-transaction-output
+- https://komodoplatform.com/en/academy/whats-utxo/
+- https://iohk.io/en/blog/posts/2021/03/12/cardanos-extended-utxo-accounting-model-part-2/
 
 ### Favicons
 
