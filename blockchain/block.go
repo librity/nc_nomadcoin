@@ -36,6 +36,7 @@ func FindBlock(hash string) (*Block, error) {
 func createBlock(prevHash string, height int) *Block {
 	block := newBlock(prevHash, height)
 	block.mine()
+	block.loadTransactions()
 	block.save()
 
 	return block
@@ -48,14 +49,9 @@ func newBlock(prevHash string, height int) *Block {
 		Hash:         "",
 		Difficulty:   Get().difficulty(),
 		NOnce:        0,
-		Transactions: []*Tx{makeCoinbaseTx("lior")},
 	}
 
 	return &block
-}
-
-func (b *Block) save() {
-	db.SaveBlock(b.Hash, utils.ToBytes(b))
 }
 
 func (b *Block) mine() {
@@ -72,6 +68,14 @@ func (b *Block) mine() {
 
 		b.NOnce++
 	}
+}
+
+func (b *Block) loadTransactions() {
+	b.Transactions = Mempool.popAll()
+}
+
+func (b *Block) save() {
+	db.SaveBlock(b.Hash, utils.ToBytes(b))
 }
 
 func blockFromBytes(encoded []byte) *Block {

@@ -4,14 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
 var (
-	port    string      = ":5000"
-	baseURL string      = "http://localhost" + port
-	router  *mux.Router = mux.NewRouter()
+	port    string = ":5000"
+	baseURL string = "http://localhost" + port
 )
 
 func Start() {
@@ -24,7 +21,7 @@ func StartCustom(portNum int) {
 }
 
 func loadAndListen() {
-	loadHandlers()
+	loadRoutes()
 	loadMiddlewares()
 	listenOrDie()
 }
@@ -32,26 +29,6 @@ func loadAndListen() {
 func setEnvVars(portNum int) {
 	port = fmt.Sprintf(":%d", portNum)
 	baseURL = "http://localhost" + port
-}
-
-func loadHandlers() {
-	router.HandleFunc("/", documentation).Methods("GET")
-
-	router.HandleFunc("/blokchain", blokchain).Methods("GET")
-
-	router.HandleFunc("/blocks", blocksIndex).Methods("GET")
-	router.HandleFunc("/blocks", createBlock).Methods("POST")
-	router.HandleFunc("/blocks/{hash:[0-9a-f]+}", block).Methods("GET")
-
-	router.HandleFunc("/wallet/{address:[0-9a-z]+}", wallet).Methods("GET")
-
-	router.HandleFunc("/mempool", mempool).Methods("GET")
-
-	router.HandleFunc("/transactions", createTransaction).Methods("POST")
-}
-
-func loadMiddlewares() {
-	router.Use(jsonContentTypeMiddleware)
 }
 
 func listenOrDie() {

@@ -185,6 +185,7 @@ to the blockchain by miners, becoming confirmed.
 - https://github.com/evnix/boltdbweb
 - https://github.com/br0xen/boltbrowser
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+- https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
 ### Go
 
