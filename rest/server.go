@@ -42,6 +42,8 @@ func loadHandlers() {
 	router.HandleFunc("/blocks", blocksIndex).Methods("GET")
 	router.HandleFunc("/blocks", createBlock).Methods("POST")
 	router.HandleFunc("/blocks/{hash:[0-9a-f]+}", block).Methods("GET")
+
+	router.HandleFunc("/wallet/{address:[0-9a-z]+}", wallet).Methods("GET")
 }
 
 func loadMiddlewares() {

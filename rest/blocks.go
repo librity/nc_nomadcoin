@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	"github.com/librity/nc_nomadcoin/blockchain"
 )
 
@@ -21,8 +20,7 @@ func createBlock(rw http.ResponseWriter, r *http.Request) {
 }
 
 func block(rw http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	hash := params["hash"]
+	hash := getParam(r, "hash")
 	encoder := json.NewEncoder(rw)
 
 	block, err := blockchain.FindBlock(hash)

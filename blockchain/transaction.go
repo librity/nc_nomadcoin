@@ -25,6 +25,19 @@ type TxOutput struct {
 	Amount int    `json:"amount"`
 }
 
+func (b *blockchain) TxOutputsFrom(address string) []*TxOutput {
+	var outputsFrom []*TxOutput
+	txOutputs := b.txOutputs()
+
+	for _, output := range txOutputs {
+		if output.Owner == address {
+			outputsFrom = append(outputsFrom, output)
+		}
+	}
+
+	return outputsFrom
+}
+
 func makeCoinbaseTx(address string) *Tx {
 	txInputs := []*TxInput{
 		{coinbaseCode, minerReward},
@@ -46,4 +59,17 @@ func makeCoinbaseTx(address string) *Tx {
 
 func (t *Tx) setId() {
 	t.Id = utils.HexHash(t)
+}
+
+func (b *blockchain) txOutputs() []*TxOutput {
+	var outputs []*TxOutput
+	blocks := b.Blocks()
+
+	for _, block := range blocks {
+		for _, tx := range block.Transactions {
+			outputs = append(outputs, tx.TxOutputs...)
+		}
+	}
+
+	return outputs
 }

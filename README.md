@@ -74,6 +74,8 @@ $ go run main.go both -ePort=PORT -rPort=PORT   # Start both REST API and HTML E
 
 ### One-way hash functions
 
+Deterministic, easy to compute, hard to invert:
+
 ```go
 hashFunction("sexy") => "dsdj21321wq0wjdw0jw9djcosaniqij0"
 hashFunction("sexy") => "dsdj21321wq0wjdw0jw9djcosaniqij0"
@@ -84,7 +86,7 @@ hashFunction("ri3j9rj2302j0ginvin0n00ivwn0inv0u") => UNDEFINED
 ### Blockchain
 
 ```go
-newBlockHash := hashFunction(data + previousBlockHash)
+newBlockHash := hashFunction(data + previousBlockHash + timestamp + ...)
 ```
 
 `data` could be anything. Any alteration to a previous block's data will
@@ -120,7 +122,7 @@ txs = append(txs, Transaction{
 })
 ```
 
-Inputs are created by a special type of transaction: The Coinbase Transaction.
+Inputs are created by a special type of transaction: the coinbase transaction.
 
 ```go
 coinbaseTx = Transaction{

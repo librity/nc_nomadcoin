@@ -49,6 +49,12 @@ var data = []endpointDescription{
 		Method:  "GET",
 		Details: "Read a block.",
 	},
+
+	{
+		URL:     url("/wallet/{address}"),
+		Method:  "GET",
+		Details: "Read the balance and transaction outputs of a wallet.",
+	},
 }
 
 func documentation(rw http.ResponseWriter, r *http.Request) {
