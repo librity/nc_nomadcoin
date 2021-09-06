@@ -46,6 +46,8 @@ func loadHandlers() {
 	router.HandleFunc("/wallet/{address:[0-9a-z]+}", wallet).Methods("GET")
 
 	router.HandleFunc("/mempool", mempool).Methods("GET")
+
+	router.HandleFunc("/transactions", createTransaction).Methods("POST")
 }
 
 func loadMiddlewares() {

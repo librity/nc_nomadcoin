@@ -18,18 +18,6 @@ http://localhost:5000/blocks/d02cbd2d697ec0e804b4527d36162c47643c9b890e4450da8b7
 
 POST http://localhost:5000/blocks
 
-{
-    "data": "19 BTC from aefc2b9a41b4bda580a01d6ab5e580e to dc5ceb3f31b53a851d3357ed52b336b14b."
-}
-
-### Block creation error
-
-POST http://localhost:5000/blocks
-
-{
-    "bad": "bad."
-}
-
 ### Wallet balance
 
 http://localhost:5000/wallet/lior
@@ -41,5 +29,14 @@ http://localhost:5000/wallet/lior?details=true
 ### Mempool transactions
 
 http://localhost:5000/mempool
+
+### Transaction creation
+
+POST http://localhost:5000/transactions
+
+{
+	"to": "waiFu",
+	"amount": 51
+}
 
 ###
