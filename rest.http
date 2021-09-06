@@ -30,8 +30,12 @@ POST http://localhost:5000/blocks
     "bad": "bad."
 }
 
-### Wallet balance and outputs
+### Wallet balance
 
 http://localhost:5000/wallet/lior
+
+### Wallet balance and outputs
+
+http://localhost:5000/wallet/lior?details=true
 
 ###

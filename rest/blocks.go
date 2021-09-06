@@ -27,7 +27,7 @@ func block(rw http.ResponseWriter, r *http.Request) {
 	if err == blockchain.ErrBlockNotFound {
 		rw.WriteHeader(http.StatusNotFound)
 		message := fmt.Sprint(err)
-		encoder.Encode(errorResponse{message})
+		encoder.Encode(errResponse{message})
 		return
 	}
 

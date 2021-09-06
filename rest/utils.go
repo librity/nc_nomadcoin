@@ -12,3 +12,9 @@ func getParam(r *http.Request, key string) string {
 
 	return value
 }
+
+func getQuery(r *http.Request, key string) string {
+	queryParam := r.URL.Query().Get(key)
+
+	return queryParam
+}

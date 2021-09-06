@@ -1,5 +1,11 @@
 package blockchain
 
+func (b *blockchain) BalanceOf(address string) int {
+	outputs := b.TxOutputsFrom(address)
+
+	return SumOverBalance(outputs)
+}
+
 func SumOverBalance(outputs []*TxOutput) int {
 	balance := 0
 
@@ -8,10 +14,4 @@ func SumOverBalance(outputs []*TxOutput) int {
 	}
 
 	return balance
-}
-
-func (b *blockchain) BalanceOf(address string) int {
-	outputs := b.TxOutputsFrom(address)
-
-	return SumOverBalance(outputs)
 }
