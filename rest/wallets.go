@@ -10,12 +10,12 @@ import (
 
 type wltResp struct {
 	Address string `json:"address"`
-	Balance int    `json:"balance"`
+	Balance uint   `json:"balance"`
 }
 
 type wltDetailsResp struct {
 	Address   string                 `json:"address"`
-	Balance   int                    `json:"balance"`
+	Balance   uint                   `json:"balance"`
 	TxOutputs []*blockchain.TxOutput `json:"transactionOuptuts"`
 }
 

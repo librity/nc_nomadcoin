@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"log"
 	"reflect"
-	"time"
 )
 
 func HandleError(err error) {
@@ -59,8 +58,4 @@ func FromBytes(target interface{}, encoded []byte) {
 	decoder := gob.NewDecoder(buffer)
 	err := decoder.Decode(target)
 	HandleError(err)
-}
-
-func Now() int {
-	return int(time.Now().Unix())
 }

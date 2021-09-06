@@ -7,7 +7,7 @@ import (
 	"github.com/librity/nc_nomadcoin/blockchain"
 )
 
-func blokchainStatus(rw http.ResponseWriter, r *http.Request) {
+func blokchain(rw http.ResponseWriter, r *http.Request) {
 	bc := blockchain.Get()
 	json.NewEncoder(rw).Encode(bc)
 }

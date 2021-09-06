@@ -92,7 +92,7 @@ newBlockHash := hashFunction(data + previousBlockHash + timestamp + ...)
 `data` could be anything. Any alteration to a previous block's data will
 avalanche obvious changes to the next blocks' hashes.
 
-### Accounting & Transactions
+### Accounting model
 
 We use the UTXO (Unspent Transaction Output) accounting model,
 the same one used in BitCoin and Cardano.
@@ -130,6 +130,11 @@ coinbaseTx = Transaction{
 	Output: []string{"$10(miner)"},
 }
 ```
+
+### Mempool
+
+Unconfirmed transactions wait on the _Mempool_ until they are added
+to the blockchain by miners, becoming confirmed.
 
 ## Libs <a name = "libs"></a>
 

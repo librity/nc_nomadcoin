@@ -37,13 +37,15 @@ func setEnvVars(portNum int) {
 func loadHandlers() {
 	router.HandleFunc("/", documentation).Methods("GET")
 
-	router.HandleFunc("/blokchain/status", blokchainStatus).Methods("GET")
+	router.HandleFunc("/blokchain", blokchain).Methods("GET")
 
 	router.HandleFunc("/blocks", blocksIndex).Methods("GET")
 	router.HandleFunc("/blocks", createBlock).Methods("POST")
 	router.HandleFunc("/blocks/{hash:[0-9a-f]+}", block).Methods("GET")
 
 	router.HandleFunc("/wallet/{address:[0-9a-z]+}", wallet).Methods("GET")
+
+	router.HandleFunc("/mempool", mempool).Methods("GET")
 }
 
 func loadMiddlewares() {

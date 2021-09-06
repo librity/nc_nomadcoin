@@ -28,7 +28,7 @@ var data = []endpointDescription{
 	},
 
 	{
-		URL:     url("/blokchain/status"),
+		URL:     url("/blokchain"),
 		Method:  "GET",
 		Details: "See the status of the blockchain.",
 	},
@@ -54,6 +54,12 @@ var data = []endpointDescription{
 		URL:     url("/wallet/{address}"),
 		Method:  "GET",
 		Details: "Read the balance and transaction outputs of a wallet.",
+	},
+
+	{
+		URL:     url("/mempool"),
+		Method:  "GET",
+		Details: "Get all unconfirmed transactions waiting in the mempool.",
 	},
 }
 

@@ -34,7 +34,7 @@ func (b *blockchain) recalculateDifficulty() int {
 	return b.CurrentDificulty
 }
 
-func (b *blockchain) timeSinceLastRecalc() int {
+func (b *blockchain) timeSinceLastRecalc() int64 {
 	blocks := b.LastNBlocks(blocksPerRecalc)
 	lastBlock := blocks[0]
 	lastRecalcBlock := blocks[blocksPerRecalc-1]
@@ -44,10 +44,10 @@ func (b *blockchain) timeSinceLastRecalc() int {
 	return actualTime
 }
 
-func tooEasy(actualTime int) bool {
+func tooEasy(actualTime int64) bool {
 	return actualTime <= (expectedTime - tolerance)
 }
 
-func tooHard(actualTime int) bool {
+func tooHard(actualTime int64) bool {
 	return actualTime >= (expectedTime + tolerance)
 }
