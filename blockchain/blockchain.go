@@ -36,9 +36,7 @@ func InspectChain() {
 }
 
 func Get() *blockchain {
-	if b == nil {
-		once.Do(initializeBlockchain)
-	}
+	once.Do(initializeBlockchain)
 
 	return b
 }
@@ -56,7 +54,7 @@ func initializeBlockchain() {
 }
 
 func (b *blockchain) AddBlock() {
-	block := createBlock(b.LastHash, b.Height+1)
+	block := createBlock(b.LastHash, b.Height+1, getDifficulty(b))
 	b.reference(block)
 }
 

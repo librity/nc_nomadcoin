@@ -33,8 +33,8 @@ func FindBlock(hash string) (*Block, error) {
 	return block, nil
 }
 
-func createBlock(prevHash string, height int) *Block {
-	block := newBlock(prevHash, height)
+func createBlock(prevHash string, height int, difficulty int) *Block {
+	block := newBlock(prevHash, height, difficulty)
 	block.mine()
 	block.loadTransactions()
 	block.save()
@@ -42,12 +42,12 @@ func createBlock(prevHash string, height int) *Block {
 	return block
 }
 
-func newBlock(prevHash string, height int) *Block {
+func newBlock(prevHash string, height int, difficulty int) *Block {
 	block := Block{
 		Height:       height,
 		PreviousHash: prevHash,
 		Hash:         "",
-		Difficulty:   getDifficulty(),
+		Difficulty:   difficulty,
 		NOnce:        0,
 	}
 

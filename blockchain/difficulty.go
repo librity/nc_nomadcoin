@@ -8,8 +8,7 @@ const (
 	expectedTime    = blocksPerRecalc * minutesPerBlock
 )
 
-func getDifficulty() int {
-	chain := Get()
+func getDifficulty(chain *blockchain) int {
 	if chain.Height == 0 {
 		return baseDifficulty
 	}
