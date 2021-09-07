@@ -46,7 +46,7 @@ func handleBalanceOnly(rw http.ResponseWriter, r *http.Request) {
 func handleFullInfo(rw http.ResponseWriter, r *http.Request) {
 	address := getParam(r, "address")
 	chain := blockchain.Get()
-	outputs := chain.TxOutputsFrom(address)
+	outputs := chain.UnspentTxOutputsFrom(address)
 	balance := blockchain.SumOverBalance(outputs)
 
 	response := wltDetailsResp{

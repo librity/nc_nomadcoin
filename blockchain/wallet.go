@@ -1,7 +1,7 @@
 package blockchain
 
 func (b *blockchain) BalanceOf(address string) uint {
-	outputs := b.TxOutputsFrom(address)
+	outputs := b.UnspentTxOutputsFrom(address)
 
 	return SumOverBalance(outputs)
 }
