@@ -47,7 +47,7 @@ func newBlock(prevHash string, height int) *Block {
 		Height:       height,
 		PreviousHash: prevHash,
 		Hash:         "",
-		Difficulty:   Get().difficulty(),
+		Difficulty:   getDifficulty(),
 		NOnce:        0,
 	}
 

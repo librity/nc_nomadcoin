@@ -21,7 +21,7 @@ func blocks(rw http.ResponseWriter, r *http.Request) {
 }
 
 func blocksIndex(rw http.ResponseWriter, r *http.Request) {
-	blocks := blockchain.Get().Blocks()
+	blocks := blockchain.Blocks()
 	data := blocksData{"Blocks", blocks}
 
 	templates.ExecuteTemplate(rw, "blocks", data)

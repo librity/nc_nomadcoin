@@ -4,9 +4,9 @@ import (
 	"fmt"
 )
 
-func (b *blockchain) Blocks() []*Block {
+func Blocks() []*Block {
 	var blocks []*Block
-	currentHash := b.LastHash
+	currentHash := Get().LastHash
 
 	for {
 		block, _ := FindBlock(currentHash)
@@ -21,9 +21,10 @@ func (b *blockchain) Blocks() []*Block {
 	return blocks
 }
 
-func (b *blockchain) LastNBlocks(n int) []*Block {
+func LastNBlocks(n int) []*Block {
 	var blocks []*Block
-	currentHash := b.LastHash
+	currentHash := Get().LastHash
+
 	for i := 0; i < n; i++ {
 		block, _ := FindBlock(currentHash)
 		blocks = append(blocks, block)
@@ -37,10 +38,10 @@ func (b *blockchain) LastNBlocks(n int) []*Block {
 	return blocks
 }
 
-func (b *blockchain) ListBlocks() {
+func InspectBlocks() {
 	fmt.Println("=== Blocks ===")
 
-	blocks := b.Blocks()
+	blocks := Blocks()
 	for _, block := range blocks {
 		block.inspect()
 	}

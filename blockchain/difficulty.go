@@ -8,34 +8,37 @@ const (
 	expectedTime    = blocksPerRecalc * minutesPerBlock
 )
 
-func (b *blockchain) difficulty() int {
-	if b.Height == 0 {
+func getDifficulty() int {
+	chain := Get()
+	if chain.Height == 0 {
 		return baseDifficulty
 	}
 
-	if b.Height%blocksPerRecalc == 0 {
-		return b.recalculateDifficulty()
+	shouldRecalc := chain.Height%blocksPerRecalc == 0
+	if shouldRecalc {
+		return newDifficulty()
 	}
 
-	return b.CurrentDificulty
+	return chain.CurrentDificulty
 }
 
-func (b *blockchain) recalculateDifficulty() int {
-	actualTime := b.timeSinceLastRecalc()
+func newDifficulty() int {
+	currentDificulty := Get().CurrentDificulty
+	actualTime := timeSinceLastRecalc()
 
 	if tooEasy(actualTime) {
-		return b.CurrentDificulty + 1
+		return currentDificulty + 1
 	}
 
 	if tooHard(actualTime) {
-		return b.CurrentDificulty - 1
+		return currentDificulty - 1
 	}
 
-	return b.CurrentDificulty
+	return currentDificulty
 }
 
-func (b *blockchain) timeSinceLastRecalc() int64 {
-	blocks := b.LastNBlocks(blocksPerRecalc)
+func timeSinceLastRecalc() int64 {
+	blocks := LastNBlocks(blocksPerRecalc)
 	lastBlock := blocks[0]
 	lastRecalcBlock := blocks[blocksPerRecalc-1]
 	actualTime := lastBlock.Timestamp - lastRecalcBlock.Timestamp

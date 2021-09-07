@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/librity/nc_nomadcoin/blockchain"
 	"github.com/librity/nc_nomadcoin/cli"
 	"github.com/librity/nc_nomadcoin/db"
@@ -16,8 +14,6 @@ func main() {
 }
 
 func printChainStatus() {
-	chain := blockchain.Get()
-	fmt.Print(chain)
-
-	chain.ListBlocks()
+	blockchain.InspectChain()
+	blockchain.InspectBlocks()
 }

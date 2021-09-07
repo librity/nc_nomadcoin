@@ -32,8 +32,7 @@ func wallet(rw http.ResponseWriter, r *http.Request) {
 
 func handleBalanceOnly(rw http.ResponseWriter, r *http.Request) {
 	address := getParam(r, "address")
-	chain := blockchain.Get()
-	balance := chain.BalanceOf(address)
+	balance := blockchain.BalanceOf(address)
 
 	response := wltResp{
 		Address: address,
@@ -45,8 +44,7 @@ func handleBalanceOnly(rw http.ResponseWriter, r *http.Request) {
 
 func handleFullInfo(rw http.ResponseWriter, r *http.Request) {
 	address := getParam(r, "address")
-	chain := blockchain.Get()
-	outputs := chain.UnspentTxOutputsFrom(address)
+	outputs := blockchain.UnspentTxOutputsFrom(address)
 	balance := blockchain.SumOverBalance(outputs)
 
 	response := wltDetailsResp{

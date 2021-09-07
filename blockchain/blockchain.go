@@ -24,9 +24,15 @@ func (b blockchain) String() string {
 	s := fmt.Sprintln("=== Blockchain ===") +
 		fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +
 		fmt.Sprintln("Last Hash:", b.LastHash) +
+		fmt.Sprintln("Current Dificulty:", b.CurrentDificulty) +
 		fmt.Sprintln("")
 
 	return s
+}
+
+func InspectChain() {
+	chain := Get()
+	fmt.Print(chain)
 }
 
 func Get() *blockchain {
@@ -35,11 +41,6 @@ func Get() *blockchain {
 	}
 
 	return b
-}
-
-func (b *blockchain) AddBlock() {
-	block := createBlock(b.LastHash, b.Height+1)
-	b.reference(block)
 }
 
 func initializeBlockchain() {
@@ -52,6 +53,11 @@ func initializeBlockchain() {
 	}
 
 	b.restore(checkpoint)
+}
+
+func (b *blockchain) AddBlock() {
+	block := createBlock(b.LastHash, b.Height+1)
+	b.reference(block)
 }
 
 func (b *blockchain) reference(block *Block) {

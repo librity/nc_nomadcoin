@@ -207,6 +207,7 @@ to the blockchain by miners, becoming confirmed.
 - https://stackoverflow.com/questions/27267900/runtime-error-assignment-to-entry-in-nil-map
 - https://stackoverflow.com/questions/14928826/passing-pointers-to-maps-in-golang
 - https://stackoverflow.com/questions/2809543/pointer-to-a-map
+- https://medium.com/golangspec/labels-in-go-4ffd81932339
 
 ### Go templates
 

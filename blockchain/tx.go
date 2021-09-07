@@ -61,10 +61,10 @@ func makeTx(from string, to string, amount uint) (*Tx, error) {
 func makeInputs(from string, amount uint) ([]*TxInput, uint) {
 	var inputs []*TxInput
 	total := uint(0)
-	unspentOutputs := Get().UnspentTxOutputsFrom(from)
+	unspentOutputs := UnspentTxOutputsFrom(from)
 
 	for _, unspentOutput := range unspentOutputs {
-		if total > amount {
+		if total >= amount {
 			break
 		}
 
@@ -93,7 +93,7 @@ func makeOutputs(from string, to string, amount uint, total uint) []*TxOutput {
 }
 
 func exceedesBalance(from string, amount uint) bool {
-	fromBalance := Get().BalanceOf(from)
+	fromBalance := BalanceOf(from)
 	return fromBalance < amount
 }
 

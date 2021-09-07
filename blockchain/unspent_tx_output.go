@@ -6,11 +6,11 @@ type UnspentTxOutput struct {
 	Amount uint   `json:"amount"`
 }
 
-func (b *blockchain) UnspentTxOutputsFrom(address string) []*UnspentTxOutput {
+func UnspentTxOutputsFrom(address string) []*UnspentTxOutput {
 	var unspentOutputs []*UnspentTxOutput
 	spentTxs := make(map[string]bool)
 
-	for _, block := range b.Blocks() {
+	for _, block := range Blocks() {
 		for _, tx := range block.Transactions {
 			setSpentTxs(spentTxs, tx, address)
 			setUnspentOutputs(&unspentOutputs, spentTxs, tx, address)
