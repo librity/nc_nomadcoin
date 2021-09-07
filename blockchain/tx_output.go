@@ -13,7 +13,7 @@ type UnspentTxOutput struct {
 
 func (b *blockchain) UnspentTxOutputsFrom(address string) []*UnspentTxOutput {
 	var unspentOutputs []*UnspentTxOutput
-	var spentTxs map[string]bool
+	spentTxs := make(map[string]bool)
 
 	for _, block := range b.Blocks() {
 		for _, tx := range block.Transactions {
@@ -29,7 +29,7 @@ func (b *blockchain) UnspentTxOutputsFrom(address string) []*UnspentTxOutput {
 				}
 
 				_, spentInput := spentTxs[tx.Id]
-				if spentInput == false {
+				if !spentInput {
 					unspentOutput := &UnspentTxOutput{
 						TxId:   tx.Id,
 						Index:  uint(index),

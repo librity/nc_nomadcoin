@@ -77,7 +77,7 @@ func generateInputs(from string, amount uint) ([]*TxInput, uint) {
 }
 
 func generateOutputs(from string, to string, amount uint, total uint) []*TxOutput {
-	toOutput := newTxOutput(to, total)
+	toOutput := newTxOutput(to, amount)
 	outputs := []*TxOutput{toOutput}
 	change := total - amount
 	if change > 0 {

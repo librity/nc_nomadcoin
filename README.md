@@ -204,6 +204,7 @@ to the blockchain by miners, becoming confirmed.
 - https://stackoverflow.com/questions/14121422/de-and-encode-interface-with-gob
 - https://golangdocs.com/generate-random-string-in-golang
 - https://stackoverflow.com/questions/22892120/how-to-generate-a-random-string-of-a-fixed-length-in-go
+- https://stackoverflow.com/questions/27267900/runtime-error-assignment-to-entry-in-nil-map
 
 ### Go templates
 

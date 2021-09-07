@@ -14,9 +14,9 @@ type wltResp struct {
 }
 
 type wltDetailsResp struct {
-	Address   string                 `json:"address"`
-	Balance   uint                   `json:"balance"`
-	TxOutputs []*blockchain.TxOutput `json:"transactionOuptuts"`
+	Address        string                        `json:"address"`
+	Balance        uint                          `json:"balance"`
+	UnspentOutputs []*blockchain.UnspentTxOutput `json:"unspentOutputs"`
 }
 
 func wallet(rw http.ResponseWriter, r *http.Request) {
@@ -50,9 +50,9 @@ func handleFullInfo(rw http.ResponseWriter, r *http.Request) {
 	balance := blockchain.SumOverBalance(outputs)
 
 	response := wltDetailsResp{
-		Address:   address,
-		Balance:   balance,
-		TxOutputs: outputs,
+		Address:        address,
+		Balance:        balance,
+		UnspentOutputs: outputs,
 	}
 	err := json.NewEncoder(rw).Encode(response)
 	utils.HandleError(err)
