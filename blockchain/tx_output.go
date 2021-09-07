@@ -17,32 +17,40 @@ func (b *blockchain) UnspentTxOutputsFrom(address string) []*UnspentTxOutput {
 
 	for _, block := range b.Blocks() {
 		for _, tx := range block.Transactions {
-			for _, input := range tx.Inputs {
-				if input.Owner == address {
-					spentTxs[input.TxId] = true
-				}
-			}
-
-			for index, output := range tx.Outputs {
-				if output.Owner != address {
-					continue
-				}
-
-				_, spentInput := spentTxs[tx.Id]
-				if !spentInput {
-					unspentOutput := &UnspentTxOutput{
-						TxId:   tx.Id,
-						Index:  uint(index),
-						Amount: output.Amount,
-					}
-
-					unspentOutputs = append(unspentOutputs, unspentOutput)
-				}
-			}
+			setSpentTxs(spentTxs, tx, address)
+			setUnspentOutputs(&unspentOutputs, spentTxs, tx, address)
 		}
 	}
 
 	return unspentOutputs
+}
+
+func setSpentTxs(spentTxs map[string]bool, tx *Tx, address string) {
+	for _, input := range tx.Inputs {
+		if input.Owner == address {
+			spentTxs[input.TxId] = true
+		}
+	}
+}
+
+func setUnspentOutputs(
+	unspentOutputs *[]*UnspentTxOutput,
+	spentTxs map[string]bool,
+	tx *Tx,
+	address string) {
+	for index, output := range tx.Outputs {
+		if output.Owner != address {
+			continue
+		}
+
+		_, spentInput := spentTxs[tx.Id]
+		if !spentInput {
+			unspentOutput := newUnspentTxOutput(
+				tx.Id, uint(index), output.Amount)
+
+			*unspentOutputs = append(*unspentOutputs, unspentOutput)
+		}
+	}
 }
 
 func newTxOutput(address string, amount uint) *TxOutput {
@@ -52,4 +60,14 @@ func newTxOutput(address string, amount uint) *TxOutput {
 	}
 
 	return newOutput
+}
+
+func newUnspentTxOutput(txId string, index uint, amount uint) *UnspentTxOutput {
+	newUnspentOutput := &UnspentTxOutput{
+		TxId:   txId,
+		Index:  index,
+		Amount: amount,
+	}
+
+	return newUnspentOutput
 }

@@ -51,14 +51,14 @@ func makeTx(from string, to string, amount uint) (*Tx, error) {
 		return nil, ErrNotEnoughMoney
 	}
 
-	inputs, total := generateInputs(from, amount)
-	outputs := generateOutputs(from, to, amount, total)
+	inputs, total := makeInputs(from, amount)
+	outputs := makeOutputs(from, to, amount, total)
 	tx := newTx(inputs, outputs)
 
 	return tx, nil
 }
 
-func generateInputs(from string, amount uint) ([]*TxInput, uint) {
+func makeInputs(from string, amount uint) ([]*TxInput, uint) {
 	var inputs []*TxInput
 	total := uint(0)
 	unspentOutputs := Get().UnspentTxOutputsFrom(from)
@@ -76,10 +76,11 @@ func generateInputs(from string, amount uint) ([]*TxInput, uint) {
 	return inputs, total
 }
 
-func generateOutputs(from string, to string, amount uint, total uint) []*TxOutput {
+func makeOutputs(from string, to string, amount uint, total uint) []*TxOutput {
 	toOutput := newTxOutput(to, amount)
 	outputs := []*TxOutput{toOutput}
 	change := total - amount
+
 	if change > 0 {
 		changeOutput := &TxOutput{
 			Owner:  from,

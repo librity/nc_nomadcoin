@@ -205,6 +205,8 @@ to the blockchain by miners, becoming confirmed.
 - https://golangdocs.com/generate-random-string-in-golang
 - https://stackoverflow.com/questions/22892120/how-to-generate-a-random-string-of-a-fixed-length-in-go
 - https://stackoverflow.com/questions/27267900/runtime-error-assignment-to-entry-in-nil-map
+- https://stackoverflow.com/questions/14928826/passing-pointers-to-maps-in-golang
+- https://stackoverflow.com/questions/2809543/pointer-to-a-map
 
 ### Go templates
 
