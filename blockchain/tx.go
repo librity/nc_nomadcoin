@@ -7,8 +7,7 @@ import (
 )
 
 const (
-	coinbaseCode = "COINBASE"
-	minerReward  = 50
+	minerReward = 50
 )
 
 var (
@@ -37,7 +36,7 @@ func newTx(inputs []*TxInput, outputs []*TxOutput) *Tx {
 
 func makeCoinbaseTx(address string) *Tx {
 	inputs := []*TxInput{
-		{"", 0, coinbaseCode},
+		newCoinbaseTxInput(),
 	}
 	outputs := []*TxOutput{
 		{address, minerReward},
@@ -48,7 +47,53 @@ func makeCoinbaseTx(address string) *Tx {
 }
 
 func makeTx(from string, to string, amount uint) (*Tx, error) {
-	return nil, nil
+	if exceedesBalance(from, amount) {
+		return nil, ErrNotEnoughMoney
+	}
+
+	inputs, total := generateInputs(from, amount)
+	outputs := generateOutputs(from, to, amount, total)
+	tx := newTx(inputs, outputs)
+
+	return tx, nil
+}
+
+func generateInputs(from string, amount uint) ([]*TxInput, uint) {
+	var inputs []*TxInput
+	total := uint(0)
+	unspentOutputs := Get().UnspentTxOutputsFrom(from)
+
+	for _, unspentOutput := range unspentOutputs {
+		if total > amount {
+			break
+		}
+
+		newInput := newTxInput(unspentOutput, from)
+		inputs = append(inputs, newInput)
+		total += unspentOutput.Amount
+	}
+
+	return inputs, total
+}
+
+func generateOutputs(from string, to string, amount uint, total uint) []*TxOutput {
+	toOutput := newTxOutput(to, total)
+	outputs := []*TxOutput{toOutput}
+	change := total - amount
+	if change > 0 {
+		changeOutput := &TxOutput{
+			Owner:  from,
+			Amount: change,
+		}
+		outputs = append(outputs, changeOutput)
+	}
+
+	return outputs
+}
+
+func exceedesBalance(from string, amount uint) bool {
+	fromBalance := Get().BalanceOf(from)
+	return fromBalance < amount
 }
 
 func (t *Tx) setId() {

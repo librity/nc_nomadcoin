@@ -110,11 +110,7 @@ type Transaction struct {
 txs := []Transaction{}
 txs = append(txs, Transaction{
 	Input:  []string{"$10(lior)"},
-	Output: []string{"$1(drugDealer)", "$9(lior)"},
-})
-txs = append(txs, Transaction{
-	Input:  []string{"$9(lior)"},
-	Output: []string{"$2(landLord)", "$7(lior)"},
+	Output: []string{"$1(drugDealer)", "$2(landLord)", "$7(lior)"},
 })
 txs = append(txs, Transaction{
 	Input:  []string{"$7(lior)"},

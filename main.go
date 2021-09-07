@@ -11,25 +11,13 @@ import (
 func main() {
 	defer db.Close()
 
-	blockchainDemo()
-	cliDemo()
+	printChainStatus()
+	cli.Start()
 }
 
-func blockchainDemo() {
+func printChainStatus() {
 	chain := blockchain.Get()
 	fmt.Print(chain)
 
-	// seedBlocks()
-
 	chain.ListBlocks()
-}
-
-func seedBlocks() {
-	chain := blockchain.Get()
-	chain.AddBlock()
-	chain.AddBlock()
-}
-
-func cliDemo() {
-	cli.Start()
 }

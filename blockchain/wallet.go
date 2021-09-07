@@ -6,7 +6,7 @@ func (b *blockchain) BalanceOf(address string) uint {
 	return SumOverBalance(outputs)
 }
 
-func SumOverBalance(outputs []*TxOutput) uint {
+func SumOverBalance(outputs []*UnspentTxOutput) uint {
 	balance := uint(0)
 
 	for _, output := range outputs {
