@@ -22,9 +22,11 @@ func (b *blockchain) UnspentTxOutputsFrom(address string) []*UnspentTxOutput {
 
 func setSpentTxs(spentTxs map[string]bool, tx *Tx, address string) {
 	for _, input := range tx.Inputs {
-		if input.Owner == address {
-			spentTxs[input.TxId] = true
+		if input.Owner != address {
+			continue
 		}
+
+		spentTxs[input.TxId] = true
 	}
 }
 
@@ -33,18 +35,23 @@ func setUnspentOutputs(
 	spentTxs map[string]bool,
 	tx *Tx,
 	address string) {
+
 	for index, output := range tx.Outputs {
 		if output.Owner != address {
 			continue
 		}
 
-		_, spentInput := spentTxs[tx.Id]
-		if !spentInput {
-			unspentOutput := newUnspentTxOutput(
-				tx.Id, uint(index), output.Amount)
-
-			*unspentOutputs = append(*unspentOutputs, unspentOutput)
+		_, isSpentInput := spentTxs[tx.Id]
+		if isSpentInput {
+			continue
 		}
+
+		unspentOutput := newUnspentTxOutput(tx.Id, uint(index), output.Amount)
+		if isOnMempool(unspentOutput) {
+			continue
+		}
+
+		*unspentOutputs = append(*unspentOutputs, unspentOutput)
 	}
 }
 

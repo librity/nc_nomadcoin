@@ -26,3 +26,19 @@ func (m *mempool) popAll() []*Tx {
 
 	return txs
 }
+
+func isOnMempool(unspentOutput *UnspentTxOutput) bool {
+	for _, transaction := range Mempool.Transactions {
+		for _, input := range transaction.Inputs {
+			sameTxId := input.TxId == unspentOutput.TxId
+			sameIndex := input.Index == unspentOutput.Index
+			outputIsOnMempool := sameTxId && sameIndex
+
+			if outputIsOnMempool {
+				return true
+			}
+		}
+	}
+
+	return false
+}
