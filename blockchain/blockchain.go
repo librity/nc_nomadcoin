@@ -66,9 +66,9 @@ func (b *blockchain) reference(block *Block) {
 }
 
 func (b *blockchain) save() {
-	db.SaveCheckpoint(utils.ToBytes(b))
+	db.SaveCheckpoint(utils.ToGob(b))
 }
 
 func (b *blockchain) restore(encoded []byte) {
-	utils.FromBytes(b, encoded)
+	utils.FromGob(b, encoded)
 }

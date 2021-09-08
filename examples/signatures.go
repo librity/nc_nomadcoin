@@ -35,7 +35,7 @@ func main() {
 func buildMessage() []byte {
 	message := Message{"lior", "waiFu", "kpop makes me nauseous"}
 	hexHash := utils.HexHash(message)
-	hash := utils.HashToBytes(hexHash)
+	hash := utils.HexToBytes(hexHash)
 
 	fmt.Println("=== Message ===")
 	fmt.Println("Struct:", message)

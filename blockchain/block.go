@@ -75,12 +75,12 @@ func (b *Block) loadTransactions() {
 }
 
 func (b *Block) save() {
-	db.SaveBlock(b.Hash, utils.ToBytes(b))
+	db.SaveBlock(b.Hash, utils.ToGob(b))
 }
 
 func blockFromBytes(encoded []byte) *Block {
 	block := &Block{}
-	utils.FromBytes(block, encoded)
+	utils.FromGob(block, encoded)
 
 	return block
 }
