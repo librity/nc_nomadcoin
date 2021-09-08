@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/gob"
+	"encoding/hex"
 	"fmt"
 	"log"
 	"reflect"
@@ -41,6 +42,13 @@ func HexHashStr(data string) string {
 	hexHash := fmt.Sprintf("%x", rawHash)
 
 	return hexHash
+}
+
+func HashToBytes(data string) []byte {
+	bytes, err := hex.DecodeString(data)
+	HandleError(err)
+
+	return bytes
 }
 
 func ToBytes(i interface{}) []byte {

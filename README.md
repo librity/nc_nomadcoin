@@ -97,40 +97,79 @@ avalanche obvious changes to the next blocks' hashes.
 We use the UTXO (Unspent Transaction Output) accounting model,
 the same one used in BitCoin and Cardano.
 
-Transactions have multiple inputs and outputs.
-Input is the money you have before the transaction.
-Output is the money everyone has by the end of the transaction.
+Coins are created by a special type of transaction: the coinbase transaction.
 
 ```go
 type Transaction struct {
+	Id     string
 	Input  []string
 	Output []string
 }
 
-txs := []Transaction{}
-txs = append(txs, Transaction{
-	Input:  []string{"$10(lior)"},
-	Output: []string{"$1(drugDealer)", "$2(landLord)", "$7(lior)"},
-})
-txs = append(txs, Transaction{
-	Input:  []string{"$7(lior)"},
-	Output: []string{"$7(waiFu)"},
-})
-```
-
-Inputs are created by a special type of transaction: the coinbase transaction.
-
-```go
 coinbaseTx = Transaction{
+	Id:     "0001"
 	Input:  []string{"$10(blockchain)"},
 	Output: []string{"$10(miner)"},
 }
 ```
 
+Transactions have multiple inputs and outputs.
+Input is the money you have before the transaction.
+Output is the money everyone has by the end of the transaction.
+
+```go
+txs := []Transaction{}
+txs = append(txs, Transaction{
+	Id:     "0002"
+	Input:  []string{"$10(lior),txId(0001)"},
+	Output: []string{"$1(drugDealer)", "$2(landLord)", "$7(lior)"},
+})
+txs = append(txs, Transaction{
+	Id:     "0003"
+	Input:  []string{"$7(lior),txId(0002)"},
+	Output: []string{"$7(waiFu)"},
+})
+```
+
+A transaction Input is a reference to a previous transaction Output.
+We can only use an Input from a previous Output
+that's not being used by another transaction in the blockchain or the mempool:
+An Output becomes "spent" once it's referenced by an Input.
+
 ### Mempool
 
 Unconfirmed transactions wait on the _Mempool_ until they are added
 to the blockchain by miners, becoming confirmed.
+
+### Digital signing
+
+1. Hash any digital object (string, picture, json, etc.)
+2. Generate a Public-Private key pair
+3. Sign the hash with the private key
+4. Verify signature with the public key
+
+```go
+messageHash := hashFunction("i like turtles")
+publicKey, privateKey := makeNewKeys()
+signature := sign(messageHash, privateKey)
+checksOut := verify(messageHash, signature, publicKey)
+```
+
+All these functions are cryptographic black boxes made with very cool math.
+There are
+[many different](https://en.wikipedia.org/wiki/Public-key_cryptography#Examples)
+Public-key cryptography algorithms with which to sign and verify data.
+We will use Elliptic-curve cryptography
+with the [NIST P-256](https://neuromancer.sk/std/nist/P-256) curve,
+while Bitcoin uses [Secp256k1](https://en.bitcoin.it/wiki/Secp256k1).
+
+### Elliptic Curve Digital Signature Algorithm (ECDSA)
+
+Public key is the (x,y) coordinates of a point in an elliptic curve:
+
+<p align="center">
+    <img src=".github/ecc.png" />
+</p>
 
 ## Libs <a name = "libs"></a>
 
@@ -153,6 +192,8 @@ to the blockchain by miners, becoming confirmed.
 - https://pkg.go.dev/flag#NewFlagSet
 - https://pkg.go.dev/flag#Parse
 - https://pkg.go.dev/encoding/gob
+- https://pkg.go.dev/crypto/elliptic#P256
+- https://pkg.go.dev/encoding/hex#DecodeString
 - https://github.com/gorilla/mux
 - https://github.com/boltdb/bolt
 
@@ -221,7 +262,27 @@ to the blockchain by miners, becoming confirmed.
 
 - https://en.wikipedia.org/wiki/Cryptographic_hash_function
 - https://en.wikipedia.org/wiki/SHA-2
+- https://www.tutorialspoint.com/cryptography/cryptography_digital_signatures.htm
 - https://en.wikipedia.org/wiki/Public-key_cryptography
+- https://www.youngwonks.com/blog/Public-Key-and-Private-Key-Encryption-Explained
+- https://en.wikipedia.org/wiki/End-to-end_encryption
+- https://en.wikipedia.org/wiki/Cryptocurrency_wallet
+- https://en.wikipedia.org/wiki/Digital_signature
+- https://en.wikipedia.org/wiki/Encryption
+- https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm
+- https://en.wikipedia.org/wiki/Elliptic-curve_cryptography
+- https://safecurves.cr.yp.to/
+- https://www.reddit.com/r/crypto/comments/7rithm/what_does_p256_stand_for/
+- https://neuromancer.sk/std/nist/P-256
+- https://askinglot.com/what-is-nist-p256
+- https://askinglot.com/open-detail/108766
+- https://csrc.nist.gov/publications/detail/fips/186/3/archive/2009-06-25
+
+### Bitcoin
+
+- https://bitcoinmagazine.com/technical/overview-bitcoins-cryptography
+- http://blog.ezyang.com/2011/06/the-cryptography-of-bitcoin/
+- https://en.bitcoin.it/wiki/Secp256k1
 
 ### Accounting models
 
@@ -238,6 +299,8 @@ to the blockchain by miners, becoming confirmed.
 - https://www.ionos.com/tools/favicon-generator
 - https://www.favicon-generator.org/search/---/Coin
 - https://www.favicon.cc/?action=icon&file_id=138923
+
+### Misc
 
 <p align="center">
     <img src=".github/golang_multiplexer.png" />
