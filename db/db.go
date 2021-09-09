@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"sync"
 
 	"github.com/boltdb/bolt"
@@ -36,6 +37,8 @@ func getDB() *bolt.DB {
 func initializeDB() {
 	openDB()
 	createBuckets()
+
+	fmt.Println("Database initialized succesfully.")
 }
 
 func openDB() {

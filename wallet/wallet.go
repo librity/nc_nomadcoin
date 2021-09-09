@@ -33,7 +33,7 @@ func GetW() *wallet {
 }
 
 func initializeWallet() {
-	if hasWalletFile() {
+	if walletFileExists() {
 		restoreWalletFromFile()
 		return
 	}
@@ -41,7 +41,7 @@ func initializeWallet() {
 	createWallet()
 }
 
-func hasWalletFile() bool {
+func walletFileExists() bool {
 	_, err := os.Stat(walletFilepath)
 	walletFileMissing := os.IsNotExist(err)
 
@@ -85,4 +85,6 @@ func (w *wallet) inspect() {
 	fmt.Println("y:", w.publicKey.Y)
 	fmt.Println("Private key")
 	fmt.Println("d:", w.privateKey.D)
+	fmt.Println("hex:", keyToHex(w.privateKey))
+	fmt.Println()
 }

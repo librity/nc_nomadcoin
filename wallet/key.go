@@ -20,36 +20,46 @@ func generateKey() *ecdsa.PrivateKey {
 	return key
 }
 
-func keyFromFile(filePath string) *ecdsa.PrivateKey {
-	fileBytes, err := os.ReadFile(filePath)
-	utils.HandleError(err)
-
-	keyHex := utils.BytesToHex(fileBytes)
-	key := hexToKey(keyHex)
-
-	return key
-}
-
 func keyToFile(key *ecdsa.PrivateKey, filePath string) {
-	keyHex := keyToHex(key)
-	keyBytes := utils.HexToBytes(keyHex)
+	keyBytes := keyToBytes(key)
 	secureFilePerm := fs.FileMode(0600)
 
-	os.WriteFile(filePath, keyBytes, secureFilePerm)
+	err := os.WriteFile(filePath, keyBytes, secureFilePerm)
+	utils.HandleError(err)
+}
+
+func keyFromFile(filePath string) (key *ecdsa.PrivateKey) {
+	keyBytes, err := os.ReadFile(filePath)
+	utils.HandleError(err)
+
+	key = keyFromBytes(keyBytes)
+	return
+}
+
+func keyToBytes(key *ecdsa.PrivateKey) []byte {
+	keyBytes, err := x509.MarshalECPrivateKey(key)
+	utils.HandleError(err)
+
+	return keyBytes
 }
 
 func keyToHex(key *ecdsa.PrivateKey) string {
-	bytes, err := x509.MarshalECPrivateKey(key)
-	utils.HandleError(err)
+	bytes := keyToBytes(key)
 
 	hex := fmt.Sprintf("%x", bytes)
 	return hex
 }
 
-func hexToKey(keyHex string) *ecdsa.PrivateKey {
-	keyBytes := utils.HexToBytes(keyHex)
-	privateKey, err := x509.ParseECPrivateKey(keyBytes)
+func keyFromBytes(keyBytes []byte) *ecdsa.PrivateKey {
+	key, err := x509.ParseECPrivateKey(keyBytes)
 	utils.HandleError(err)
 
-	return privateKey
+	return key
+}
+
+func keyFromHex(keyHex string) *ecdsa.PrivateKey {
+	keyBytes := utils.HexToBytes(keyHex)
+	key := keyFromBytes(keyBytes)
+
+	return key
 }
