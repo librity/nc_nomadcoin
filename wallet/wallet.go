@@ -2,6 +2,7 @@ package wallet
 
 import (
 	"crypto/ecdsa"
+	"crypto/elliptic"
 	"fmt"
 	"os"
 )
@@ -13,7 +14,8 @@ type wallet struct {
 }
 
 var (
-	w *wallet
+	w     *wallet
+	curve = elliptic.P256()
 )
 
 const (
@@ -78,13 +80,6 @@ func newWallet(key *ecdsa.PrivateKey) *wallet {
 	}
 
 	return w
-}
-
-func addressFromKey(key *ecdsa.PrivateKey) string {
-	publicKey := &key.PublicKey
-	address := bigIntsToHex(publicKey.X, publicKey.Y)
-
-	return address
 }
 
 func (w *wallet) inspect() {

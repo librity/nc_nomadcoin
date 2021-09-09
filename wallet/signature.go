@@ -1,6 +1,8 @@
 package wallet
 
 import (
+	"crypto/ecdsa"
+	"crypto/rand"
 	"math/big"
 
 	"github.com/librity/nc_nomadcoin/utils"
@@ -11,21 +13,27 @@ type Signature struct {
 	S *big.Int
 }
 
-func signFromHex(hex string) *Signature {
-	bytes := utils.HexToBytes(hex)
-	halfLength := len(bytes) / 2
-	rBytes := bytes[:halfLength]
-	sBytes := bytes[halfLength:]
+func hexSign(hash string, w *wallet) string {
+	payloadBytes := utils.HexToBytes(hash)
 
-	signature := signFromBytes(rBytes, sBytes)
-	return signature
+	r, s, err := ecdsa.Sign(rand.Reader, w.privateKey, payloadBytes)
+	utils.HandleError(err)
+
+	signHex := utils.BigIntsToHex(r, s)
+	return signHex
 }
 
-func signFromBytes(rBytes []byte, sBytes []byte) *Signature {
-	r, err := utils.BytesToBigInt(rBytes)
-	utils.HandleError(err)
-	s, err := utils.BytesToBigInt(sBytes)
-	utils.HandleError(err)
+func verify(signHex, hash, address string) bool {
+	signature := signFromHex(signHex)
+	publicKey := addressToPublicKey(address)
+	hashBytes := utils.HexToBytes(hash)
+
+	isValidSignature := ecdsa.Verify(publicKey, hashBytes, signature.R, signature.S)
+	return isValidSignature
+}
+
+func signFromHex(hex string) *Signature {
+	r, s := utils.BigIntsFromHex(hex)
 
 	signature := newSignature(r, s)
 	return signature

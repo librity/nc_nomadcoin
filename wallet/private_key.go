@@ -2,7 +2,6 @@ package wallet
 
 import (
 	"crypto/ecdsa"
-	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/x509"
 	"fmt"
@@ -13,7 +12,6 @@ import (
 )
 
 func generateKey() *ecdsa.PrivateKey {
-	curve := elliptic.P256()
 	key, err := ecdsa.GenerateKey(curve, rand.Reader)
 	utils.HandleError(err)
 
