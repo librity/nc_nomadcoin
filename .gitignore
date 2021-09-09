@@ -16,3 +16,6 @@
 
 # Database files
 *.db
+
+# Wallet files
+*.wallet

@@ -2,6 +2,7 @@ package wallet
 
 import (
 	"crypto/ecdsa"
+	"fmt"
 	"os"
 )
 
@@ -15,8 +16,13 @@ var (
 )
 
 const (
-	walletFile = "my.wallet"
+	walletFilepath = "./my.wallet"
 )
+
+func Start() {
+	wallet := GetW()
+	wallet.inspect()
+}
 
 func GetW() *wallet {
 	if w == nil {
@@ -28,7 +34,7 @@ func GetW() *wallet {
 
 func initializeWallet() {
 	if hasWalletFile() {
-		restoreFromFile()
+		restoreWalletFromFile()
 		return
 	}
 
@@ -36,16 +42,47 @@ func initializeWallet() {
 }
 
 func hasWalletFile() bool {
-	_, err := os.Stat(walletFile)
+	_, err := os.Stat(walletFilepath)
 	walletFileMissing := os.IsNotExist(err)
 
 	return !walletFileMissing
 }
 
-func restoreFromFile() {
+func restoreWalletFromFile() {
+	key := keyFromFile(walletFilepath)
+	w = restoreWallet(key)
 
+	fmt.Println("Wallet restored from file:", walletFilepath)
 }
 
 func createWallet() {
+	w = newWallet()
+	keyToFile(w.privateKey, walletFilepath)
 
+	fmt.Println("Wallet created and saved to file:", walletFilepath)
+}
+
+func newWallet() *wallet {
+	privateKey := generateKey()
+	publicKey := privateKey.PublicKey
+	w := &wallet{privateKey, &publicKey}
+
+	return w
+}
+
+func restoreWallet(privateKey *ecdsa.PrivateKey) *wallet {
+	publicKey := privateKey.PublicKey
+	w := &wallet{privateKey, &publicKey}
+
+	return w
+}
+
+func (w *wallet) inspect() {
+	fmt.Println("=== Wallet ===")
+	fmt.Println("curve:", w.publicKey.Curve.Params().B)
+	fmt.Println("Public key")
+	fmt.Println("x:", w.publicKey.X)
+	fmt.Println("y:", w.publicKey.Y)
+	fmt.Println("Private key")
+	fmt.Println("d:", w.privateKey.D)
 }

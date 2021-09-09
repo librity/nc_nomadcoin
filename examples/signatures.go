@@ -54,7 +54,7 @@ func generateKeys() (*ecdsa.PrivateKey, *ecdsa.PublicKey) {
 	fmt.Println("x:", publicKey.X)
 	fmt.Println("y:", publicKey.Y)
 	fmt.Println("=== Private key ===")
-	fmt.Println(privateKey.D)
+	fmt.Println("d:", privateKey.D)
 
 	return privateKey, publicKey
 }

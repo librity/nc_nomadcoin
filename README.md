@@ -195,7 +195,8 @@ Public key is the (x,y) coordinates of a point in an elliptic curve:
 - https://pkg.go.dev/crypto/elliptic#P256
 - https://pkg.go.dev/encoding/hex#DecodeString
 - https://pkg.go.dev/math/big#Int
-- https://pkg.go.dev/crypto/x509
+- https://pkg.go.dev/crypto/x509#MarshalECPrivateKey
+- https://pkg.go.dev/os#WriteFile
 - https://github.com/gorilla/mux
 - https://github.com/boltdb/bolt
 
