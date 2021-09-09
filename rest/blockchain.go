@@ -8,6 +8,6 @@ import (
 )
 
 func blokchain(rw http.ResponseWriter, r *http.Request) {
-	bc := blockchain.Get()
+	bc := blockchain.GetBC()
 	json.NewEncoder(rw).Encode(bc)
 }

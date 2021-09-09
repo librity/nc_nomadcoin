@@ -6,7 +6,7 @@ import (
 
 func Blocks() []*Block {
 	var blocks []*Block
-	currentHash := Get().LastHash
+	currentHash := GetBC().LastHash
 
 	for {
 		block, _ := FindBlock(currentHash)
@@ -23,7 +23,7 @@ func Blocks() []*Block {
 
 func LastNBlocks(n int) []*Block {
 	var blocks []*Block
-	currentHash := Get().LastHash
+	currentHash := GetBC().LastHash
 
 	for i := 0; i < n; i++ {
 		block, _ := FindBlock(currentHash)

@@ -31,11 +31,11 @@ func (b blockchain) String() string {
 }
 
 func InspectChain() {
-	chain := Get()
+	chain := GetBC()
 	fmt.Print(chain)
 }
 
-func Get() *blockchain {
+func GetBC() *blockchain {
 	once.Do(initializeBlockchain)
 
 	return b

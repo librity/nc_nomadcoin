@@ -72,14 +72,15 @@ func sign(privateKey *ecdsa.PrivateKey, hash []byte) *Signature {
 }
 
 func verify(publicKey *ecdsa.PublicKey, hash []byte, signature *Signature) {
-	checksOut := ecdsa.Verify(publicKey, hash, signature.R, signature.S)
+	validSignature := ecdsa.Verify(publicKey, hash, signature.R, signature.S)
 
 	fmt.Println("=== Verification ===")
-	if checksOut {
+	if validSignature {
 		fmt.Println("🔐 Valid signature! 🛡️")
-	} else {
-		fmt.Println("🔓 Invalid signature: Authorities alerted! ⚠️")
+		return
 	}
+
+	fmt.Println("🔓 Invalid signature: Authorities alerted! 👨‍💻⚠️")
 }
 
 func tamperPrivateKey(key *ecdsa.PrivateKey) {

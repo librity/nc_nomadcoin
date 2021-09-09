@@ -22,7 +22,7 @@ func getDifficulty(chain *blockchain) int {
 }
 
 func newDifficulty() int {
-	currentDificulty := Get().CurrentDificulty
+	currentDificulty := GetBC().CurrentDificulty
 	actualTime := timeSinceLastRecalc()
 
 	if tooEasy(actualTime) {

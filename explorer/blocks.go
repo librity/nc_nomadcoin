@@ -28,7 +28,7 @@ func blocksIndex(rw http.ResponseWriter, r *http.Request) {
 }
 
 func createBlock(rw http.ResponseWriter, r *http.Request) {
-	blockchain.Get().AddBlock()
+	blockchain.GetBC().AddBlock()
 
 	http.Redirect(rw, r, "/blocks", http.StatusFound)
 }
