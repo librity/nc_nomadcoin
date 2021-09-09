@@ -8,7 +8,8 @@ import (
 
 type wallet struct {
 	privateKey *ecdsa.PrivateKey
-	publicKey  *ecdsa.PublicKey
+	PublicKey  *ecdsa.PublicKey
+	Address    string
 }
 
 var (
@@ -32,9 +33,13 @@ func GetW() *wallet {
 	return w
 }
 
+func GetAddress() string {
+	return GetW().Address
+}
+
 func initializeWallet() {
 	if walletFileExists() {
-		restoreWalletFromFile()
+		initializeWalletFromFile()
 		return
 	}
 
@@ -48,43 +53,54 @@ func walletFileExists() bool {
 	return !walletFileMissing
 }
 
-func restoreWalletFromFile() {
+func initializeWalletFromFile() {
 	key := keyFromFile(walletFilepath)
-	w = restoreWallet(key)
+	w = newWallet(key)
 
-	fmt.Println("Wallet restored from file:", walletFilepath)
+	fmt.Println("👛 Wallet initialized from file:", walletFilepath)
+	w.prettyAddress()
 }
 
 func createWallet() {
-	w = newWallet()
+	key := generateKey()
+	w = newWallet(key)
 	keyToFile(w.privateKey, walletFilepath)
 
-	fmt.Println("Wallet created and saved to file:", walletFilepath)
+	fmt.Println("👛 Wallet created and saved to file:", walletFilepath)
+	w.prettyAddress()
 }
 
-func newWallet() *wallet {
-	privateKey := generateKey()
-	publicKey := privateKey.PublicKey
-	w := &wallet{privateKey, &publicKey}
+func newWallet(key *ecdsa.PrivateKey) *wallet {
+	w := &wallet{
+		privateKey: key,
+		PublicKey:  &key.PublicKey,
+		Address:    addressFromKey(key),
+	}
 
 	return w
 }
 
-func restoreWallet(privateKey *ecdsa.PrivateKey) *wallet {
-	publicKey := privateKey.PublicKey
-	w := &wallet{privateKey, &publicKey}
+func addressFromKey(key *ecdsa.PrivateKey) string {
+	publicKey := &key.PublicKey
+	address := bigIntsToHex(publicKey.X, publicKey.Y)
 
-	return w
+	return address
 }
 
 func (w *wallet) inspect() {
 	fmt.Println("=== Wallet ===")
-	fmt.Println("curve:", w.publicKey.Curve.Params().B)
-	fmt.Println("Public key")
-	fmt.Println("x:", w.publicKey.X)
-	fmt.Println("y:", w.publicKey.Y)
-	fmt.Println("Private key")
-	fmt.Println("d:", w.privateKey.D)
-	fmt.Println("hex:", keyToHex(w.privateKey))
+	fmt.Println("curve:", w.PublicKey.Curve.Params().B)
+	fmt.Println("address:", w.Address)
+
+	fmt.Println("public_key:")
+	fmt.Println("	x:", w.PublicKey.X)
+	fmt.Println("	y:", w.PublicKey.Y)
+
+	fmt.Println("private_key:")
+	fmt.Println("	d:", w.privateKey.D)
 	fmt.Println()
+}
+
+func (w *wallet) prettyAddress() {
+	fmt.Println("📮 Wallet address:", w.Address)
 }

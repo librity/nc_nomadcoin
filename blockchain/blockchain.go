@@ -47,12 +47,12 @@ func initializeBlockchain() {
 	checkpoint := db.LoadCheckpoint()
 	if checkpoint == nil {
 		b.AddBlock()
-		fmt.Println("Blockchain initialized succesfully.")
+		fmt.Println("⛓️  Blockchain initialized succesfully.")
 		return
 	}
 
 	b.restore(checkpoint)
-	fmt.Println("Blockchain restored succesfully.")
+	fmt.Println("⛓️  Blockchain restored succesfully.")
 }
 
 func (b *blockchain) AddBlock() {

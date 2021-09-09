@@ -23,7 +23,12 @@ var (
 )
 
 func Close() {
+	if db == nil {
+		return
+	}
+
 	getDB().Close()
+	fmt.Println("🗃️  Database closed succesfully.")
 }
 
 func getDB() *bolt.DB {
@@ -38,7 +43,7 @@ func initializeDB() {
 	openDB()
 	createBuckets()
 
-	fmt.Println("Database initialized succesfully.")
+	fmt.Println("🗃️  Database initialized succesfully.")
 }
 
 func openDB() {

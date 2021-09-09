@@ -1,5 +1,7 @@
 package blockchain
 
+import "github.com/librity/nc_nomadcoin/wallet"
+
 type mempool struct {
 	Transactions []*Tx `json:"transactions"`
 }
@@ -9,7 +11,8 @@ var (
 )
 
 func (m *mempool) AddTx(to string, amount uint) error {
-	tx, err := makeTx("lior", to, amount)
+	from := wallet.GetAddress()
+	tx, err := makeTx(from, to, amount)
 	if err != nil {
 		return err
 	}
@@ -19,7 +22,8 @@ func (m *mempool) AddTx(to string, amount uint) error {
 }
 
 func (m *mempool) popAll() []*Tx {
-	coinbase := makeCoinbaseTx("lior")
+	miner := wallet.GetAddress()
+	coinbase := makeCoinbaseTx(miner)
 	txs := m.Transactions
 	txs = append(txs, coinbase)
 	m.Transactions = nil

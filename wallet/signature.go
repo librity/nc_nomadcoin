@@ -1,7 +1,6 @@
 package wallet
 
 import (
-	"fmt"
 	"math/big"
 
 	"github.com/librity/nc_nomadcoin/utils"
@@ -10,19 +9,6 @@ import (
 type Signature struct {
 	R *big.Int
 	S *big.Int
-}
-
-func rsToHex(r *big.Int, s *big.Int) string {
-	bytes := rsToBytes(r, s)
-	hex := fmt.Sprintf("%x", bytes)
-
-	return hex
-}
-
-func rsToBytes(r *big.Int, s *big.Int) []byte {
-	bytes := append(r.Bytes(), s.Bytes()...)
-
-	return bytes
 }
 
 func signFromHex(hex string) *Signature {
