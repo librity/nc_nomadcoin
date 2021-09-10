@@ -22,11 +22,6 @@ const (
 	walletFilepath = "./my.wallet"
 )
 
-func Start() {
-	wallet := GetW()
-	wallet.inspect()
-}
-
 func GetW() *wallet {
 	if w == nil {
 		initializeWallet()
@@ -82,7 +77,7 @@ func newWallet(key *ecdsa.PrivateKey) *wallet {
 	return w
 }
 
-func (w *wallet) inspect() {
+func (w *wallet) Inspect() {
 	fmt.Println("=== Wallet ===")
 	fmt.Println("curve:", w.PublicKey.Curve.Params().B)
 	fmt.Println("address:", w.Address)

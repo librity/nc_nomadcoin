@@ -51,6 +51,11 @@ var data = []endpointDescription{
 	},
 
 	{
+		URL:     url("/wallet/server"),
+		Method:  "GET",
+		Details: "Read the balance and transaction outputs of the server's wallet.",
+	},
+	{
 		URL:     url("/wallet/{address}"),
 		Method:  "GET",
 		Details: "Read the balance and transaction outputs of a wallet.",

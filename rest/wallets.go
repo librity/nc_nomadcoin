@@ -6,6 +6,7 @@ import (
 
 	"github.com/librity/nc_nomadcoin/blockchain"
 	"github.com/librity/nc_nomadcoin/utils"
+	"github.com/librity/nc_nomadcoin/wallet"
 )
 
 type wltResp struct {
@@ -19,19 +20,31 @@ type wltDetailsResp struct {
 	UnspTxOutput []*blockchain.UnspTxOutput `json:"unspTxOutputs"`
 }
 
-func wallet(rw http.ResponseWriter, r *http.Request) {
+func serverWlt(rw http.ResponseWriter, r *http.Request) {
 	details := getQuery(r, "details")
+	address := wallet.GetAddress()
 
 	switch details {
 	case "true":
-		handleFullInfo(rw, r)
+		handleFullInfo(rw, r, address)
 	default:
-		handleBalanceOnly(rw, r)
+		handleBalanceOnly(rw, r, address)
 	}
 }
 
-func handleBalanceOnly(rw http.ResponseWriter, r *http.Request) {
+func wlt(rw http.ResponseWriter, r *http.Request) {
+	details := getQuery(r, "details")
 	address := getParam(r, "address")
+
+	switch details {
+	case "true":
+		handleFullInfo(rw, r, address)
+	default:
+		handleBalanceOnly(rw, r, address)
+	}
+}
+
+func handleBalanceOnly(rw http.ResponseWriter, r *http.Request, address string) {
 	balance := blockchain.BalanceOf(address)
 
 	response := wltResp{
@@ -42,8 +55,7 @@ func handleBalanceOnly(rw http.ResponseWriter, r *http.Request) {
 	utils.HandleError(err)
 }
 
-func handleFullInfo(rw http.ResponseWriter, r *http.Request) {
-	address := getParam(r, "address")
+func handleFullInfo(rw http.ResponseWriter, r *http.Request, address string) {
 	outputs := blockchain.UnspTxOutputsFrom(address)
 	balance := blockchain.SumOverBalance(outputs)
 

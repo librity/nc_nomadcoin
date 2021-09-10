@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/librity/nc_nomadcoin/blockchain"
+	"github.com/librity/nc_nomadcoin/cli"
 	"github.com/librity/nc_nomadcoin/db"
 	"github.com/librity/nc_nomadcoin/wallet"
 )
@@ -11,9 +12,9 @@ import (
 func main() {
 	defer cleanExit()
 
-	walletDemo()
+	// walletDemo()
 	// printChainStatus()
-	// cli.Start()
+	cli.Start()
 }
 
 func printChainStatus() {
@@ -22,7 +23,8 @@ func printChainStatus() {
 }
 
 func walletDemo() {
-	wallet.Start()
+	wallet := wallet.GetW()
+	wallet.Inspect()
 }
 
 func cleanExit() {

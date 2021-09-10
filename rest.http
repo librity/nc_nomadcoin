@@ -18,9 +18,13 @@ http://localhost:5000/blocks/d02cbd2d697ec0e804b4527d36162c47643c9b890e4450da8b7
 
 POST http://localhost:5000/blocks
 
-### Wallet balance
+### Server's wallet details
 
-http://localhost:5000/wallet/lior
+http://localhost:5000/wallet/server
+
+### Wallet details
+
+http://localhost:5000/wallet/224c4ab3ef55080f2fd26c9268e5d134f7cafc0ab44badc2b721d4aaea88bf6ba86225643d2410d7309f5f3fe323fe317b16eb314356f5672ef4b9c9044a75a5
 
 ### Wallet balance and outputs
 
@@ -35,7 +39,7 @@ http://localhost:5000/mempool
 POST http://localhost:5000/transactions
 
 {
-	"to": "waiFu",
+	"to": "224c4ab3ef55080f2fd26c9268e5d134f7cafc0ab44badc2b721d4aaea88bf6ba86225643d2410d7309f5f3fe323fe317b16eb314356f5672ef4b9c9044a75a5",
 	"amount": 51
 }
 

@@ -15,7 +15,8 @@ func loadRoutes() {
 	router.HandleFunc("/blocks", createBlock).Methods("POST")
 	router.HandleFunc("/blocks/{hash:[0-9a-f]+}", block).Methods("GET")
 
-	router.HandleFunc("/wallet/{address}", wallet).Methods("GET")
+	router.HandleFunc("/wallet/server", serverWlt).Methods("GET")
+	router.HandleFunc("/wallet/{address:[0-9a-f]+}", wlt).Methods("GET")
 
 	router.HandleFunc("/mempool", mempool).Methods("GET")
 
