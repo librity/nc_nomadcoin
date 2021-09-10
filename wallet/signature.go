@@ -8,15 +8,16 @@ import (
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
-type Signature struct {
+type signature struct {
 	R *big.Int
 	S *big.Int
 }
 
-func hexSign(hash string, w *wallet) string {
+func hexSign(hash string) string {
 	payloadBytes := utils.HexToBytes(hash)
+	privateKey := GetW().privateKey
 
-	r, s, err := ecdsa.Sign(rand.Reader, w.privateKey, payloadBytes)
+	r, s, err := ecdsa.Sign(rand.Reader, privateKey, payloadBytes)
 	utils.HandleError(err)
 
 	signHex := utils.BigIntsToHex(r, s)
@@ -28,19 +29,19 @@ func verify(signHex, hash, address string) bool {
 	publicKey := addressToPublicKey(address)
 	hashBytes := utils.HexToBytes(hash)
 
-	isValidSignature := ecdsa.Verify(publicKey, hashBytes, signature.R, signature.S)
-	return isValidSignature
+	isValid := ecdsa.Verify(publicKey, hashBytes, signature.R, signature.S)
+	return isValid
 }
 
-func signFromHex(hex string) *Signature {
+func signFromHex(hex string) *signature {
 	r, s := utils.BigIntsFromHex(hex)
 
 	signature := newSignature(r, s)
 	return signature
 }
 
-func newSignature(r *big.Int, s *big.Int) *Signature {
-	signature := &Signature{
+func newSignature(r, s *big.Int) *signature {
+	signature := &signature{
 		R: r,
 		S: s,
 	}

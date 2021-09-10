@@ -55,7 +55,7 @@ func setUnspentOutputs(
 	}
 }
 
-func newUnspentTxOutput(txId string, index uint, amount uint) *UnspentTxOutput {
+func newUnspentTxOutput(txId string, index, amount uint) *UnspentTxOutput {
 	newUnspentOutput := &UnspentTxOutput{
 		TxId:   txId,
 		Index:  index,

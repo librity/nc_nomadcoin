@@ -30,10 +30,10 @@ func main() {
 }
 
 func verify(publicKey *ecdsa.PublicKey, messageHash []byte, signature *Signature) {
-	isValidSignature := ecdsa.Verify(publicKey, messageHash, signature.R, signature.S)
+	isValid := ecdsa.Verify(publicKey, messageHash, signature.R, signature.S)
 
 	fmt.Println("=== Verification ===")
-	if isValidSignature {
+	if isValid {
 		fmt.Println("🔐 Valid signature! 🛡️")
 		return
 	}

@@ -7,17 +7,8 @@ import (
 )
 
 var (
-	ErrBigIntBadBytes = errors.New("bytes array should be 32 in length")
+	ErrBigIntBadBytes = errors.New("byte slice length should equal 32")
 )
-
-func BytesToBigInt(bytes []byte) (*big.Int, error) {
-	if len(bytes) != 32 {
-		return nil, ErrBigIntBadBytes
-	}
-
-	bi := new(big.Int).SetBytes(bytes)
-	return bi, nil
-}
 
 func BigIntsToHex(a, b *big.Int) string {
 	bytes := BigIntsToBytes(a, b)
@@ -49,4 +40,13 @@ func BigIntsFromBytes(aBytes, bBytes []byte) (*big.Int, *big.Int) {
 	HandleError(err)
 
 	return a, b
+}
+
+func BytesToBigInt(bytes []byte) (*big.Int, error) {
+	if len(bytes) != 32 {
+		return nil, ErrBigIntBadBytes
+	}
+
+	bi := new(big.Int).SetBytes(bytes)
+	return bi, nil
 }

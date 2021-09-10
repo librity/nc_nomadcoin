@@ -46,7 +46,7 @@ func makeCoinbaseTx(address string) *Tx {
 	return tx
 }
 
-func makeTx(from string, to string, amount uint) (*Tx, error) {
+func makeTx(from, to string, amount uint) (*Tx, error) {
 	if exceedesBalance(from, amount) {
 		return nil, ErrNotEnoughMoney
 	}
@@ -76,7 +76,7 @@ func makeInputs(from string, amount uint) ([]*TxInput, uint) {
 	return inputs, total
 }
 
-func makeOutputs(from string, to string, amount uint, total uint) []*TxOutput {
+func makeOutputs(from, to string, amount, total uint) []*TxOutput {
 	toOutput := newTxOutput(to, amount)
 	outputs := []*TxOutput{toOutput}
 	change := total - amount
