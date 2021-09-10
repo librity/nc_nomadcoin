@@ -13,6 +13,7 @@ const (
 
 var (
 	ErrNotEnoughMoney = errors.New("not enough money")
+	ErrInvalidTx      = errors.New("transaction signature verification failed")
 )
 
 // Transaction
@@ -37,13 +38,8 @@ func (t *Tx) sign() {
 
 func (t *Tx) isValid() bool {
 	for _, input := range t.Inputs {
-		creatorTx, err := FindTx(input.TxId)
-		if err == ErrTxNotFound {
-			return false
-		}
-
-		creatorOutput := creatorTx.Outputs[input.Index]
-		if creatorOutput == nil {
+		creatorOutput, err := findCreatorOutput(input)
+		if err != nil {
 			return false
 		}
 
@@ -67,7 +63,6 @@ func newTx(inputs []*TxInput, outputs []*TxOutput) *Tx {
 		Outputs:   outputs,
 	}
 	tx.setId()
-	tx.sign()
 
 	return &tx
 }
@@ -77,7 +72,7 @@ func makeCoinbaseTx(address string) *Tx {
 		newCoinbaseTxInput(),
 	}
 	outputs := []*TxOutput{
-		{address, minerReward},
+		newTxOutput(address, minerReward),
 	}
 	tx := newTx(inputs, outputs)
 
@@ -92,6 +87,10 @@ func makeTx(from, to string, amount uint) (*Tx, error) {
 	inputs, total := makeInputs(from, amount)
 	outputs := makeOutputs(from, to, amount, total)
 	tx := newTx(inputs, outputs)
+	tx.sign()
+	if !tx.isValid() {
+		return nil, ErrInvalidTx
+	}
 
 	return tx, nil
 }
@@ -120,10 +119,7 @@ func makeOutputs(from, to string, amount, total uint) []*TxOutput {
 	change := total - amount
 
 	if change > 0 {
-		changeOutput := &TxOutput{
-			Address: from,
-			Amount:  change,
-		}
+		changeOutput := newTxOutput(from, change)
 		outputs = append(outputs, changeOutput)
 	}
 

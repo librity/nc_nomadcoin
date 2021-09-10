@@ -3,7 +3,7 @@ package blockchain
 import "errors"
 
 var (
-	ErrTxNotFound = errors.New("not enough money")
+	ErrTxNotFound = errors.New("transaction not found")
 )
 
 func GetTxs() []*Tx {
