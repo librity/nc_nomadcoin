@@ -9,7 +9,7 @@ import (
 )
 
 func blocksIndex(rw http.ResponseWriter, r *http.Request) {
-	blocks := blockchain.Blocks()
+	blocks := blockchain.GetBlocks()
 
 	json.NewEncoder(rw).Encode(blocks)
 }

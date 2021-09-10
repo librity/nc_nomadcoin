@@ -1,12 +1,12 @@
 package blockchain
 
 func BalanceOf(address string) uint {
-	outputs := UnspentTxOutputsFrom(address)
+	outputs := UnspTxOutputsFrom(address)
 
 	return SumOverBalance(outputs)
 }
 
-func SumOverBalance(outputs []*UnspentTxOutput) uint {
+func SumOverBalance(outputs []*UnspTxOutput) uint {
 	balance := uint(0)
 
 	for _, output := range outputs {

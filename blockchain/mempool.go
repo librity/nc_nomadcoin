@@ -31,7 +31,7 @@ func (m *mempool) popAll() []*Tx {
 	return txs
 }
 
-func isOnMempool(unspentOutput *UnspentTxOutput) bool {
+func isOnMempool(unspentOutput *UnspTxOutput) bool {
 	for _, transaction := range Mempool.Transactions {
 		for _, input := range transaction.Inputs {
 			sameTxId := input.TxId == unspentOutput.TxId

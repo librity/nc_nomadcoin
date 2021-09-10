@@ -5,16 +5,16 @@ const (
 )
 
 type TxInput struct {
-	TxId  string `json:"transactionId"`
-	Index uint   `json:"index"`
-	Owner string `json:"owner"`
+	TxId      string `json:"transactionId"`
+	Index     uint   `json:"index"`
+	Signature string `json:"signature"`
 }
 
-func newTxInput(unspentOutput *UnspentTxOutput, address string) *TxInput {
+func newTxInput(unspentOutput *UnspTxOutput, signature string) *TxInput {
 	newInput := &TxInput{
-		TxId:  unspentOutput.TxId,
-		Index: unspentOutput.Index,
-		Owner: address,
+		TxId:      unspentOutput.TxId,
+		Index:     unspentOutput.Index,
+		Signature: signature,
 	}
 
 	return newInput
@@ -22,9 +22,9 @@ func newTxInput(unspentOutput *UnspentTxOutput, address string) *TxInput {
 
 func newCoinbaseTxInput() *TxInput {
 	coinbaseInput := &TxInput{
-		TxId:  "",
-		Index: 0,
-		Owner: coinbaseCode,
+		TxId:      "",
+		Index:     0,
+		Signature: coinbaseCode,
 	}
 
 	return coinbaseInput

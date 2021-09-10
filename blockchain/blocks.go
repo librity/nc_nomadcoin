@@ -1,10 +1,17 @@
 package blockchain
 
 import (
+	"errors"
 	"fmt"
+
+	"github.com/librity/nc_nomadcoin/db"
 )
 
-func Blocks() []*Block {
+var (
+	ErrBlockNotFound = errors.New("block not found")
+)
+
+func GetBlocks() []*Block {
 	var blocks []*Block
 	currentHash := GetBC().LastHash
 
@@ -19,6 +26,16 @@ func Blocks() []*Block {
 	}
 
 	return blocks
+}
+
+func FindBlock(hash string) (*Block, error) {
+	rawBlock := db.LoadBlock(hash)
+	if rawBlock == nil {
+		return nil, ErrBlockNotFound
+	}
+
+	block := blockFromBytes(rawBlock)
+	return block, nil
 }
 
 func LastNBlocks(n int) []*Block {
@@ -41,7 +58,7 @@ func LastNBlocks(n int) []*Block {
 func InspectBlocks() {
 	fmt.Println("=== Blocks ===")
 
-	blocks := Blocks()
+	blocks := GetBlocks()
 	for _, block := range blocks {
 		block.inspect()
 	}

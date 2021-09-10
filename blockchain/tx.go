@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/librity/nc_nomadcoin/utils"
+	"github.com/librity/nc_nomadcoin/wallet"
 )
 
 const (
@@ -22,6 +23,42 @@ type Tx struct {
 	Outputs   []*TxOutput `json:"outputs"`
 }
 
+func (t *Tx) setId() {
+	t.Id = utils.HexHash(t)
+}
+
+func (t *Tx) sign() {
+	hash := t.Id
+
+	for _, input := range t.Inputs {
+		input.Signature = wallet.HexSign(hash)
+	}
+}
+
+func (t *Tx) isValid() bool {
+	for _, input := range t.Inputs {
+		creatorTx, err := FindTx(input.TxId)
+		if err == ErrTxNotFound {
+			return false
+		}
+
+		creatorOutput := creatorTx.Outputs[input.Index]
+		if creatorOutput == nil {
+			return false
+		}
+
+		hash := t.Id
+		signHex := input.Signature
+		address := creatorOutput.Address
+		isValid := wallet.Verify(hash, signHex, address)
+		if !isValid {
+			return false
+		}
+	}
+
+	return true
+}
+
 func newTx(inputs []*TxInput, outputs []*TxOutput) *Tx {
 	tx := Tx{
 		Id:        "",
@@ -30,6 +67,7 @@ func newTx(inputs []*TxInput, outputs []*TxOutput) *Tx {
 		Outputs:   outputs,
 	}
 	tx.setId()
+	tx.sign()
 
 	return &tx
 }
@@ -61,7 +99,7 @@ func makeTx(from, to string, amount uint) (*Tx, error) {
 func makeInputs(from string, amount uint) ([]*TxInput, uint) {
 	var inputs []*TxInput
 	total := uint(0)
-	unspentOutputs := UnspentTxOutputsFrom(from)
+	unspentOutputs := UnspTxOutputsFrom(from)
 
 	for _, unspentOutput := range unspentOutputs {
 		if total >= amount {
@@ -83,8 +121,8 @@ func makeOutputs(from, to string, amount, total uint) []*TxOutput {
 
 	if change > 0 {
 		changeOutput := &TxOutput{
-			Owner:  from,
-			Amount: change,
+			Address: from,
+			Amount:  change,
 		}
 		outputs = append(outputs, changeOutput)
 	}
@@ -95,8 +133,4 @@ func makeOutputs(from, to string, amount, total uint) []*TxOutput {
 func exceedesBalance(from string, amount uint) bool {
 	fromBalance := BalanceOf(from)
 	return fromBalance < amount
-}
-
-func (t *Tx) setId() {
-	t.Id = utils.HexHash(t)
 }

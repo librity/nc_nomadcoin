@@ -13,7 +13,7 @@ type signature struct {
 	S *big.Int
 }
 
-func hexSign(hash string) string {
+func HexSign(hash string) string {
 	payloadBytes := utils.HexToBytes(hash)
 	privateKey := GetW().privateKey
 
@@ -24,7 +24,7 @@ func hexSign(hash string) string {
 	return signHex
 }
 
-func verify(signHex, hash, address string) bool {
+func Verify(hash, signHex, address string) bool {
 	signature := signFromHex(signHex)
 	publicKey := addressToPublicKey(address)
 	hashBytes := utils.HexToBytes(hash)
