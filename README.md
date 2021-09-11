@@ -79,6 +79,19 @@ http://localhost:4000
 
 http://localhost:5000
 
+### Web Sockets Chat example
+
+From the project's root run
+
+```bash
+$ go run examples/chat/chat.go
+```
+
+Then open one of the demos in your web browser:
+
+- Ping demo: http://localhost:7000/static/ping_chat.html
+- Echo demo: http://localhost:7000/static/echo_chat.html
+
 ## Notes <a name = "notes"></a>
 
 ### Go Routines and Channels
@@ -251,6 +264,9 @@ Public key is the (x,y) coordinates of a point in an elliptic curve:
 - https://github.com/br0xen/boltbrowser
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 - https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+- https://javascript.info/websocket
+- https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
+- https://www.javatpoint.com/how-to-add-javascript-to-html
 
 ### Go
 
