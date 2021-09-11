@@ -22,8 +22,11 @@ func loadRoutes() {
 	router.HandleFunc("/mempool", mempool).Methods("GET")
 
 	router.HandleFunc("/transactions", createTransaction).Methods("POST")
+
+	router.HandleFunc("/web_sockets/upgrade", upgradeToWebSockets).Methods("GET")
 }
 
 func loadMiddlewares() {
-	router.Use(jsonContentTypeMiddleware)
+	router.Use(loggerMw)
+	router.Use(jsonContentTypeMw)
 }

@@ -44,6 +44,7 @@ Install the latest version of `Go`, then install external dependencies:
 go get -u github.com/gorilla/mux
 go get -u github.com/boltdb/bolt
 go get -u github.com/evnix/boltdbweb
+go get -u github.com/gorilla/websocket
 ```
 
 ### Installing
@@ -221,6 +222,7 @@ Public key is the (x,y) coordinates of a point in an elliptic curve:
 - https://pkg.go.dev/os#WriteFile
 - https://pkg.go.dev/builtin#close
 - https://github.com/gorilla/mux
+- https://github.com/gorilla/websocket
 - https://github.com/boltdb/bolt
 
 ## Docs <a name = "docs"></a>

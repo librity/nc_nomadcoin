@@ -66,6 +66,12 @@ var data = []endpointDescription{
 		Method:  "GET",
 		Details: "Get all unconfirmed transactions waiting in the mempool.",
 	},
+
+	{
+		URL:     url("/web_socket/upgrade"),
+		Method:  "GET",
+		Details: "Upgrade connection to Web Sockets.",
+	},
 }
 
 func documentation(rw http.ResponseWriter, r *http.Request) {
