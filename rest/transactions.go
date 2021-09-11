@@ -2,7 +2,6 @@ package rest
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/librity/nc_nomadcoin/blockchain"
@@ -21,9 +20,8 @@ func createTransaction(rw http.ResponseWriter, r *http.Request) {
 
 	err = blockchain.Mempool.AddTx(payload.To, payload.Amount)
 	if err == blockchain.ErrNotEnoughMoney {
-		rw.WriteHeader(http.StatusForbidden)
-		message := fmt.Sprint(err)
-		json.NewEncoder(rw).Encode(errResp{message})
+		rw.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(rw).Encode(errResp{err.Error()})
 		return
 	}
 

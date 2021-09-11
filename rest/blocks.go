@@ -2,7 +2,6 @@ package rest
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/librity/nc_nomadcoin/blockchain"
@@ -26,8 +25,7 @@ func block(rw http.ResponseWriter, r *http.Request) {
 	block, err := blockchain.FindBlock(hash)
 	if err == blockchain.ErrBlockNotFound {
 		rw.WriteHeader(http.StatusNotFound)
-		message := fmt.Sprint(err)
-		encoder.Encode(errResp{message})
+		encoder.Encode(errResp{err.Error()})
 		return
 	}
 

@@ -22,7 +22,7 @@ func findCreatorOutput(input *TxInput) (*TxOutput, error) {
 		return nil, err
 	}
 
-	creatorOutput := creatorTx.Outputs[input.Index]
+	creatorOutput := creatorTx.Outputs[input.OutputIndex]
 	if creatorOutput == nil {
 		return nil, ErrTxOutputNotFound
 	}

@@ -51,6 +51,6 @@ func loadRoutes() {
 }
 
 func listenOrDie() {
-	fmt.Printf("HTML Explorer listening on %s\n", baseURL)
+	fmt.Printf("🧭 HTML Explorer listening on %s\n", baseURL)
 	log.Fatal(http.ListenAndServe(port, handler))
 }

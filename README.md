@@ -51,7 +51,7 @@ go get -u github.com/evnix/boltdbweb
 ```bash
 $ git clone https://github.com/librity/nc_nomadcoin
 $ cd nc_nomadcoin
-$ go run main.go
+$ go run main.go both
 ```
 
 Automagically analyze race conditions during compilation:
@@ -69,6 +69,14 @@ $ go run main.go rest -port=PORT                # Start the REST API (recommende
 $ go run main.go explorer -port=PORT            # Start the HTLM Explorer
 $ go run main.go both -ePort=PORT -rPort=PORT   # Start both REST API and HTML Explorer
 ```
+
+### HTLM Explorer
+
+http://localhost:4000
+
+### REST API
+
+http://localhost:5000
 
 ## Notes <a name = "notes"></a>
 

@@ -35,7 +35,7 @@ func isOnMempool(unspentOutput *UnspTxOutput) bool {
 	for _, transaction := range Mempool.Transactions {
 		for _, input := range transaction.Inputs {
 			sameTxId := input.TxId == unspentOutput.TxId
-			sameIndex := input.Index == unspentOutput.Index
+			sameIndex := input.OutputIndex == unspentOutput.Index
 			outputIsOnMempool := sameTxId && sameIndex
 
 			if outputIsOnMempool {

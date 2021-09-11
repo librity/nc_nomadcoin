@@ -32,6 +32,6 @@ func setEnvVars(portNum int) {
 }
 
 func listenOrDie() {
-	fmt.Printf("REST API listening on %s\n", baseURL)
+	fmt.Printf("🤖 REST API listening on %s\n", baseURL)
 	log.Fatal(http.ListenAndServe(port, router))
 }
