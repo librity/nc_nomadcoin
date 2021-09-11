@@ -80,6 +80,20 @@ http://localhost:5000
 
 ## Notes <a name = "notes"></a>
 
+### Go Routines and Channels
+
+- Reading from a channel without an active go routines will create a panic.
+- Reading from a closed channel will return `nil`
+  or the type equivalent (`0`, `""`, etc.)
+- Closing a closed channel will create a panic.
+- Sending to a closed channel will create a panic.
+- Channels can be Read-only (`<-chan`) or Send-only (`chan<-`).
+- Both sending and receiveing are blocking operations
+  for unbuffered channels.
+- Buffered channels have a non-blocking queue of messages
+  (`make(chan int, BUFFER_SIZE)`).
+  Sending and receiving become blocking operations once the queue is full.
+
 ### One-way hash functions
 
 Deterministic, easy to compute, hard to invert:

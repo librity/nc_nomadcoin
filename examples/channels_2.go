@@ -1,10 +1,9 @@
 package main
 
-// RECAP:
-// 1. Reading from a channel without active go routines will create a panic
-// 2. Reading from a closed channel will return null
-// 3. Closing a closed channel will create a panic
-// 4. Sending to a closed channel will create a panic
+// - Reading from a channel without active go routines will create a panic
+// - Reading from a closed channel will return null
+// - Closing a closed channel will create a panic
+// - Sending to a closed channel will create a panic
 
 import (
 	"bufio"
