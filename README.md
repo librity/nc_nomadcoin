@@ -30,7 +30,7 @@ A fully-featured blockchain and cryptocurrency using the Go programming language
 - [x] Database Backend
 - [x] Mining
 - [x] Transactions
-- [ ] Wallets
+- [x] Wallets
 - [ ] P2P (Websockets)
 - [ ] Unit Testing
 
@@ -261,6 +261,7 @@ Public key is the (x,y) coordinates of a point in an elliptic curve:
 - https://stackoverflow.com/questions/2809543/pointer-to-a-map
 - https://medium.com/golangspec/labels-in-go-4ffd81932339
 - https://stackoverflow.com/questions/24757814/golang-convert-byte-array-to-big-int
+- https://stackoverflow.com/questions/33832762/how-do-i-make-a-go-program-wait-until-there-is-user-input
 
 ### Go templates
 
