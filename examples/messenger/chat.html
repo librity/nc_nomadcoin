@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      const socket = new WebSocket("ws://localhost:5000/web_sockets/upgrade");
+      var isConnected = true;
+
+      socket.addEventListener("close", () => {
+        console.log("Websocket connection terminated from", socket.url);
+        isConnected = false;
+      });
+
+      setTimeout(() => {
+        sendAlert();
+        socket.send("Message from the browser through web sockets!");
+      }, 3000);
+
+      setTimeout(() => {
+        sendAlert();
+        socket.send("Another message from the browser through web sockets!");
+      }, 6000);
+
+      setTimeout(() => {
+        sendAlert();
+        socket.send(
+          "Yet another message from the browser through web sockets!"
+        );
+      }, 9000);
+
+      ping();
+
+      function ping() {
+        setTimeout(() => {
+          if (!isConnected) {
+            return;
+          }
+
+          sendAlert();
+          socket.send("Ping");
+
+          ping();
+        }, 1000);
+      }
+
+      function sendAlert() {
+        console.log("Sending message to", socket.url);
+      }
+    </script>
+  </body>
+</html>
