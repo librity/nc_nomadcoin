@@ -1,49 +1,106 @@
 package main
 
+// RECAP:
+// 1. Reading from a channel without active go routines will create a panic
+// 2. Reading from a closed channel will return null
+// 3. Closing a closed channel will create a panic
+// 4. Sending to a closed channel will create a panic
+
 import (
 	"bufio"
 	"fmt"
-	"math/rand"
 	"os"
 	"time"
-
-	"github.com/librity/nc_nomadcoin/utils"
 )
 
 const (
-	countCap    = 20
-	durationCap = 1000
+	routines   = 2
+	countCap   = 2
+	countTotal = routines * countCap
+	interval   = time.Duration(1000) * time.Millisecond
 )
 
 func main() {
-	labels := [...]string{"first", "second", "third"}
-	channel := make(chan string)
-
-	for _, label := range labels {
-		go randomCounter(label, channel)
-	}
-
-	for _ = range labels {
-		result := <-channel
-		fmt.Println(result)
-	}
+	// go chanDemo()
+	// go chanDemo()
+	// chanDemo()
+	chanDemo()
 
 	wait()
 }
 
-func randomCounter(label string, channel chan string) {
-	utils.SeedRandom()
-	randomCount := rand.Intn(countCap)
-	utils.SeedRandom()
-	randomDuration := rand.Intn(durationCap)
-	interval := time.Duration(randomDuration) * time.Millisecond
+func chanDemo() {
+	c := make(chan int)
 
-	for i := 0; i < randomCount; i++ {
-		fmt.Println(label, i)
-		time.Sleep(interval)
+	launchRoutines(c)
+	// receiveAllAndClose(c)
+	// receiveResultSafe(c)
+	deadlockAndDie(c)
+	deadlockAndDie(c)
+	// sendAndDie(c)
+	// closeAndDie(c)
+}
+
+func launchRoutines(c chan int) {
+	for id := 0; id < routines; id++ {
+		go count(id, c)
+	}
+}
+
+func receiveAllAndClose(c chan int) {
+	for i := 0; i < countTotal; i++ {
+		receiveResultSafe(c)
 	}
 
-	channel <- label + " finished counting!"
+	fmt.Println("MAIN: Closing channel.", c)
+	close(c)
+}
+
+func receiveResultSafe(c chan int) {
+	fmt.Println("MAIN: Blocked, awaiting result...")
+
+	result, ok := <-c
+	if !ok {
+		fmt.Println("MAIN: Unblocked, channel", c, "is closed")
+		fmt.Println("---")
+		return
+	}
+
+	fmt.Println("MAIN: Unblocked, result received.")
+	fmt.Println("MAIN: result:", result)
+	fmt.Println("---")
+}
+
+func deadlockAndDie(c chan int) {
+	fmt.Println("MAIN: Deadlock, will panic and exit unless channel", c, "has been closed")
+	receiveResult(c)
+}
+
+func receiveResult(c chan int) {
+	fmt.Println("MAIN: Blocked, awaiting result...")
+	result := <-c
+	fmt.Println("MAIN: Unblocked, result received.")
+	fmt.Println("MAIN: result:", result)
+	fmt.Println("---")
+}
+
+func closeAndDie(c chan int) {
+	fmt.Println("MAIN: Will panic and exit if channel", c, "has been closed already")
+	close(c)
+}
+
+func sendAndDie(c chan int) {
+	fmt.Println("MAIN: Will panic and exit if channel", c, "has been closed already")
+	c <- 1
+}
+
+func count(id int, c chan int) {
+	for i := 0; i < countCap; i++ {
+		time.Sleep(interval)
+
+		fmt.Println("ROUTINE", id, ": sending", i)
+		c <- i
+	}
 }
 
 func wait() {

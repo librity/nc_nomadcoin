@@ -9,7 +9,7 @@ import (
 
 const (
 	routines   = 3
-	countCap   = 5
+	countCap   = 3
 	countTotal = routines * countCap
 	interval   = time.Duration(1000) * time.Millisecond
 )
