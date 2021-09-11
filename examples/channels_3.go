@@ -3,47 +3,77 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"math/rand"
 	"os"
 	"time"
-
-	"github.com/librity/nc_nomadcoin/utils"
 )
 
 const (
-	countCap    = 20
-	durationCap = 1000
+	routines   = 2
+	countCap   = 2
+	countTotal = routines * countCap
+	interval   = time.Duration(1000) * time.Millisecond
 )
 
 func main() {
-	labels := [...]string{"first", "second", "third"}
-	channel := make(chan string)
-
-	for _, label := range labels {
-		go randomCounter(label, channel)
-	}
-
-	for _ = range labels {
-		result := <-channel
-		fmt.Println(result)
-	}
+	chanDemo()
 
 	wait()
 }
 
-func randomCounter(label string, channel chan string) {
-	utils.SeedRandom()
-	randomCount := rand.Intn(countCap)
-	utils.SeedRandom()
-	randomDuration := rand.Intn(durationCap)
-	interval := time.Duration(randomDuration) * time.Millisecond
+func chanDemo() {
+	c := make(chan int)
 
-	for i := 0; i < randomCount; i++ {
-		fmt.Println(label, i)
-		time.Sleep(interval)
+	launchRoutines(c)
+
+	receiveAllAndClose(c)
+}
+
+// Send-only channel
+func launchRoutines(c chan<- int) {
+	// ERROR:
+	// a := <-c
+
+	for id := 0; id < routines; id++ {
+		go count(id, c)
+	}
+}
+
+func receiveAllAndClose(c chan int) {
+	for i := 0; i < countTotal; i++ {
+		receiveResultSafe(c)
 	}
 
-	channel <- label + " finished counting!"
+	// Cannot close a receive-only channel
+	close(c)
+	fmt.Println("MAIN: Closing channel.", c)
+}
+
+// Receive-only channel
+func receiveResultSafe(c <-chan int) {
+	// ERROR:
+	// c <- 1
+
+	fmt.Println("MAIN: Blocked, awaiting result...")
+
+	result, ok := <-c
+	if !ok {
+		fmt.Println("MAIN: Unblocked, channel", c, "is closed")
+		fmt.Println("---")
+		return
+	}
+
+	fmt.Println("MAIN: Unblocked, result received.")
+	fmt.Println("MAIN: result:", result)
+	fmt.Println("---")
+}
+
+func count(id int, c chan<- int) {
+	for i := 0; i < countCap; i++ {
+		time.Sleep(interval)
+
+		fmt.Println("ROUTINE", id, ": sending", i)
+		c <- i
+	}
 }
 
 func wait() {
