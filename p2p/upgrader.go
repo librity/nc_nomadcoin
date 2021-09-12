@@ -2,30 +2,37 @@ package p2p
 
 import (
 	"net/http"
-	"strings"
 
 	"github.com/gorilla/websocket"
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
-var (
-	upgrader = websocket.Upgrader{
-		CheckOrigin: checkOrigin,
-	}
-)
-
-// NOT SAFE AT ALL
-func checkOrigin(r *http.Request) bool { return true }
-
 func Upgrade(rw http.ResponseWriter, r *http.Request) {
+	upgrader, ip, port := buildUpgrader(r)
 	seniorConn, err := upgrader.Upgrade(rw, r, nil)
 	utils.PanicError(err)
 
-	address := parseAddress(r.RemoteAddr)
-	port := utils.GetQuery(r, "thisPort")
-	initPeer(address, port, seniorConn)
+	initPeer(ip, port, seniorConn)
 }
 
-func parseAddress(remoteAddress string) string {
-	return strings.Split(remoteAddress, ":")[0]
+func buildUpgrader(r *http.Request) (*websocket.Upgrader, string, string) {
+	ip := parseIP(r.RemoteAddr)
+	port := utils.GetQuery(r, "thisPort")
+	checkOrigin := func(r *http.Request) bool {
+		if ip == "" {
+			return false
+		}
+		if port == "" {
+			return false
+		}
+
+		return true
+	}
+
+	upgrader := &websocket.Upgrader{CheckOrigin: checkOrigin}
+	return upgrader, ip, port
+}
+
+func parseIP(RemoteAddr string) string {
+	return utils.SafeSplit(RemoteAddr, ":", 0)
 }

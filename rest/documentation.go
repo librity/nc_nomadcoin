@@ -82,7 +82,7 @@ var data = []endpointDescription{
 		URL:     url("/peers"),
 		Method:  "POST",
 		Details: "Receiver connects to requester as peer though web sockets.",
-		Payload: "address:string,port:string",
+		Payload: "ip:string,port:string",
 	},
 	{
 		URL:     url("/peers/upgrade"),

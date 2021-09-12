@@ -9,7 +9,7 @@ import (
 )
 
 type addPeerPayload struct {
-	Address, Port string
+	IP, Port string
 }
 
 func peersIndex(rw http.ResponseWriter, r *http.Request) {
@@ -23,7 +23,7 @@ func addPeer(rw http.ResponseWriter, r *http.Request) {
 	utils.PanicError(err)
 
 	thisPort := cleanPort()
-	p2p.AddPeer(payload.Address, payload.Port, thisPort)
+	p2p.AddPeer(payload.IP, payload.Port, thisPort)
 	rw.WriteHeader(http.StatusOK)
 }
 

@@ -77,7 +77,7 @@ http://localhost:4000
 
 ### REST API
 
-http://localhost:5000
+http://localhost:5001
 
 ### Web Sockets Chat demo
 

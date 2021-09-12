@@ -14,9 +14,9 @@ var (
 	Peers = make(map[string]*peer)
 )
 
-func initPeer(address, port string, conn *websocket.Conn) *peer {
+func initPeer(ip, port string, conn *websocket.Conn) *peer {
 	peer := newPeer(conn)
-	key := fmt.Sprintf("%s:%s", address, port)
+	key := fmt.Sprintf("%s:%s", ip, port)
 	Peers[key] = peer
 
 	return peer

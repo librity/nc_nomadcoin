@@ -7,11 +7,20 @@ import (
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
-func AddPeer(address, port, thisPort string) {
-	format := "ws://%s:%s/peers/upgrade?thisPort=%s"
-	url := fmt.Sprintf(format, address, port, thisPort)
+const (
+	WSURLformat = "ws://%s:%s/peers/upgrade?thisPort=%s"
+)
+
+func AddPeer(ip, port, thisPort string) {
+	url := makeWSURL(ip, port, thisPort)
 	juniorConn, _, err := websocket.DefaultDialer.Dial(url, nil)
 	utils.PanicError(err)
 
-	initPeer(address, port, juniorConn)
+	initPeer(ip, port, juniorConn)
+}
+
+func makeWSURL(ip, port, thisPort string) string {
+	url := fmt.Sprintf(WSURLformat, ip, port, thisPort)
+
+	return url
 }

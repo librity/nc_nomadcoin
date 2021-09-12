@@ -12,7 +12,7 @@ func handleBoth() {
 	var (
 		command   = flag.NewFlagSet("both", flag.ExitOnError)
 		ePortFlag = command.Int("ePort", 4000, "Sets the port of the HTML Explorer server")
-		rPortFlag = command.Int("rPort", 5000, "Sets the port of the REST API server")
+		rPortFlag = command.Int("rPort", 5001, "Sets the port of the REST API server")
 	)
 	command.Parse(os.Args[2:])
 	ePort := *ePortFlag
