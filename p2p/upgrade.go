@@ -7,7 +7,7 @@ import (
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
-func Upgrade(rw http.ResponseWriter, r *http.Request) {
+func UpgradePeer(rw http.ResponseWriter, r *http.Request) {
 	upgrader, ip, port := buildUpgrader(r)
 	seniorConn, err := upgrader.Upgrade(rw, r, nil)
 	utils.PanicError(err)

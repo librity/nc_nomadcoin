@@ -27,6 +27,6 @@ func addPeer(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 }
 
-func upgradeToWebSockets(rw http.ResponseWriter, r *http.Request) {
-	p2p.Upgrade(rw, r)
+func upgradePeer(rw http.ResponseWriter, r *http.Request) {
+	p2p.UpgradePeer(rw, r)
 }

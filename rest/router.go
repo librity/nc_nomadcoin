@@ -26,7 +26,7 @@ func loadRoutes() {
 
 	router.HandleFunc("/peers", peersIndex).Methods("GET")
 	router.HandleFunc("/peers", addPeer).Methods("POST")
-	router.HandleFunc("/peers/upgrade", upgradeToWebSockets).Methods("GET")
+	router.HandleFunc("/peers/upgrade", upgradePeer).Methods("GET")
 }
 
 func loadMiddlewares() {
