@@ -21,7 +21,7 @@ type wltDetailsResp struct {
 }
 
 func serverWlt(rw http.ResponseWriter, r *http.Request) {
-	details := getQuery(r, "details")
+	details := utils.GetQuery(r, "details")
 	address := wallet.GetAddress()
 
 	switch details {
@@ -33,8 +33,8 @@ func serverWlt(rw http.ResponseWriter, r *http.Request) {
 }
 
 func wlt(rw http.ResponseWriter, r *http.Request) {
-	details := getQuery(r, "details")
-	address := getParam(r, "address")
+	details := utils.GetQuery(r, "details")
+	address := utils.GetParam(r, "address")
 
 	switch details {
 	case "true":

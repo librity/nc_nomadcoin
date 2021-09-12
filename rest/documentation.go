@@ -74,16 +74,20 @@ var data = []endpointDescription{
 	},
 
 	{
-		URL:     url("/web_socket/upgrade"),
+		URL:     url("/peers"),
 		Method:  "GET",
-		Details: "Upgrade connection to Web Sockets.",
+		Details: "Get all connected peers.",
 	},
-
 	{
 		URL:     url("/peers"),
 		Method:  "POST",
 		Details: "Receiver connects to requester as peer though web sockets.",
 		Payload: "address:string,port:string",
+	},
+	{
+		URL:     url("/peers/upgrade"),
+		Method:  "GET",
+		Details: "Upgrade connection to Web Sockets.",
 	},
 }
 

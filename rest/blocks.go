@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/librity/nc_nomadcoin/blockchain"
+	"github.com/librity/nc_nomadcoin/utils"
 )
 
 func blocksIndex(rw http.ResponseWriter, r *http.Request) {
@@ -19,7 +20,7 @@ func createBlock(rw http.ResponseWriter, r *http.Request) {
 }
 
 func block(rw http.ResponseWriter, r *http.Request) {
-	hash := getParam(r, "hash")
+	hash := utils.GetParam(r, "hash")
 	encoder := json.NewEncoder(rw)
 
 	block, err := blockchain.FindBlock(hash)

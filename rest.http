@@ -43,6 +43,10 @@ POST http://localhost:5000/transactions
 	"amount": 51
 }
 
+### Peers index
+
+http://localhost:5000/peers
+
 ### Connect to peer
 
 POST http://localhost:5000/peers

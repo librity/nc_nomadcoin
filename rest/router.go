@@ -24,6 +24,7 @@ func loadRoutes() {
 	// router.HandleFunc("/transactions", transactionsIndex).Methods("GET")
 	router.HandleFunc("/transactions", createTransaction).Methods("POST")
 
+	router.HandleFunc("/peers", peersIndex).Methods("GET")
 	router.HandleFunc("/peers", addPeer).Methods("POST")
 	router.HandleFunc("/peers/upgrade", upgradeToWebSockets).Methods("GET")
 }

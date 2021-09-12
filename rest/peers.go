@@ -9,7 +9,12 @@ import (
 )
 
 type addPeerPayload struct {
-	address, port string
+	Address, Port string
+}
+
+func peersIndex(rw http.ResponseWriter, r *http.Request) {
+	peers := p2p.Peers
+	json.NewEncoder(rw).Encode(peers)
 }
 
 func addPeer(rw http.ResponseWriter, r *http.Request) {
@@ -17,7 +22,8 @@ func addPeer(rw http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&payload)
 	utils.PanicError(err)
 
-	p2p.AddPeer(payload.address, payload.port)
+	thisPort := cleanPort()
+	p2p.AddPeer(payload.Address, payload.Port, thisPort)
 	rw.WriteHeader(http.StatusOK)
 }
 
