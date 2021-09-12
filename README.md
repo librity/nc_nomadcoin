@@ -79,7 +79,7 @@ http://localhost:4000
 
 http://localhost:5000
 
-### Web Sockets Chat example
+### Web Sockets Chat demo
 
 From the project's root run
 
@@ -89,8 +89,9 @@ $ go run examples/chat/chat.go
 
 Then open one of the demos in your web browser:
 
-- Ping demo: http://localhost:7000/static/ping_chat.html
-- Echo demo: http://localhost:7000/static/echo_chat.html
+- Ping demo: http://localhost:7000/static/ping_demo.html
+- Echo demo: http://localhost:7000/static/echo_demo.html
+- Broadcast demo: http://localhost:7000/static/broadcast_demo.html
 
 ## Notes <a name = "notes"></a>
 
@@ -207,6 +208,30 @@ Public key is the (x,y) coordinates of a point in an elliptic curve:
     <img src=".github/ecc.png" />
 </p>
 
+### Cryptocurrency Investment Advice
+
+This what I've gathered from all my research, merely my opinion.
+
+- Only bet what you can afford to loose.
+- Don't bet on anything you don't understand.
+- Don't bet on anything you haven't read the code.
+- A blockchain is only as good as its dev community.
+- Bet on engineering, not marketability.
+- "I am an adult and everything I do is my responsibility."
+- Don't be this guy:
+
+<p align="center">
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube-nocookie.com/embed/61i2iDz7u04"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</p>
+
 ## Libs <a name = "libs"></a>
 
 - https://pkg.go.dev/fmt#Printf
@@ -295,6 +320,7 @@ Public key is the (x,y) coordinates of a point in an elliptic curve:
 - https://medium.com/golangspec/labels-in-go-4ffd81932339
 - https://stackoverflow.com/questions/24757814/golang-convert-byte-array-to-big-int
 - https://stackoverflow.com/questions/33832762/how-do-i-make-a-go-program-wait-until-there-is-user-input
+- https://stackoverflow.com/questions/37334119/how-to-delete-an-element-from-a-slice-in-golang
 
 ### Go templates
 
@@ -346,7 +372,7 @@ Public key is the (x,y) coordinates of a point in an elliptic curve:
 - https://www.favicon-generator.org/search/---/Coin
 - https://www.favicon.cc/?action=icon&file_id=138923
 
-### Misc
+### Golang's `http.server` architecture
 
 <p align="center">
     <img src=".github/golang_multiplexer.png" />

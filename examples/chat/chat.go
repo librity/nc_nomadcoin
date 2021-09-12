@@ -11,19 +11,21 @@ import (
 )
 
 const (
-	port    string = ":7000"
-	baseURL string = "http://localhost" + port
+	port    = ":7000"
+	baseURL = "http://localhost" + port
 
-	staticDir   string = "examples/chat"
-	staticRoute string = "/static/"
+	staticDir   = "examples/chat"
+	staticRoute = "/static/"
+	staticURL   = baseURL + staticRoute
 )
 
 var (
 	handler *http.ServeMux = http.NewServeMux()
 
 	upgrader = websocket.Upgrader{
-		CheckOrigin: checkOrigin,
+		CheckOrigin: func(r *http.Request) bool { return true },
 	}
+	activeConns []*websocket.Conn
 )
 
 func main() {
@@ -42,19 +44,22 @@ func loadFileServer() {
 }
 
 func loadRoutes() {
-	handler.HandleFunc("/chat/ping", pingChat)
-	handler.HandleFunc("/chat/echo", echoChat)
+	handler.HandleFunc("/chat/ping", pingDemo)
+	handler.HandleFunc("/chat/echo", echoDemo)
+	handler.HandleFunc("/chat/broadcast", broadcastDemo)
 }
 
 func listenOrDie() {
 	fmt.Printf("📨 Chat server listening on %s\n", baseURL)
-	fmt.Printf("➡️ Ping demo: %s%sping_chat.html\n", baseURL, staticRoute)
-	fmt.Printf("➡️ Echo demo: %s%secho_chat.html\n", baseURL, staticRoute)
+	fmt.Printf("➡️ Ping demo: %sping_demo.html\n", staticURL)
+	fmt.Printf("➡️ Echo demo: %secho_demo.html\n", staticURL)
+	fmt.Printf("➡️ Broadcast demo: %sbroadcast_demo.html\n", staticURL)
+	fmt.Println("---")
 
 	log.Fatal(http.ListenAndServe(port, handler))
 }
 
-func pingChat(rw http.ResponseWriter, r *http.Request) {
+func pingDemo(rw http.ResponseWriter, r *http.Request) {
 	wsConn, err := upgrader.Upgrade(rw, r, nil)
 	utils.HandleError(err)
 
@@ -70,7 +75,7 @@ func pingChat(rw http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func echoChat(rw http.ResponseWriter, r *http.Request) {
+func echoDemo(rw http.ResponseWriter, r *http.Request) {
 	wsConn, err := upgrader.Upgrade(rw, r, nil)
 	utils.HandleError(err)
 
@@ -94,4 +99,67 @@ func echoChat(rw http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func checkOrigin(r *http.Request) bool { return true }
+func broadcastDemo(rw http.ResponseWriter, r *http.Request) {
+	thisConn, err := upgrader.Upgrade(rw, r, nil)
+	thisAddress := thisConn.RemoteAddr()
+	utils.HandleError(err)
+
+	activeConns = append(activeConns, thisConn)
+	for {
+		fmt.Println(thisAddress, "awaiting message...")
+		_, payload, err := thisConn.ReadMessage()
+		if err != nil {
+			break
+		}
+
+		fmt.Printf("Message received: \"%s\" from %s\n", payload, thisAddress)
+		message := fmt.Sprintf("From %s: %s", thisAddress, payload)
+		badConns := broadcastMessage(message)
+		cleanupConns(badConns)
+
+		fmt.Println("---")
+	}
+}
+
+func broadcastMessage(message string) []*websocket.Conn {
+	var badConns []*websocket.Conn
+
+	for _, conn := range activeConns {
+		err := conn.WriteMessage(websocket.TextMessage, []byte(message))
+		if err != nil {
+			badConns = append(badConns, conn)
+			continue
+		}
+
+		fmt.Printf("Broadcasting \"%s\" to %s\n", message, conn.RemoteAddr())
+	}
+
+	return badConns
+}
+
+func cleanupConns(badConns []*websocket.Conn) {
+	for _, badConn := range badConns {
+		fmt.Println("Removing", badConn.RemoteAddr(), "from broadcast.")
+		removeConn(badConn)
+	}
+}
+
+func removeConn(target *websocket.Conn) {
+	index := -1
+	for i, conn := range activeConns {
+		if conn == target {
+			index = i
+			break
+		}
+	}
+
+	if index == -1 {
+		return
+	}
+
+	removeConnByIndex(index)
+}
+
+func removeConnByIndex(index int) {
+	activeConns = append(activeConns[:index], activeConns[index+1:]...)
+}
