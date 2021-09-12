@@ -84,7 +84,7 @@ http://localhost:5000
 From the project's root run
 
 ```bash
-$ go run examples/chat/chat.go
+$ go run examples/chat/*.go
 ```
 
 Then open one of the demos in your web browser:
@@ -217,7 +217,7 @@ This what I've gathered from all my research, merely my opinion.
 - Don't bet on anything you haven't read the code.
 - A blockchain is only as good as its dev community.
 - Bet on engineering, not marketability.
-- "I am an adult and everything I do is my responsibility."
+- "I'm an adult and everything I do is my responsibility."
 - Don't be this guy:
 
 [![Watch the video](https://img.youtube.com/vi/61i2iDz7u04/maxresdefault.jpg)](https://youtu.be/61i2iDz7u04)
