@@ -220,17 +220,17 @@ This what I've gathered from all my research, merely my opinion.
 - "I am an adult and everything I do is my responsibility."
 - Don't be this guy:
 
-<p align="center">
-  <iframe
-    width="560"
-    height="315"
-    src="https://www.youtube-nocookie.com/embed/61i2iDz7u04"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</p>
+[![Watch the video](https://img.youtube.com/vi/61i2iDz7u04/maxresdefault.jpg)](https://youtu.be/61i2iDz7u04)
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube-nocookie.com/embed/61i2iDz7u04"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
 
 ## Libs <a name = "libs"></a>
 
@@ -292,6 +292,7 @@ This what I've gathered from all my research, merely my opinion.
 - https://javascript.info/websocket
 - https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
 - https://www.javatpoint.com/how-to-add-javascript-to-html
+- https://stackoverflow.com/questions/4279611/how-to-embed-a-video-into-github-readme-md
 
 ### Go
 
