@@ -13,7 +13,7 @@ import (
 
 func generateKey() *ecdsa.PrivateKey {
 	key, err := ecdsa.GenerateKey(curve, rand.Reader)
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	return key
 }
@@ -23,12 +23,12 @@ func keyToFile(key *ecdsa.PrivateKey, filePath string) {
 	secureFilePerm := fs.FileMode(0600)
 
 	err := os.WriteFile(filePath, keyBytes, secureFilePerm)
-	utils.HandleError(err)
+	utils.PanicError(err)
 }
 
 func keyFromFile(filePath string) (key *ecdsa.PrivateKey) {
 	keyBytes, err := os.ReadFile(filePath)
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	key = keyFromBytes(keyBytes)
 	return
@@ -36,7 +36,7 @@ func keyFromFile(filePath string) (key *ecdsa.PrivateKey) {
 
 func keyToBytes(key *ecdsa.PrivateKey) []byte {
 	keyBytes, err := x509.MarshalECPrivateKey(key)
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	return keyBytes
 }
@@ -50,7 +50,7 @@ func keyToHex(key *ecdsa.PrivateKey) string {
 
 func keyFromBytes(keyBytes []byte) *ecdsa.PrivateKey {
 	key, err := x509.ParseECPrivateKey(keyBytes)
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	return key
 }

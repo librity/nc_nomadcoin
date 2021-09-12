@@ -52,7 +52,7 @@ func handleBalanceOnly(rw http.ResponseWriter, r *http.Request, address string) 
 		Balance: balance,
 	}
 	err := json.NewEncoder(rw).Encode(response)
-	utils.HandleError(err)
+	utils.PanicError(err)
 }
 
 func handleFullInfo(rw http.ResponseWriter, r *http.Request, address string) {
@@ -65,5 +65,5 @@ func handleFullInfo(rw http.ResponseWriter, r *http.Request, address string) {
 		UnspTxOutput: outputs,
 	}
 	err := json.NewEncoder(rw).Encode(response)
-	utils.HandleError(err)
+	utils.PanicError(err)
 }

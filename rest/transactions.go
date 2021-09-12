@@ -16,7 +16,7 @@ type txPayload struct {
 func createTransaction(rw http.ResponseWriter, r *http.Request) {
 	payload := txPayload{}
 	err := json.NewDecoder(r.Body).Decode(&payload)
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	err = blockchain.Mempool.AddTx(payload.To, payload.Amount)
 	if err == blockchain.ErrNotEnoughMoney {

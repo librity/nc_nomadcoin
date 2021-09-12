@@ -48,18 +48,18 @@ func initializeDB() {
 
 func openDB() {
 	dbPointer, err := bolt.Open(dbName, 0600, nil)
-	utils.HandleError(err)
+	utils.PanicError(err)
 	db = dbPointer
 }
 
 func createBuckets() {
 	err := db.Update(func(transaction *bolt.Tx) error {
 		_, err := transaction.CreateBucketIfNotExists([]byte(chainBucket))
-		utils.HandleError(err)
+		utils.PanicError(err)
 		_, err = transaction.CreateBucketIfNotExists([]byte(blocksBucket))
 
 		return err
 	})
 
-	utils.HandleError(err)
+	utils.PanicError(err)
 }

@@ -43,7 +43,7 @@ func verify(publicKey *ecdsa.PublicKey, messageHash []byte, signature *Signature
 
 func keyToHex(privateKey *ecdsa.PrivateKey) string {
 	bytes, err := x509.MarshalECPrivateKey(privateKey)
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	hex := fmt.Sprintf("%x", bytes)
 	return hex
@@ -52,7 +52,7 @@ func keyToHex(privateKey *ecdsa.PrivateKey) string {
 func hexToKey(keyHex string) *ecdsa.PrivateKey {
 	keyBytes := utils.HexToBytes(keyHex)
 	privateKey, err := x509.ParseECPrivateKey(keyBytes)
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	return privateKey
 }
@@ -71,9 +71,9 @@ func hexToSignature(signatureHex string) *Signature {
 	sBytes := signatureBytes[halfLength:]
 
 	r, err := utils.BytesToBigInt(rBytes)
-	utils.HandleError(err)
+	utils.PanicError(err)
 	s, err := utils.BytesToBigInt(sBytes)
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	signature := &Signature{r, s}
 	return signature

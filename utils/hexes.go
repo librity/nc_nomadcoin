@@ -4,7 +4,7 @@ import "encoding/hex"
 
 func HexToBytes(hexStr string) []byte {
 	bytes, err := hex.DecodeString(hexStr)
-	HandleError(err)
+	PanicError(err)
 
 	return bytes
 }

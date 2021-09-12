@@ -13,7 +13,7 @@ func SaveCheckpoint(chain []byte) {
 		return err
 	})
 
-	utils.HandleError(err)
+	utils.PanicError(err)
 }
 
 func LoadCheckpoint() []byte {
@@ -24,7 +24,7 @@ func LoadCheckpoint() []byte {
 		chain = bucket.Get([]byte(chainCheckpoint))
 		return nil
 	})
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	return chain
 }

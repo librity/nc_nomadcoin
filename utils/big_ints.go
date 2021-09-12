@@ -35,9 +35,9 @@ func BigIntsFromHex(hex string) (*big.Int, *big.Int) {
 
 func BigIntsFromBytes(aBytes, bBytes []byte) (*big.Int, *big.Int) {
 	a, err := BytesToBigInt(aBytes)
-	HandleError(err)
+	PanicError(err)
 	b, err := BytesToBigInt(bBytes)
-	HandleError(err)
+	PanicError(err)
 
 	return a, b
 }

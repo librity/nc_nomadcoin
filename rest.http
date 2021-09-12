@@ -43,4 +43,17 @@ POST http://localhost:5000/transactions
 	"amount": 51
 }
 
+### Connect to peer
+
+POST http://localhost:5000/peers
+
+{
+	"address": "127.0.0.1",
+	"port": "5001"
+}
+
+### Upgrade connection to web sockets
+
+http://localhost:5000/peers/upgrade
+
 ###

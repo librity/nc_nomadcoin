@@ -9,7 +9,7 @@ import (
 
 func pingDemo(rw http.ResponseWriter, r *http.Request) {
 	wsConn, err := upgrader.Upgrade(rw, r, nil)
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	for {
 		fmt.Println("Awaiting message...")

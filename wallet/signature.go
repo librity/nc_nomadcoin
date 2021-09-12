@@ -18,7 +18,7 @@ func HexSign(hash string) string {
 	privateKey := GetW().privateKey
 
 	r, s, err := ecdsa.Sign(rand.Reader, privateKey, payloadBytes)
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	signHex := utils.BigIntsToHex(r, s)
 	return signHex

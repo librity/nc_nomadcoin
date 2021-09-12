@@ -13,7 +13,7 @@ func SaveBlock(hash string, data []byte) {
 		return err
 	})
 
-	utils.HandleError(err)
+	utils.PanicError(err)
 }
 
 func LoadBlock(hash string) []byte {
@@ -24,7 +24,7 @@ func LoadBlock(hash string) []byte {
 		rawBlock = bucket.Get([]byte(hash))
 		return nil
 	})
-	utils.HandleError(err)
+	utils.PanicError(err)
 
 	return rawBlock
 }

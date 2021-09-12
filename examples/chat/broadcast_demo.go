@@ -25,9 +25,9 @@ const messageHTML = `
 
 func broadcastDemo(rw http.ResponseWriter, r *http.Request) {
 	thisConn, err := upgrader.Upgrade(rw, r, nil)
-	thisAddress := thisConn.RemoteAddr()
-	utils.HandleError(err)
+	utils.PanicError(err)
 
+	thisAddress := thisConn.RemoteAddr()
 	activeConns = append(activeConns, thisConn)
 	for {
 		fmt.Println(thisAddress, "awaiting message...")

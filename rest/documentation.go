@@ -41,8 +41,7 @@ var data = []endpointDescription{
 	{
 		URL:     url("/blocks"),
 		Method:  "POST",
-		Details: "Create a block.",
-		Payload: "data:string",
+		Details: "Mine current block.",
 	},
 	{
 		URL:     url("/blocks/{hash}"),
@@ -68,9 +67,23 @@ var data = []endpointDescription{
 	},
 
 	{
+		URL:     url("/transactions"),
+		Method:  "POST",
+		Details: "Create and add a new transaction to the mempool.",
+		Payload: "to:string,amount:int",
+	},
+
+	{
 		URL:     url("/web_socket/upgrade"),
 		Method:  "GET",
 		Details: "Upgrade connection to Web Sockets.",
+	},
+
+	{
+		URL:     url("/peers"),
+		Method:  "POST",
+		Details: "Receiver connects to requester as peer though web sockets.",
+		Payload: "address:string,port:string",
 	},
 }
 

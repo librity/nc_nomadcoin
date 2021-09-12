@@ -47,7 +47,7 @@ func buildMessage() []byte {
 
 func generateKeys() (*ecdsa.PrivateKey, *ecdsa.PublicKey) {
 	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-	utils.HandleError(err)
+	utils.PanicError(err)
 	publicKey := &privateKey.PublicKey
 
 	fmt.Println("=== Public key ===")
@@ -61,7 +61,7 @@ func generateKeys() (*ecdsa.PrivateKey, *ecdsa.PublicKey) {
 
 func sign(privateKey *ecdsa.PrivateKey, hash []byte) *Signature {
 	r, s, err := ecdsa.Sign(rand.Reader, privateKey, hash)
-	utils.HandleError(err)
+	utils.PanicError(err)
 	signature := &Signature{r, s}
 
 	fmt.Println("=== Signature ===")

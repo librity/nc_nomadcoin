@@ -12,5 +12,5 @@ func mempool(rw http.ResponseWriter, r *http.Request) {
 	mempool := blockchain.Mempool
 
 	err := json.NewEncoder(rw).Encode(mempool)
-	utils.HandleError(err)
+	utils.PanicError(err)
 }
