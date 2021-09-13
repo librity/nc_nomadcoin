@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/boltdb/bolt"
 	"github.com/librity/nc_nomadcoin/utils"
+	bolt "go.etcd.io/bbolt"
 )
 
 const (

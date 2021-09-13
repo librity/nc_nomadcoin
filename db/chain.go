@@ -1,8 +1,8 @@
 package db
 
 import (
-	"github.com/boltdb/bolt"
 	"github.com/librity/nc_nomadcoin/utils"
+	bolt "go.etcd.io/bbolt"
 )
 
 func SaveCheckpoint(chain []byte) {

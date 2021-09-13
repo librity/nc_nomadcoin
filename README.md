@@ -41,10 +41,7 @@ A fully-featured blockchain and cryptocurrency using the Go programming language
 Install the latest version of `Go`, then install external dependencies:
 
 ```bash
-go get -u github.com/gorilla/mux
-go get -u github.com/boltdb/bolt
-go get -u github.com/evnix/boltdbweb
-go get -u github.com/gorilla/websocket
+go get
 ```
 
 ### Installing
@@ -57,13 +54,29 @@ $ go run main.go both
 
 Automagically analyze race conditions during execution:
 
+### Race conditions
+
 ```bash
 $ go run -race main.go rest -port=5001
 $ go run -race main.go rest -port=5002
-# OR
+# or
 $ go build -race && nc_nomadcoin rest -port=5001
 $ go build -race && nc_nomadcoin rest -port=5002
 ```
+
+Data races can occur when:
+
+- two or more threads (go routines in this case) in a single process
+  access the same memory location concurrently, and
+- at least one of the accesses is for writing, and
+- the threads are not using any exclusive locks
+  to control their accesses to that memory.
+
+When these three conditions hold, the order of accesses is non-deterministic,
+and the computation may give different results from run to run
+depending on that order.
+
+[Source](https://docs.oracle.com/cd/E19205-01/820-0619/geojs/index.html)
 
 ## Usage <a name = "usage"></a>
 
@@ -230,7 +243,7 @@ This what I've gathered from all my research, merely my opinion.
 
 - https://github.com/gorilla/mux
 - https://github.com/gorilla/websocket
-- https://github.com/boltdb/bolt
+- https://github.com/etcd-io/bbolt
 
 ## Docs <a name = "docs"></a>
 
@@ -279,12 +292,14 @@ This what I've gathered from all my research, merely my opinion.
 - https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
 - https://www.javatpoint.com/how-to-add-javascript-to-html
 - https://stackoverflow.com/questions/4279611/how-to-embed-a-video-into-github-readme-md
+- https://docs.oracle.com/cd/E19205-01/820-0619/geojs/index.html
+- https://en.wikipedia.org/wiki/Race_condition
 
 ### Go
 
 - https://www.gorillatoolkit.org/
 - https://dbdb.io/db/boltdb
-- https://github.com/etcd-io/bbolt
+- https://github.com/boltdb/bolt
 - https://cobra.dev/
 - https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
 - https://stackoverflow.com/questions/25161774/what-are-conventions-for-filenames-in-go
