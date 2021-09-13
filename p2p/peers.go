@@ -7,38 +7,39 @@ import (
 
 var (
 	Peers = &peers{
-		active: make(map[string]*peer),
+		v: make(map[string]*peer),
 	}
 )
 
+// Abreviations per convention
 type peers struct {
-	active map[string]*peer
-	mx     sync.Mutex
+	v map[string]*peer
+	m sync.Mutex
 }
 
 func GetPeers() []string {
-	Peers.mx.Lock()
-	defer Peers.mx.Unlock()
+	Peers.m.Lock()
+	defer Peers.m.Unlock()
 
 	var peersList []string
-	for address := range Peers.active {
+	for address := range Peers.v {
 		peersList = append(peersList, address)
 	}
 	return peersList
 }
 
 func insertPeer(p *peer) {
-	Peers.mx.Lock()
+	Peers.m.Lock()
 	fmt.Println("Inserting peer", p.address)
-	defer Peers.mx.Unlock()
+	defer Peers.m.Unlock()
 
-	Peers.active[p.address] = p
+	Peers.v[p.address] = p
 }
 
 func delistPeer(p *peer) {
-	Peers.mx.Lock()
+	Peers.m.Lock()
 	fmt.Println("Delisting peer", p.address)
-	defer Peers.mx.Unlock()
+	defer Peers.m.Unlock()
 
-	delete(Peers.active, p.address)
+	delete(Peers.v, p.address)
 }

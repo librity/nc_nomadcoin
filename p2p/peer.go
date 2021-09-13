@@ -18,12 +18,13 @@ func (p *peer) read() {
 	defer p.remove()
 
 	for {
-		_, payload, err := p.conn.ReadMessage()
+		m := &Msg{}
+		err := p.conn.ReadJSON(m)
 		if err != nil {
 			break
 		}
 
-		fmt.Printf("Received from %s: \"%s\"\n---\n", p.address, payload)
+		fmt.Println("Received from", p.address, m)
 	}
 }
 

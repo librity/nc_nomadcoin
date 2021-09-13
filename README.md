@@ -228,6 +228,14 @@ depending on that order.
 
 In Golang we fix data races with blocking `chan`nels,
 `sync.WaitGroup` or `sync.Mutex`.
+They all do pretty much the same thing:
+lock the variable during read and write
+to guarantee that only one routine access it at a time.
+
+### Peer 2 Peer
+
+Nodes broadcast changes in the blockchain
+through [Web Sockets](https://github.com/gorilla/websocket).
 
 ### Cryptocurrency Investment Advice
 
@@ -236,12 +244,19 @@ This what I've gathered from all my research, merely my opinion.
 - Only bet what you can afford to loose.
 - Don't bet on anything you don't understand.
 - Don't bet on anything you haven't read the code.
+- Don't bet on new currencies if you don't undertand
+  the problems they're trying to solve
+  and what they're doing differently.
 - A blockchain is only as good as its dev community.
 - Bet on engineering, not marketability.
 - "I'm an adult and everything I do is my responsibility."
 - Don't be this guy:
 
 [![Watch the video](https://img.youtube.com/vi/61i2iDz7u04/maxresdefault.jpg)](https://youtu.be/61i2iDz7u04)
+
+_To his credit, it's pretty unreasonable to expect someone
+without any technical knowledge
+to successfully speculate on new cryptocurrencies._
 
 ## Libs <a name = "libs"></a>
 
