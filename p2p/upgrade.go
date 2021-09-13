@@ -2,7 +2,6 @@ package p2p
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/gorilla/websocket"
 	"github.com/librity/nc_nomadcoin/utils"
@@ -13,10 +12,8 @@ func UpgradePeer(rw http.ResponseWriter, r *http.Request) {
 	juniorConn, err := upgrader.Upgrade(rw, r, nil)
 	utils.PanicError(err)
 
-	initPeer(ip, port, juniorConn)
-
-	time.Sleep(5 * time.Second)
-	juniorConn.WriteMessage(websocket.TextMessage, []byte("You are junior, I am senior."))
+	peer := initPeer(ip, port, juniorConn)
+	peer.inbox <- []byte("I am senior, you are junior.")
 }
 
 func buildUpgrader(r *http.Request) (*websocket.Upgrader, string, string) {

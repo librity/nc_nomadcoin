@@ -13,6 +13,7 @@ var (
 type peer struct {
 	address string
 	conn    *websocket.Conn
+	inbox   chan []byte
 }
 
 func (p *peer) read() {
@@ -22,7 +23,22 @@ func (p *peer) read() {
 			break
 		}
 
-		fmt.Printf("From %s: \"%s\"\n", p.address, payload)
+		fmt.Printf("Received from %s:\n\"%s\"\n---\n", p.address, payload)
+	}
+}
+
+func (p *peer) write() {
+	for {
+		payload, ok := <-p.inbox
+		if !ok {
+			break
+		}
+		err := p.conn.WriteMessage(websocket.TextMessage, payload)
+		if err != nil {
+			break
+		}
+
+		fmt.Printf("Sent to %s:\n\"%s\"\n---\n", p.address, payload)
 	}
 }
 
@@ -30,6 +46,7 @@ func initPeer(ip, port string, conn *websocket.Conn) *peer {
 	key := fmt.Sprintf("%s:%s", ip, port)
 	peer := newPeer(key, conn)
 	go peer.read()
+	go peer.write()
 
 	Peers[key] = peer
 	return peer
@@ -39,6 +56,7 @@ func newPeer(address string, conn *websocket.Conn) *peer {
 	peer := &peer{
 		address: address,
 		conn:    conn,
+		inbox:   make(chan []byte),
 	}
 
 	return peer
