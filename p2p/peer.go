@@ -6,10 +6,6 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-var (
-	Peers = make(map[string]*peer)
-)
-
 type peer struct {
 	ip      string
 	port    string
@@ -19,7 +15,7 @@ type peer struct {
 }
 
 func (p *peer) read() {
-	defer p.cleanup()
+	defer p.remove()
 
 	for {
 		_, payload, err := p.conn.ReadMessage()
@@ -32,7 +28,7 @@ func (p *peer) read() {
 }
 
 func (p *peer) write() {
-	defer p.cleanup()
+	defer p.remove()
 
 	for {
 		payload, ok := <-p.inbox
@@ -49,10 +45,9 @@ func (p *peer) write() {
 	}
 }
 
-func (p *peer) cleanup() {
-	fmt.Println("Removing peer", p.address)
+func (p *peer) remove() {
 	p.conn.Close()
-	delete(Peers, p.address)
+	delistPeer(p)
 }
 
 func initPeer(ip, port string, conn *websocket.Conn) *peer {
@@ -60,7 +55,7 @@ func initPeer(ip, port string, conn *websocket.Conn) *peer {
 	go peer.read()
 	go peer.write()
 
-	Peers[peer.address] = peer
+	insertPeer(peer)
 	return peer
 }
 

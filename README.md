@@ -52,9 +52,9 @@ $ cd nc_nomadcoin
 $ go run main.go both
 ```
 
-Automagically analyze race conditions during execution:
+### Analyze race conditions
 
-### Race conditions
+Automagically analyze race conditions during execution:
 
 ```bash
 $ go run -race main.go rest -port=5001
@@ -63,20 +63,6 @@ $ go run -race main.go rest -port=5002
 $ go build -race && nc_nomadcoin rest -port=5001
 $ go build -race && nc_nomadcoin rest -port=5002
 ```
-
-Data races can occur when:
-
-- two or more threads (go routines in this case) in a single process
-  access the same memory location concurrently, and
-- at least one of the accesses is for writing, and
-- the threads are not using any exclusive locks
-  to control their accesses to that memory.
-
-When these three conditions hold, the order of accesses is non-deterministic,
-and the computation may give different results from run to run
-depending on that order.
-
-[Source](https://docs.oracle.com/cd/E19205-01/820-0619/geojs/index.html)
 
 ## Usage <a name = "usage"></a>
 
@@ -225,6 +211,24 @@ Public key is the (x,y) coordinates of a point in an elliptic curve:
     <img src=".github/ecc.png" />
 </p>
 
+### Data races
+
+Data races can occur when:
+
+- two or more threads (go routines in this case) in a single process
+  access the same memory location concurrently, and
+- at least one of the accesses is for writing, and
+- the threads are not using any exclusive locks
+  to control their accesses to that memory.
+
+When these three conditions hold, the order of accesses is non-deterministic,
+and the computation may give different results from run to run
+depending on that order.
+[Source](https://docs.oracle.com/cd/E19205-01/820-0619/geojs/index.html)
+
+In Golang we fix data races with blocking `chan`nels,
+`sync.WaitGroup` or `sync.Mutex`.
+
 ### Cryptocurrency Investment Advice
 
 This what I've gathered from all my research, merely my opinion.
@@ -292,8 +296,6 @@ This what I've gathered from all my research, merely my opinion.
 - https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
 - https://www.javatpoint.com/how-to-add-javascript-to-html
 - https://stackoverflow.com/questions/4279611/how-to-embed-a-video-into-github-readme-md
-- https://docs.oracle.com/cd/E19205-01/820-0619/geojs/index.html
-- https://en.wikipedia.org/wiki/Race_condition
 
 ### Go
 
@@ -373,6 +375,15 @@ This what I've gathered from all my research, merely my opinion.
 - https://www.ionos.com/tools/favicon-generator
 - https://www.favicon-generator.org/search/---/Coin
 - https://www.favicon.cc/?action=icon&file_id=138923
+
+### Data races
+
+- https://docs.oracle.com/cd/E19205-01/820-0619/geojs/index.html
+- https://en.wikipedia.org/wiki/Race_condition
+- https://www.sohamkamani.com/golang/data-races/
+- https://yourbasic.org/golang/data-races-explained/
+- https://programming.guide/go/data-races-explained.html
+- https://programming.guide/go/detect-data-races.html
 
 ### Golang's `http.server` architecture
 

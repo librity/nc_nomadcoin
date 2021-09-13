@@ -4,9 +4,11 @@ import "time"
 
 func PingForever() {
 	for {
-		for _, peer := range Peers {
+		Peers.mx.Lock()
+		for _, peer := range Peers.active {
 			peer.inbox <- []byte("Ping!")
 		}
+		Peers.mx.Unlock()
 
 		time.Sleep(10 * time.Second)
 	}
