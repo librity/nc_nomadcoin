@@ -1,9 +1,13 @@
 package p2p
 
+import (
+	"github.com/librity/nc_nomadcoin/utils"
+)
+
 type MsgKind int
 
 const (
-	LastBlock MsgKind = iota
+	MsgLastBlock MsgKind = iota
 	MsgAllBlocksRequest
 	MsgAllBlocksResponse
 )
@@ -13,6 +17,19 @@ type Msg struct {
 	Payload []byte
 }
 
-func newMsg() {
+func makeMsgJSON(kind MsgKind, payload interface{}) []byte {
+	message := newMsg(kind, payload)
+	messageJSON := utils.ToJSON(message)
 
+	return messageJSON
+}
+
+func newMsg(kind MsgKind, payload interface{}) *Msg {
+	jsonPayload := utils.ToJSON(payload)
+	message := &Msg{
+		Kind:    kind,
+		Payload: jsonPayload,
+	}
+
+	return message
 }

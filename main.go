@@ -6,14 +6,13 @@ import (
 	"github.com/librity/nc_nomadcoin/blockchain"
 	"github.com/librity/nc_nomadcoin/cli"
 	"github.com/librity/nc_nomadcoin/db"
-	"github.com/librity/nc_nomadcoin/p2p"
 	"github.com/librity/nc_nomadcoin/wallet"
 )
 
 func main() {
 	defer cleanExit()
 
-	go p2p.PingForever()
+	// go p2p.PingForever()
 
 	// walletDemo()
 	// printChainStatus()

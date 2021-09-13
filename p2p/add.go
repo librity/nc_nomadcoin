@@ -16,7 +16,8 @@ func AddPeer(ip, port, thisPort string) {
 	seniorConn, _, err := websocket.DefaultDialer.Dial(url, nil)
 	utils.PanicError(err)
 
-	initPeer(ip, port, seniorConn)
+	peer := initPeer(ip, port, seniorConn)
+	sendLastBlock(peer)
 }
 
 func makeWSURL(ip, port, thisPort string) string {

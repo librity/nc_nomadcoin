@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/librity/nc_nomadcoin/db"
+	"github.com/librity/nc_nomadcoin/utils"
 )
 
 var (
@@ -38,7 +39,7 @@ func FindBlock(hash string) (*Block, error) {
 	return block, nil
 }
 
-func LastNBlocks(n int) []*Block {
+func GetLastNBlocks(n int) []*Block {
 	var blocks []*Block
 	currentHash := GetBC().LastHash
 
@@ -53,6 +54,14 @@ func LastNBlocks(n int) []*Block {
 	}
 
 	return blocks
+}
+
+func GetLastBlock() *Block {
+	lastHash := GetBC().LastHash
+	lastBlock, err := FindBlock(lastHash)
+	utils.PanicError(err)
+
+	return lastBlock
 }
 
 func InspectBlocks() {

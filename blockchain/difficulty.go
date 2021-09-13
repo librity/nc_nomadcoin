@@ -37,7 +37,7 @@ func newDifficulty() int {
 }
 
 func timeSinceLastRecalc() int64 {
-	blocks := LastNBlocks(blocksPerRecalc)
+	blocks := GetLastNBlocks(blocksPerRecalc)
 	lastBlock := blocks[0]
 	lastRecalcBlock := blocks[blocksPerRecalc-1]
 	actualTime := lastBlock.Timestamp - lastRecalcBlock.Timestamp
