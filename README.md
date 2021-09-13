@@ -224,24 +224,22 @@ This what I've gathered from all my research, merely my opinion.
 
 ## Libs <a name = "libs"></a>
 
+- https://github.com/gorilla/mux
+- https://github.com/gorilla/websocket
+- https://github.com/boltdb/bolt
+
+## Docs <a name = "docs"></a>
+
 - https://pkg.go.dev/fmt#Printf
-- https://pkg.go.dev/fmt#Sprintf
-- https://pkg.go.dev/fmt#Fprint
-- https://pkg.go.dev/fmt#Stringer
 - https://pkg.go.dev/sync#Once
-- https://pkg.go.dev/sync#Do
 - https://pkg.go.dev/net/http#HandleFunc
-- https://pkg.go.dev/net/http#ListenAndServe
 - https://pkg.go.dev/log#Fatal
 - https://pkg.go.dev/text/template#hdr-Actions
 - https://pkg.go.dev/html/template#ParseFiles
-- https://pkg.go.dev/html/template#Must
 - https://pkg.go.dev/path/filepath#Match
 - https://pkg.go.dev/encoding/json#Marshal
-- https://pkg.go.dev/encoding#TextMarshaler
 - https://pkg.go.dev/strconv#Atoi
 - https://pkg.go.dev/flag#NewFlagSet
-- https://pkg.go.dev/flag#Parse
 - https://pkg.go.dev/encoding/gob
 - https://pkg.go.dev/crypto/elliptic#P256
 - https://pkg.go.dev/encoding/hex#DecodeString
@@ -249,12 +247,6 @@ This what I've gathered from all my research, merely my opinion.
 - https://pkg.go.dev/crypto/x509#MarshalECPrivateKey
 - https://pkg.go.dev/os#WriteFile
 - https://pkg.go.dev/builtin#close
-- https://github.com/gorilla/mux
-- https://github.com/gorilla/websocket
-- https://github.com/boltdb/bolt
-
-## Docs <a name = "docs"></a>
-
 - https://golang.org/doc/
 - https://pkg.go.dev/std
 - https://golang.org/ref/spec#Variables

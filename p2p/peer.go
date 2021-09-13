@@ -6,25 +6,39 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-type peer struct {
-	conn *websocket.Conn
-}
-
 var (
 	Peers = make(map[string]*peer)
 )
 
-func initPeer(ip, port string, conn *websocket.Conn) *peer {
-	peer := newPeer(conn)
-	key := fmt.Sprintf("%s:%s", ip, port)
-	Peers[key] = peer
+type peer struct {
+	address string
+	conn    *websocket.Conn
+}
 
+func (p *peer) read() {
+	for {
+		_, payload, err := p.conn.ReadMessage()
+		if err != nil {
+			break
+		}
+
+		fmt.Printf("From %s: \"%s\"\n", p.address, payload)
+	}
+}
+
+func initPeer(ip, port string, conn *websocket.Conn) *peer {
+	key := fmt.Sprintf("%s:%s", ip, port)
+	peer := newPeer(key, conn)
+	go peer.read()
+
+	Peers[key] = peer
 	return peer
 }
 
-func newPeer(conn *websocket.Conn) *peer {
+func newPeer(address string, conn *websocket.Conn) *peer {
 	peer := &peer{
-		conn: conn,
+		address: address,
+		conn:    conn,
 	}
 
 	return peer

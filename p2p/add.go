@@ -2,6 +2,7 @@ package p2p
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/gorilla/websocket"
 	"github.com/librity/nc_nomadcoin/utils"
@@ -13,10 +14,13 @@ const (
 
 func AddPeer(ip, port, thisPort string) {
 	url := makeWSURL(ip, port, thisPort)
-	juniorConn, _, err := websocket.DefaultDialer.Dial(url, nil)
+	seniorConn, _, err := websocket.DefaultDialer.Dial(url, nil)
 	utils.PanicError(err)
 
-	initPeer(ip, port, juniorConn)
+	initPeer(ip, port, seniorConn)
+
+	time.Sleep(5 * time.Second)
+	seniorConn.WriteMessage(websocket.TextMessage, []byte("You are senior, I am junior."))
 }
 
 func makeWSURL(ip, port, thisPort string) string {
