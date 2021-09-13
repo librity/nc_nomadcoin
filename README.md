@@ -55,10 +55,14 @@ $ cd nc_nomadcoin
 $ go run main.go both
 ```
 
-Automagically analyze race conditions during compilation:
+Automagically analyze race conditions during execution:
 
 ```bash
-$ go build -race
+$ go run -race main.go rest -port=5001
+$ go run -race main.go rest -port=5002
+# OR
+$ go build -race && nc_nomadcoin rest -port=5001
+$ go build -race && nc_nomadcoin rest -port=5002
 ```
 
 ## Usage <a name = "usage"></a>

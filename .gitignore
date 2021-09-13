@@ -19,3 +19,6 @@
 
 # Wallet files
 *.wallet
+
+# Build
+nc_nomadcoin

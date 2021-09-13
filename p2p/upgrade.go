@@ -12,8 +12,7 @@ func UpgradePeer(rw http.ResponseWriter, r *http.Request) {
 	juniorConn, err := upgrader.Upgrade(rw, r, nil)
 	utils.PanicError(err)
 
-	peer := initPeer(ip, port, juniorConn)
-	peer.inbox <- []byte("I am senior, you are junior.")
+	initPeer(ip, port, juniorConn)
 }
 
 func buildUpgrader(r *http.Request) (*websocket.Upgrader, string, string) {

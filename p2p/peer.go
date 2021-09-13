@@ -11,49 +11,64 @@ var (
 )
 
 type peer struct {
+	ip      string
+	port    string
 	address string
 	conn    *websocket.Conn
 	inbox   chan []byte
 }
 
 func (p *peer) read() {
+	defer p.cleanup()
+
 	for {
 		_, payload, err := p.conn.ReadMessage()
 		if err != nil {
 			break
 		}
 
-		fmt.Printf("Received from %s:\n\"%s\"\n---\n", p.address, payload)
+		fmt.Printf("Received from %s: \"%s\"\n---\n", p.address, payload)
 	}
 }
 
 func (p *peer) write() {
+	defer p.cleanup()
+
 	for {
 		payload, ok := <-p.inbox
 		if !ok {
 			break
 		}
+
 		err := p.conn.WriteMessage(websocket.TextMessage, payload)
 		if err != nil {
 			break
 		}
 
-		fmt.Printf("Sent to %s:\n\"%s\"\n---\n", p.address, payload)
+		fmt.Printf("Sent to %s: \"%s\"\n---\n", p.address, payload)
 	}
 }
 
+func (p *peer) cleanup() {
+	fmt.Println("Removing peer", p.address)
+	p.conn.Close()
+	delete(Peers, p.address)
+}
+
 func initPeer(ip, port string, conn *websocket.Conn) *peer {
-	key := fmt.Sprintf("%s:%s", ip, port)
-	peer := newPeer(key, conn)
+	peer := newPeer(ip, port, conn)
 	go peer.read()
 	go peer.write()
 
-	Peers[key] = peer
+	Peers[peer.address] = peer
 	return peer
 }
 
-func newPeer(address string, conn *websocket.Conn) *peer {
+func newPeer(ip, port string, conn *websocket.Conn) *peer {
+	address := fmt.Sprintf("%s:%s", ip, port)
 	peer := &peer{
+		ip:      ip,
+		port:    port,
 		address: address,
 		conn:    conn,
 		inbox:   make(chan []byte),
