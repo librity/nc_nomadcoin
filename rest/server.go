@@ -4,30 +4,28 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/librity/nc_nomadcoin/config"
+	"github.com/librity/nc_nomadcoin/utils"
 )
 
 var (
-	port    string = ":5001"
+	port    string = utils.BuildPort(config.DefaultRestPort)
 	baseURL string = "http://localhost" + port
 )
 
 func Start() {
-	loadAndListen()
-}
+	setEnvVars()
 
-func StartCustom(portNum int) {
-	setEnvVars(portNum)
-	loadAndListen()
-}
-
-func loadAndListen() {
 	loadRoutes()
 	loadMiddlewares()
+
 	listenOrDie()
 }
 
-func setEnvVars(portNum int) {
-	port = fmt.Sprintf(":%d", portNum)
+func setEnvVars() {
+	portNum := config.GetRestPort()
+	port = utils.BuildPort(portNum)
 	baseURL = "http://localhost" + port
 }
 

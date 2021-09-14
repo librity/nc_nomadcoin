@@ -314,32 +314,52 @@ to successfully speculate on new cryptocurrencies._
 
 ### Go
 
+- https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
+- https://stackoverflow.com/questions/25161774/what-are-conventions-for-filenames-in-go
+- https://golang.org/src/strconv/atoi.go?h=Atoi
+- https://golangdocs.com/generate-random-string-in-golang
+- https://stackoverflow.com/questions/22892120/how-to-generate-a-random-string-of-a-fixed-length-in-go
+- https://medium.com/golangspec/labels-in-go-4ffd81932339
+- https://stackoverflow.com/questions/33832762/how-do-i-make-a-go-program-wait-until-there-is-user-input
+
+### Go gobs
+
+- https://gist.github.com/miguelmota/2a0c0e96c22bccc8740819d5d64ff8d0
+- https://stackoverflow.com/questions/14121422/de-and-encode-interface-with-gob
+
+### Go HTTP
+
+- https://hackthedeveloper.com/golang-server-static-files/
+- https://golangdocs.com/golang-mux-router
+- https://stackoverflow.com/questions/40478027/what-is-an-http-request-multiplexer
+
+### Go maps
+
+- https://golangdocs.com/maps-in-golang
+- https://stackoverflow.com/questions/27267900/runtime-error-assignment-to-entry-in-nil-map
+- https://stackoverflow.com/questions/14928826/passing-pointers-to-maps-in-golang
+- https://stackoverflow.com/questions/2809543/pointer-to-a-map
+
+### Go import cycles
+
+- https://jogendra.dev/import-cycles-in-golang-and-how-to-deal-with-them
+- https://stackoverflow.com/questions/38412950/golang-import-cycle-not-allowed
+
+### Go arrays & slices
+
+- https://github.com/golang/go/wiki/SliceTricks#reversing
+- https://stackoverflow.com/questions/24757814/golang-convert-byte-array-to-big-int
+- https://stackoverflow.com/questions/37334119/how-to-delete-an-element-from-a-slice-in-golang
+- https://stackoverflow.com/questions/19239449/how-do-i-reverse-an-array-in-go
+- https://stackoverflow.com/questions/54858529/golang-reverse-a-arbitrary-slice
+
+### Go packages
+
 - https://www.gorillatoolkit.org/
 - https://dbdb.io/db/boltdb
 - https://github.com/boltdb/bolt
 - https://cobra.dev/
-- https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
-- https://stackoverflow.com/questions/25161774/what-are-conventions-for-filenames-in-go
-- https://jogendra.dev/import-cycles-in-golang-and-how-to-deal-with-them
-- https://hackthedeveloper.com/golang-server-static-files/
-- https://stackoverflow.com/questions/19239449/how-do-i-reverse-an-array-in-go
-- https://stackoverflow.com/questions/54858529/golang-reverse-a-arbitrary-slice
-- https://github.com/golang/go/wiki/SliceTricks#reversing
-- https://golangdocs.com/golang-mux-router
-- https://stackoverflow.com/questions/40478027/what-is-an-http-request-multiplexer
-- https://golangdocs.com/maps-in-golang
-- https://golang.org/src/strconv/atoi.go?h=Atoi
-- https://gist.github.com/miguelmota/2a0c0e96c22bccc8740819d5d64ff8d0
-- https://stackoverflow.com/questions/14121422/de-and-encode-interface-with-gob
-- https://golangdocs.com/generate-random-string-in-golang
-- https://stackoverflow.com/questions/22892120/how-to-generate-a-random-string-of-a-fixed-length-in-go
-- https://stackoverflow.com/questions/27267900/runtime-error-assignment-to-entry-in-nil-map
-- https://stackoverflow.com/questions/14928826/passing-pointers-to-maps-in-golang
-- https://stackoverflow.com/questions/2809543/pointer-to-a-map
-- https://medium.com/golangspec/labels-in-go-4ffd81932339
-- https://stackoverflow.com/questions/24757814/golang-convert-byte-array-to-big-int
-- https://stackoverflow.com/questions/33832762/how-do-i-make-a-go-program-wait-until-there-is-user-input
-- https://stackoverflow.com/questions/37334119/how-to-delete-an-element-from-a-slice-in-golang
+- https://gobuffalo.io/en/
 
 ### Go templates
 
@@ -348,6 +368,15 @@ to successfully speculate on new cryptocurrencies._
 - https://stackoverflow.com/questions/25689829/arithmetic-in-go-templates
 - https://stackoverflow.com/questions/17843311/template-and-custom-function-panic-function-not-defined
 - https://stackoverflow.com/questions/38686583/golang-parse-all-templates-in-directory-and-subdirectories
+
+### GO data races
+
+- https://docs.oracle.com/cd/E19205-01/820-0619/geojs/index.html
+- https://en.wikipedia.org/wiki/Race_condition
+- https://www.sohamkamani.com/golang/data-races/
+- https://yourbasic.org/golang/data-races-explained/
+- https://programming.guide/go/data-races-explained.html
+- https://programming.guide/go/detect-data-races.html
 
 ### Cryptograhy
 
@@ -390,15 +419,6 @@ to successfully speculate on new cryptocurrencies._
 - https://www.ionos.com/tools/favicon-generator
 - https://www.favicon-generator.org/search/---/Coin
 - https://www.favicon.cc/?action=icon&file_id=138923
-
-### Data races
-
-- https://docs.oracle.com/cd/E19205-01/820-0619/geojs/index.html
-- https://en.wikipedia.org/wiki/Race_condition
-- https://www.sohamkamani.com/golang/data-races/
-- https://yourbasic.org/golang/data-races-explained/
-- https://programming.guide/go/data-races-explained.html
-- https://programming.guide/go/detect-data-races.html
 
 ### Golang's `http.server` architecture
 

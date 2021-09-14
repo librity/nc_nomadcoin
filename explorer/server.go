@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/librity/nc_nomadcoin/config"
+	"github.com/librity/nc_nomadcoin/utils"
 )
 
 const (
@@ -12,31 +15,25 @@ const (
 )
 
 var (
-	port    string         = ":4000"
+	port    string         = utils.BuildPort(config.DefaultExplorerPort)
 	baseURL string         = "http://localhost" + port
 	handler *http.ServeMux = http.NewServeMux()
 )
 
 func Start() {
-	loadAndListen()
-}
+	setEnvVars()
 
-func StartCustom(portNum int) {
-	setEnvVars(portNum)
-	loadAndListen()
-}
-
-func setEnvVars(portNum int) {
-	port = fmt.Sprintf(":%d", portNum)
-	baseURL = "http://localhost" + port
-}
-
-func loadAndListen() {
 	loadTemplates()
 	loadFileServer()
 	loadRoutes()
 
 	listenOrDie()
+}
+
+func setEnvVars() {
+	portNum := config.GetRestPort()
+	port = utils.BuildPort(portNum)
+	baseURL = "http://localhost" + port
 }
 
 func loadFileServer() {

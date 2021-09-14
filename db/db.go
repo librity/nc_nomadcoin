@@ -4,13 +4,12 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/librity/nc_nomadcoin/config"
 	"github.com/librity/nc_nomadcoin/utils"
 	bolt "go.etcd.io/bbolt"
 )
 
 const (
-	dbName = "blockchain.db"
-
 	chainBucket     = "chain"
 	chainCheckpoint = "checkpoint"
 
@@ -47,6 +46,7 @@ func initializeDB() {
 }
 
 func openDB() {
+	dbName := buildName()
 	dbPointer, err := bolt.Open(dbName, 0600, nil)
 	utils.PanicError(err)
 	db = dbPointer
@@ -62,4 +62,11 @@ func createBuckets() {
 	})
 
 	utils.PanicError(err)
+}
+
+func buildName() string {
+	port := config.GetRestPort()
+	dbName := fmt.Sprintf("blockchain_%d.db", port)
+
+	return dbName
 }
