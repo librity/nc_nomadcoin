@@ -321,11 +321,16 @@ to successfully speculate on new cryptocurrencies._
 
 - https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go
 - https://stackoverflow.com/questions/25161774/what-are-conventions-for-filenames-in-go
+- https://medium.com/golangspec/labels-in-go-4ffd81932339
+- https://stackoverflow.com/questions/33832762/how-do-i-make-a-go-program-wait-until-there-is-user-input
+
+### Go strings
+
 - https://golang.org/src/strconv/atoi.go?h=Atoi
 - https://golangdocs.com/generate-random-string-in-golang
 - https://stackoverflow.com/questions/22892120/how-to-generate-a-random-string-of-a-fixed-length-in-go
-- https://medium.com/golangspec/labels-in-go-4ffd81932339
-- https://stackoverflow.com/questions/33832762/how-do-i-make-a-go-program-wait-until-there-is-user-input
+- https://stackoverflow.com/questions/59402587/how-to-get-enum-variable-name-by-value-in-golang
+- https://embeddedartistry.com/blog/2017/07/05/printf-a-limited-number-of-characters-from-a-string/
 
 ### Go gobs
 

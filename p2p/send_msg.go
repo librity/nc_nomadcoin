@@ -10,7 +10,7 @@ func sendLastBlock(p *peer) {
 }
 
 func sendAllBlocksReq(p *peer) {
-	message := makeMsgJSON(MsgAllBlocksReq, "")
+	message := makeMsgJSON(MsgAllBlocksReq, nil)
 
 	p.inbox <- message
 }

@@ -30,7 +30,7 @@ func GetPeers() []string {
 
 func insertPeer(p *peer) {
 	Peers.m.Lock()
-	fmt.Println("Inserting peer", p.address)
+	fmt.Println("🤝 Inserting peer", p.address)
 	defer Peers.m.Unlock()
 
 	Peers.v[p.address] = p
@@ -38,7 +38,7 @@ func insertPeer(p *peer) {
 
 func delistPeer(p *peer) {
 	Peers.m.Lock()
-	fmt.Println("Delisting peer", p.address)
+	fmt.Println("🤝 Delisting peer", p.address)
 	defer Peers.m.Unlock()
 
 	delete(Peers.v, p.address)

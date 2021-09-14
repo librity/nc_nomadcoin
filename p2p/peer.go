@@ -24,7 +24,7 @@ func (p *peer) read() {
 			break
 		}
 
-		fmt.Println("Received from", p.address, message)
+		fmt.Println("🤝 Message received from", p.address, message)
 		handleMsg(message, p)
 	}
 }
@@ -43,7 +43,7 @@ func (p *peer) write() {
 			break
 		}
 
-		fmt.Printf("Sent to %s: \"%s\"\n---\n", p.address, payload)
+		fmt.Printf("🤝 Message sent to %s: \"%s...\"\n", p.address, payload[:20])
 	}
 }
 
