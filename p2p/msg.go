@@ -8,8 +8,8 @@ type MsgKind int
 
 const (
 	MsgLastBlock MsgKind = iota
-	MsgAllBlocksRequest
-	MsgAllBlocksResponse
+	MsgAllBlocksReq
+	MsgAllBlocksResp
 )
 
 type Msg struct {

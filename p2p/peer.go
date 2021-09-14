@@ -25,6 +25,7 @@ func (p *peer) read() {
 		}
 
 		fmt.Println("Received from", p.address, message)
+		handleMsg(message, p)
 	}
 }
 

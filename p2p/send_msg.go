@@ -8,3 +8,11 @@ func sendLastBlock(p *peer) {
 
 	p.inbox <- message
 }
+
+func sendAllBlocksReq(p *peer) {
+
+}
+
+func sendAllBlocksResp(p *peer) {
+
+}
