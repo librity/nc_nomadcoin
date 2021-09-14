@@ -291,26 +291,31 @@ to successfully speculate on new cryptocurrencies._
 
 ## Resources <a name = "resources"></a>
 
-- https://github.com/LarryRuane/minesim
-- https://mining-simulator.netlify.app/
-- https://www.blockchain.com/explorer
-- https://www.youtube.com/playlist?list=PL7jH19IHhOLOJfXeVqjtiawzNQLxOgTdq
-- https://stackoverflow.com/questions/29762118/range-over-array-index-in-templates
 - https://andybrewer.github.io/mvp/?ref=producthunt
-- https://www.digitalocean.com/community/tutorials/how-to-add-a-favicon-to-your-website-with-html
 - https://en.wikipedia.org/wiki/Marshalling_(computer_science)
 - https://swagger.io/specification/
 - https://en.wikipedia.org/wiki/Adapter_pattern
-- https://github.com/google/leveldb
-- https://github.com/LMDB/lmdb
-- https://github.com/evnix/boltdbweb
-- https://github.com/br0xen/boltbrowser
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 - https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 - https://javascript.info/websocket
 - https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
 - https://www.javatpoint.com/how-to-add-javascript-to-html
 - https://stackoverflow.com/questions/4279611/how-to-embed-a-video-into-github-readme-md
+
+### Key-value DB
+
+- https://en.wikipedia.org/wiki/Key%E2%80%93value_database
+- https://github.com/google/leveldb
+- https://github.com/LMDB/lmdb
+- https://github.com/evnix/boltdbweb
+- https://github.com/br0xen/boltbrowser
+
+### Blockchain
+
+- https://www.youtube.com/playlist?list=PL7jH19IHhOLOJfXeVqjtiawzNQLxOgTdq
+- https://github.com/LarryRuane/minesim
+- https://mining-simulator.netlify.app/
+- https://www.blockchain.com/explorer
 
 ### Go
 
@@ -365,11 +370,12 @@ to successfully speculate on new cryptocurrencies._
 
 - https://gowebexamples.com/templates/
 - https://blog.gopheracademy.com/advent-2017/using-go-templates/
+- https://stackoverflow.com/questions/29762118/range-over-array-index-in-templates
 - https://stackoverflow.com/questions/25689829/arithmetic-in-go-templates
 - https://stackoverflow.com/questions/17843311/template-and-custom-function-panic-function-not-defined
 - https://stackoverflow.com/questions/38686583/golang-parse-all-templates-in-directory-and-subdirectories
 
-### GO data races
+### Go data races
 
 - https://docs.oracle.com/cd/E19205-01/820-0619/geojs/index.html
 - https://en.wikipedia.org/wiki/Race_condition
@@ -419,6 +425,7 @@ to successfully speculate on new cryptocurrencies._
 - https://www.ionos.com/tools/favicon-generator
 - https://www.favicon-generator.org/search/---/Coin
 - https://www.favicon.cc/?action=icon&file_id=138923
+- https://www.digitalocean.com/community/tutorials/how-to-add-a-favicon-to-your-website-with-html
 
 ### Golang's `http.server` architecture
 
