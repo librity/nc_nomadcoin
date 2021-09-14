@@ -1,21 +1,28 @@
 package config
 
+import "sync"
+
 const (
 	DefaultRestPort = 5001
 )
 
 var (
 	restPort int
+	restOnce sync.Once
 )
 
 func GetRestPort() int {
-	if restPort != 0 {
-		return restPort
+	if restPort == 0 {
+		return DefaultRestPort
 	}
 
-	return DefaultRestPort
+	return restPort
 }
 
 func SetRestPort(port int) {
-	restPort = port
+	restOnce.Do(func() {
+		restPort = port
+
+		SetDBName()
+	})
 }

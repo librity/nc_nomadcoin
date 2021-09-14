@@ -42,13 +42,14 @@ func initializeDB() {
 	openDB()
 	createBuckets()
 
-	fmt.Println("🗃️  Database initialized succesfully.")
+	fmt.Println("🗃️  Database initialized from file:", config.GetDBName())
 }
 
 func openDB() {
-	dbName := buildName()
+	dbName := config.GetDBName()
 	dbPointer, err := bolt.Open(dbName, 0600, nil)
 	utils.PanicError(err)
+
 	db = dbPointer
 }
 
@@ -56,17 +57,11 @@ func createBuckets() {
 	err := db.Update(func(transaction *bolt.Tx) error {
 		_, err := transaction.CreateBucketIfNotExists([]byte(chainBucket))
 		utils.PanicError(err)
+
 		_, err = transaction.CreateBucketIfNotExists([]byte(blocksBucket))
 
 		return err
 	})
 
 	utils.PanicError(err)
-}
-
-func buildName() string {
-	port := config.GetRestPort()
-	dbName := fmt.Sprintf("blockchain_%d.db", port)
-
-	return dbName
 }

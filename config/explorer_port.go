@@ -1,21 +1,26 @@
 package config
 
+import "sync"
+
 const (
 	DefaultExplorerPort = 4000
 )
 
 var (
 	explorerPort int
+	explorerOnce sync.Once
 )
 
 func GetExplorerPort() int {
-	if explorerPort != 0 {
-		return explorerPort
+	if explorerPort == 0 {
+		return DefaultExplorerPort
 	}
 
-	return DefaultExplorerPort
+	return explorerPort
 }
 
 func SetExplorerPort(port int) {
-	explorerPort = port
+	explorerOnce.Do(func() {
+		explorerPort = port
+	})
 }
