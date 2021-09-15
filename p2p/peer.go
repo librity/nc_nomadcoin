@@ -43,7 +43,7 @@ func (p *peer) write() {
 			break
 		}
 
-		fmt.Printf("🤝 Message sent to %s: \"%s...\"\n", p.address, payload[:20])
+		fmt.Printf("🤝 Message sent to %s: %s...\"}\n", p.address, payload[:25])
 	}
 }
 

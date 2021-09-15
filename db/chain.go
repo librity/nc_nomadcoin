@@ -5,7 +5,7 @@ import (
 	bolt "go.etcd.io/bbolt"
 )
 
-func SaveCheckpoint(chain []byte) {
+func SaveChain(chain []byte) {
 	err := getDB().Update(func(transaction *bolt.Tx) error {
 		bucket := transaction.Bucket([]byte(chainBucket))
 		err := bucket.Put([]byte(chainCheckpoint), chain)
@@ -16,7 +16,7 @@ func SaveCheckpoint(chain []byte) {
 	utils.PanicError(err)
 }
 
-func LoadCheckpoint() []byte {
+func LoadChain() []byte {
 	var chain []byte
 
 	err := getDB().View(func(transaction *bolt.Tx) error {
@@ -27,4 +27,8 @@ func LoadCheckpoint() []byte {
 	utils.PanicError(err)
 
 	return chain
+}
+
+func ClearChain() {
+	resetBucket(chainBucket)
 }

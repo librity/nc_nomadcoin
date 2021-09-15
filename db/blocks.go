@@ -28,3 +28,7 @@ func LoadBlock(hash string) []byte {
 
 	return rawBlock
 }
+
+func ClearBlocks() {
+	resetBucket(blocksBucket)
+}

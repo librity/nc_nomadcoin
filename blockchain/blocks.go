@@ -64,6 +64,20 @@ func GetLastBlock() *Block {
 	return lastBlock
 }
 
+func Replace(blocks []*Block) {
+	chain := GetBC()
+	chain.reset()
+
+	for _, block := range blocks {
+		block.save()
+	}
+
+	lastBlock := blocks[0]
+	chain.reference(lastBlock)
+
+	fmt.Println("⛓️  Blockchain replaced succesfully.")
+}
+
 func InspectBlocks() {
 	fmt.Println("=== Blocks ===")
 

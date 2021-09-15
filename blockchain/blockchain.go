@@ -44,7 +44,7 @@ func GetBC() *blockchain {
 func initializeBlockchain() {
 	b = &blockchain{Height: 0}
 
-	checkpoint := db.LoadCheckpoint()
+	checkpoint := db.LoadChain()
 	if checkpoint == nil {
 		b.AddBlock()
 		fmt.Println("⛓️  Blockchain initialized succesfully.")
@@ -68,9 +68,14 @@ func (b *blockchain) reference(block *Block) {
 }
 
 func (b *blockchain) save() {
-	db.SaveCheckpoint(utils.ToGob(b))
+	db.SaveChain(utils.ToGob(b))
 }
 
 func (b *blockchain) restore(encoded []byte) {
 	utils.FromGob(b, encoded)
+}
+
+func (b *blockchain) reset() {
+	db.ClearBlocks()
+	db.ClearChain()
 }
