@@ -15,6 +15,10 @@ func handleMsg(message *Msg, p *peer) {
 		handleAllBlocksReq(message, p)
 	case MsgAllBlocksResp:
 		handleAllBlocksResp(message, p)
+	case MsgMinedBlock:
+		handleMinedBlock(message, p)
+	default:
+		handleUnknownMsg(message, p)
 	}
 }
 
@@ -28,4 +32,16 @@ func handleAllBlocksResp(message *Msg, p *peer) {
 
 	fmt.Println("🤝 Replacing local blocks with", fmt.Sprintf("%s's", p.address), "blocks.")
 	blockchain.Replace(theirBlocks)
+}
+
+func handleMinedBlock(message *Msg, p *peer) {
+	minedBlock := &blockchain.Block{}
+	utils.FromJSON(message.Payload, minedBlock)
+
+	fmt.Println("🤝 Received new block from", p.address)
+	// blockchain.AddPeerBlock(minedBlock)
+}
+
+func handleUnknownMsg(message *Msg, p *peer) {
+	fmt.Println("🤝 Message of unknown type", message)
 }

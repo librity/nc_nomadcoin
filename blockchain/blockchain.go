@@ -12,6 +12,7 @@ type blockchain struct {
 	LastHash         string `json:"lastHash"`
 	Height           int    `json:"height"`
 	CurrentDificulty int    `json:"currentDifficulty"`
+	m                sync.Mutex
 }
 
 var (
@@ -43,6 +44,8 @@ func GetBC() *blockchain {
 
 func initializeBlockchain() {
 	b = &blockchain{Height: 0}
+	b.m.Lock()
+	defer b.m.Unlock()
 
 	checkpoint := db.LoadChain()
 	if checkpoint == nil {
@@ -55,9 +58,11 @@ func initializeBlockchain() {
 	fmt.Println("⛓️  Blockchain restored succesfully.")
 }
 
-func (b *blockchain) AddBlock() {
+func (b *blockchain) AddBlock() *Block {
 	block := createBlock(b.LastHash, b.Height+1, getDifficulty(b))
 	b.reference(block)
+
+	return block
 }
 
 func (b *blockchain) reference(block *Block) {

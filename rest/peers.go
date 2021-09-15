@@ -13,7 +13,7 @@ type addPeerPayload struct {
 }
 
 func peersIndex(rw http.ResponseWriter, r *http.Request) {
-	peers := p2p.GetPeers()
+	peers := p2p.GetPeersList()
 	json.NewEncoder(rw).Encode(peers)
 }
 

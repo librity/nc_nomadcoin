@@ -12,6 +12,7 @@ const (
 	MsgLastBlock MsgKind = iota
 	MsgAllBlocksReq
 	MsgAllBlocksResp
+	MsgMinedBlock
 )
 
 type Msg struct {
@@ -34,6 +35,8 @@ func (m *Msg) KindToString() string {
 		return "MsgAllBlocksReq"
 	case MsgAllBlocksResp:
 		return "MsgAllBlocksResp"
+	case MsgMinedBlock:
+		return "MsgMinedBlock"
 	default:
 		return "UNKOWN"
 	}

@@ -92,5 +92,5 @@ func (w *wallet) Inspect() {
 }
 
 func (w *wallet) prettyAddress() {
-	fmt.Println("📮 Wallet address:", w.Address)
+	fmt.Println("👛 Wallet address:", w.Address)
 }
