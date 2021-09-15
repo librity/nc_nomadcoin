@@ -31,9 +31,7 @@ func AddPeerBlock(peerBlock *Block) {
 	peerBlock.save()
 	chain.reference(peerBlock)
 
-	// TODO: Handle mempool
-	pool := getMP()
-	pool.clear()
+	getMP().removeConfirmedTxs(peerBlock)
 }
 
 func (b *Block) mine() {
@@ -53,7 +51,7 @@ func (b *Block) mine() {
 }
 
 func (b *Block) loadTransactions() {
-	b.Transactions = popAllFromMP()
+	b.Transactions = getMP().popAll()
 }
 
 func (b *Block) save() {

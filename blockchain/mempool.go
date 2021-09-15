@@ -23,14 +23,14 @@ func AddTx(to string, amount uint) (*Tx, error) {
 		return nil, err
 	}
 
-	addTxToMP(tx)
+	getMP().addTx(tx)
 	return tx, nil
 }
 
 func AddPeerTx(peerTx *Tx) {
-	// TODO: Validate tx
+	// TODO: Validate transaction
 
-	addTxToMP(peerTx)
+	getMP().addTx(peerTx)
 }
 
 func getMP() *mempool {
@@ -45,44 +45,53 @@ func initializeMP() {
 	mp = &mempool{}
 }
 
-func addTxToMP(tx *Tx) {
-	pool := getMP()
-	pool.m.Lock()
-	defer pool.m.Unlock()
+func (m *mempool) addTx(tx *Tx) {
+	m.m.Lock()
+	defer m.m.Unlock()
 
-	pool.transactions = append(pool.transactions, tx)
+	m.transactions = append(m.transactions, tx)
 }
 
-func popAllFromMP() []*Tx {
-	pool := getMP()
-	pool.m.Lock()
-	defer pool.m.Unlock()
+func (m *mempool) popAll() []*Tx {
+	m.m.Lock()
+	defer m.m.Unlock()
 
 	miner := wallet.GetAddress()
 	coinbase := makeCoinbaseTx(miner)
-	txs := pool.transactions
+	txs := m.transactions
 	txs = append(txs, coinbase)
-	pool.clear()
+	m.clear()
 
 	return txs
 }
 
-func (m *mempool) clear() {
-	m.transactions = nil
+func (m *mempool) removeConfirmedTxs(peerBlock *Block) {
+	m.m.Lock()
+	defer m.m.Unlock()
+
+	confirmedTxs := peerBlock.Transactions
+	for _, confirmedTx := range confirmedTxs {
+		isInMP, index := m.hasTx(confirmedTx.Id)
+		if isInMP {
+			m.removeTx(index)
+		}
+	}
 }
 
-func outputIsOnMP(unspentOutput *UnspTxOutput) bool {
-	for _, transaction := range getMP().transactions {
-		for _, input := range transaction.Inputs {
-			sameTxId := input.TxId == unspentOutput.TxId
-			sameIndex := input.OutputIndex == unspentOutput.Index
-			outputIsOnMempool := sameTxId && sameIndex
-
-			if outputIsOnMempool {
-				return true
-			}
+func (m *mempool) hasTx(targetId string) (bool, int) {
+	for index, tx := range m.transactions {
+		if tx.Id == targetId {
+			return true, index
 		}
 	}
 
-	return false
+	return false, -1
+}
+
+func (m *mempool) removeTx(index int) {
+	m.transactions = append(m.transactions[:index], m.transactions[index+1:]...)
+}
+
+func (m *mempool) clear() {
+	m.transactions = nil
 }
