@@ -16,7 +16,7 @@ func blocksIndex(rw http.ResponseWriter, r *http.Request) {
 }
 
 func createBlock(rw http.ResponseWriter, r *http.Request) {
-	newBlock := blockchain.GetBC().AddBlock()
+	newBlock := blockchain.MineBlock()
 	p2p.BroadcastMinedBlock(newBlock)
 
 	rw.WriteHeader(http.StatusCreated)

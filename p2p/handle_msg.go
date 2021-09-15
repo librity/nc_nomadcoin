@@ -35,11 +35,11 @@ func handleAllBlocksResp(message *Msg, p *peer) {
 }
 
 func handleMinedBlock(message *Msg, p *peer) {
-	minedBlock := &blockchain.Block{}
-	utils.FromJSON(message.Payload, minedBlock)
+	peerBlock := &blockchain.Block{}
+	utils.FromJSON(message.Payload, peerBlock)
 
 	fmt.Println("🤝 Received new block from", p.address)
-	// blockchain.AddPeerBlock(minedBlock)
+	blockchain.AddPeerBlock(peerBlock)
 }
 
 func handleUnknownMsg(message *Msg, p *peer) {

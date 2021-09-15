@@ -32,11 +32,17 @@ func (b blockchain) String() string {
 }
 
 func InspectChain() {
-	chain := GetBC()
+	chain := getBC()
 	fmt.Print(chain)
 }
 
-func GetBC() *blockchain {
+func Status() blockchain {
+	chain := getBC()
+
+	return *chain
+}
+
+func getBC() *blockchain {
 	once.Do(initializeBlockchain)
 
 	return b
@@ -49,7 +55,7 @@ func initializeBlockchain() {
 
 	checkpoint := db.LoadChain()
 	if checkpoint == nil {
-		b.AddBlock()
+		b.addBlock()
 		fmt.Println("⛓️  Blockchain initialized succesfully.")
 		return
 	}
@@ -58,7 +64,7 @@ func initializeBlockchain() {
 	fmt.Println("⛓️  Blockchain restored succesfully.")
 }
 
-func (b *blockchain) AddBlock() *Block {
+func (b *blockchain) addBlock() *Block {
 	block := createBlock(b.LastHash, b.Height+1, getDifficulty(b))
 	b.reference(block)
 

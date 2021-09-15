@@ -18,6 +18,22 @@ type Block struct {
 	Transactions []*Tx  `json:"transactions"`
 }
 
+func MineBlock() *Block {
+	block := getBC().addBlock()
+
+	return block
+}
+
+func AddPeerBlock(peerBlock *Block) {
+	// TODO: Verify block
+
+	chain := getBC()
+	peerBlock.save()
+	chain.reference(peerBlock)
+
+	// TODO: Handle mempool
+}
+
 func (b *Block) mine() {
 	target := strings.Repeat("0", b.Difficulty)
 
