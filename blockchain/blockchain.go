@@ -66,6 +66,9 @@ func (b *blockchain) addBlock() *Block {
 }
 
 func (b *blockchain) reference(block *Block) {
+	b.m.Lock()
+	defer b.m.Unlock()
+
 	b.LastHash = block.Hash
 	b.Leight = block.Height
 	b.Dificulty = block.Difficulty

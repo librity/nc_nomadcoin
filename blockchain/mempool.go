@@ -62,12 +62,16 @@ func popAllFromMP() []*Tx {
 	coinbase := makeCoinbaseTx(miner)
 	txs := pool.transactions
 	txs = append(txs, coinbase)
-	pool.transactions = nil
+	pool.clear()
 
 	return txs
 }
 
-func isOnMempool(unspentOutput *UnspTxOutput) bool {
+func (m *mempool) clear() {
+	m.transactions = nil
+}
+
+func outputIsOnMP(unspentOutput *UnspTxOutput) bool {
 	for _, transaction := range getMP().transactions {
 		for _, input := range transaction.Inputs {
 			sameTxId := input.TxId == unspentOutput.TxId

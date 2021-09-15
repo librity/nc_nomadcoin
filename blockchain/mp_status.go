@@ -7,8 +7,10 @@ type MPStatus struct {
 
 func MempoolStatus() *MPStatus {
 	pool := getMP()
-	status := newMPStatus(pool)
+	pool.m.Lock()
+	defer pool.m.Unlock()
 
+	status := newMPStatus(pool)
 	return status
 }
 

@@ -8,8 +8,10 @@ type BCStatus struct {
 
 func Status() *BCStatus {
 	chain := getBC()
-	status := newBCStatus(chain)
+	chain.m.Lock()
+	defer chain.m.Unlock()
 
+	status := newBCStatus(chain)
 	return status
 }
 

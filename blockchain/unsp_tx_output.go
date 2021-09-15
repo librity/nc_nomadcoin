@@ -50,7 +50,7 @@ func makeUnspOutputs(txs *[]*Tx, referencedTxs map[string]bool, address string) 
 			}
 
 			unspentOutput := newUnspTxOutput(tx.Id, uint(index), output.Amount)
-			if isOnMempool(unspentOutput) {
+			if outputIsOnMP(unspentOutput) {
 				continue
 			}
 

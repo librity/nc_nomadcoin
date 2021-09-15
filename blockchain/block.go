@@ -32,6 +32,8 @@ func AddPeerBlock(peerBlock *Block) {
 	chain.reference(peerBlock)
 
 	// TODO: Handle mempool
+	pool := getMP()
+	pool.clear()
 }
 
 func (b *Block) mine() {
