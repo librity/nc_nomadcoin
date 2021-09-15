@@ -15,9 +15,9 @@ func Status() *BCStatus {
 
 func newBCStatus(b *blockchain) *BCStatus {
 	bcStatus := &BCStatus{
-		LastHash:         b.lastHash,
-		Height:           b.height,
-		CurrentDificulty: b.dificulty,
+		LastHash:         b.LastHash,
+		Height:           b.Leight,
+		CurrentDificulty: b.Dificulty,
 	}
 
 	return bcStatus

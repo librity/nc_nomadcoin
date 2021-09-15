@@ -9,20 +9,20 @@ const (
 )
 
 func getDifficulty(chain *blockchain) int {
-	if chain.height == 0 {
+	if chain.Leight == 0 {
 		return baseDifficulty
 	}
 
-	shouldRecalc := chain.height%blocksPerRecalc == 0
+	shouldRecalc := chain.Leight%blocksPerRecalc == 0
 	if shouldRecalc {
 		return newDifficulty()
 	}
 
-	return chain.dificulty
+	return chain.Dificulty
 }
 
 func newDifficulty() int {
-	currentDificulty := getBC().dificulty
+	currentDificulty := getBC().Dificulty
 	actualTime := timeSinceLastRecalc()
 
 	if tooEasy(actualTime) {
