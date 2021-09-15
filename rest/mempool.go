@@ -9,8 +9,8 @@ import (
 )
 
 func mempool(rw http.ResponseWriter, r *http.Request) {
-	mempool := blockchain.Mempool
+	mempool := blockchain.MempoolStatus()
 
-	err := json.NewEncoder(rw).Encode(mempool)
+	err := json.NewEncoder(rw).Encode(&mempool)
 	utils.PanicError(err)
 }

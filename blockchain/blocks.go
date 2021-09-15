@@ -14,7 +14,7 @@ var (
 
 func GetBlocks() []*Block {
 	var blocks []*Block
-	currentHash := getBC().LastHash
+	currentHash := getBC().lastHash
 
 	for {
 		block, _ := FindBlock(currentHash)
@@ -41,7 +41,7 @@ func FindBlock(hash string) (*Block, error) {
 
 func GetLastNBlocks(n int) []*Block {
 	var blocks []*Block
-	currentHash := getBC().LastHash
+	currentHash := getBC().lastHash
 
 	for i := 0; i < n; i++ {
 		block, _ := FindBlock(currentHash)
@@ -57,7 +57,7 @@ func GetLastNBlocks(n int) []*Block {
 }
 
 func GetLastBlock() *Block {
-	lastHash := getBC().LastHash
+	lastHash := getBC().lastHash
 	lastBlock, err := FindBlock(lastHash)
 	utils.PanicError(err)
 
@@ -66,7 +66,7 @@ func GetLastBlock() *Block {
 
 func Replace(blocks []*Block) {
 	chain := getBC()
-	chain.reset()
+	resetBC()
 
 	for _, block := range blocks {
 		block.save()

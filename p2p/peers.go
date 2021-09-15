@@ -3,8 +3,6 @@ package p2p
 import (
 	"fmt"
 	"sync"
-
-	"github.com/librity/nc_nomadcoin/blockchain"
 )
 
 var (
@@ -28,15 +26,6 @@ func GetPeersList() []string {
 		peersList = append(peersList, address)
 	}
 	return peersList
-}
-
-func BroadcastMinedBlock(minedBlock *blockchain.Block) {
-	Peers.m.Lock()
-	defer Peers.m.Unlock()
-
-	for _, peer := range Peers.v {
-		sendMinedBlock(peer, minedBlock)
-	}
 }
 
 func insertPeer(p *peer) {

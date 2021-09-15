@@ -51,7 +51,7 @@ func (b *Block) mine() {
 }
 
 func (b *Block) loadTransactions() {
-	b.Transactions = Mempool.popAll()
+	b.Transactions = popAllFromMP()
 }
 
 func (b *Block) save() {

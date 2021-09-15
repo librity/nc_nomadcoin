@@ -9,23 +9,23 @@ import (
 )
 
 type blockchain struct {
-	LastHash         string `json:"lastHash"`
-	Height           int    `json:"height"`
-	CurrentDificulty int    `json:"currentDifficulty"`
-	m                sync.Mutex
+	lastHash  string
+	height    int
+	dificulty int
+	m         sync.Mutex
 }
 
 var (
-	b    *blockchain
-	once sync.Once
+	bc     *blockchain
+	onceBC sync.Once
 )
 
 // Stringer interface: https://pkg.go.dev/fmt#Stringer
-func (b blockchain) String() string {
+func (b *blockchain) String() string {
 	s := fmt.Sprintln("=== Blockchain ===") +
-		fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +
-		fmt.Sprintln("Last Hash:", b.LastHash) +
-		fmt.Sprintln("Current Dificulty:", b.CurrentDificulty) +
+		fmt.Sprintln("Height:", fmt.Sprint(b.height)) +
+		fmt.Sprintln("Last Hash:", b.lastHash) +
+		fmt.Sprintln("Current Dificulty:", b.dificulty) +
 		fmt.Sprintln("")
 
 	return s
@@ -36,45 +36,39 @@ func InspectChain() {
 	fmt.Print(chain)
 }
 
-func Status() blockchain {
-	chain := getBC()
-
-	return *chain
-}
-
 func getBC() *blockchain {
-	once.Do(initializeBlockchain)
+	onceBC.Do(initializeBC)
 
-	return b
+	return bc
 }
 
-func initializeBlockchain() {
-	b = &blockchain{Height: 0}
-	b.m.Lock()
-	defer b.m.Unlock()
+func initializeBC() {
+	bc = &blockchain{}
+	bc.m.Lock()
+	defer bc.m.Unlock()
 
 	checkpoint := db.LoadChain()
 	if checkpoint == nil {
-		b.addBlock()
+		bc.addBlock()
 		fmt.Println("⛓️  Blockchain initialized succesfully.")
 		return
 	}
 
-	b.restore(checkpoint)
+	bc.restore(checkpoint)
 	fmt.Println("⛓️  Blockchain restored succesfully.")
 }
 
 func (b *blockchain) addBlock() *Block {
-	block := createBlock(b.LastHash, b.Height+1, getDifficulty(b))
+	block := createBlock(b.lastHash, b.height+1, getDifficulty(b))
 	b.reference(block)
 
 	return block
 }
 
 func (b *blockchain) reference(block *Block) {
-	b.LastHash = block.Hash
-	b.Height = block.Height
-	b.CurrentDificulty = block.Difficulty
+	b.lastHash = block.Hash
+	b.height = block.Height
+	b.dificulty = block.Difficulty
 	b.save()
 }
 
@@ -86,7 +80,7 @@ func (b *blockchain) restore(encoded []byte) {
 	utils.FromGob(b, encoded)
 }
 
-func (b *blockchain) reset() {
+func resetBC() {
 	db.ClearBlocks()
 	db.ClearChain()
 }

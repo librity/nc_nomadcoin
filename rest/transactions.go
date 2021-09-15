@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/librity/nc_nomadcoin/blockchain"
+	"github.com/librity/nc_nomadcoin/p2p"
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
@@ -18,12 +19,13 @@ func createTransaction(rw http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&payload)
 	utils.PanicError(err)
 
-	err = blockchain.Mempool.AddTx(payload.To, payload.Amount)
+	tx, err := blockchain.AddTx(payload.To, payload.Amount)
 	if err == blockchain.ErrNotEnoughMoney {
 		rw.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(rw).Encode(errResp{err.Error()})
 		return
 	}
 
+	go p2p.BroadcastNewTx(tx)
 	rw.WriteHeader(http.StatusCreated)
 }

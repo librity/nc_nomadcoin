@@ -10,5 +10,5 @@ import (
 func blokchain(rw http.ResponseWriter, r *http.Request) {
 	chain := blockchain.Status()
 
-	json.NewEncoder(rw).Encode(chain)
+	json.NewEncoder(rw).Encode(&chain)
 }

@@ -1,38 +1,74 @@
 package blockchain
 
-import "github.com/librity/nc_nomadcoin/wallet"
+import (
+	"sync"
+
+	"github.com/librity/nc_nomadcoin/wallet"
+)
 
 type mempool struct {
-	Transactions []*Tx `json:"transactions"`
+	transactions []*Tx
+	m            sync.Mutex
 }
 
 var (
-	Mempool = &mempool{}
+	mp     *mempool
+	onceMP sync.Once
 )
 
-func (m *mempool) AddTx(to string, amount uint) error {
+func AddTx(to string, amount uint) (*Tx, error) {
 	from := wallet.GetAddress()
 	tx, err := makeTx(from, to, amount)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	m.Transactions = append(m.Transactions, tx)
-	return nil
+	addTxToMP(tx)
+	return tx, nil
 }
 
-func (m *mempool) popAll() []*Tx {
+func AddPeerTx(peerTx *Tx) {
+	// TODO: Validate tx
+
+	addTxToMP(peerTx)
+}
+
+func getMP() *mempool {
+	if mp == nil {
+		onceMP.Do(initializeMP)
+	}
+
+	return mp
+}
+
+func initializeMP() {
+	mp = &mempool{}
+}
+
+func addTxToMP(tx *Tx) {
+	pool := getMP()
+	pool.m.Lock()
+	defer pool.m.Unlock()
+
+	pool.transactions = append(pool.transactions, tx)
+}
+
+func popAllFromMP() []*Tx {
+	pool := getMP()
+	pool.m.Lock()
+	defer pool.m.Unlock()
+
 	miner := wallet.GetAddress()
 	coinbase := makeCoinbaseTx(miner)
-	txs := m.Transactions
+	txs := pool.transactions
 	txs = append(txs, coinbase)
-	m.Transactions = nil
+	pool.transactions = nil
 
 	return txs
 }
 
 func isOnMempool(unspentOutput *UnspTxOutput) bool {
-	for _, transaction := range Mempool.Transactions {
+	for _, transaction := range getMP().transactions {
 		for _, input := range transaction.Inputs {
 			sameTxId := input.TxId == unspentOutput.TxId
 			sameIndex := input.OutputIndex == unspentOutput.Index

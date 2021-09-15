@@ -27,3 +27,9 @@ func sendMinedBlock(p *peer, minedBlock *blockchain.Block) {
 
 	p.inbox <- message
 }
+
+func sendNewTx(p *peer, newTx *blockchain.Tx) {
+	message := makeMsgJSON(MsgNewTx, newTx)
+
+	p.inbox <- message
+}

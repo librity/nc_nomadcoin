@@ -283,11 +283,12 @@ to successfully speculate on new cryptocurrencies._
 - https://pkg.go.dev/crypto/x509#MarshalECPrivateKey
 - https://pkg.go.dev/os#WriteFile
 - https://pkg.go.dev/builtin#close
-- https://golang.org/doc/
 - https://pkg.go.dev/std
+- https://golang.org/doc/
 - https://golang.org/ref/spec#Variables
 - https://golang.org/ref/spec#Pointer_types
 - https://tour.golang.org/methods/17
+- https://go.dev/blog/maps
 
 ## Resources <a name = "resources"></a>
 
@@ -323,6 +324,7 @@ to successfully speculate on new cryptocurrencies._
 - https://stackoverflow.com/questions/25161774/what-are-conventions-for-filenames-in-go
 - https://medium.com/golangspec/labels-in-go-4ffd81932339
 - https://stackoverflow.com/questions/33832762/how-do-i-make-a-go-program-wait-until-there-is-user-input
+- https://stackoverflow.com/questions/37242009/function-returns-lock-by-value
 
 ### Go strings
 
