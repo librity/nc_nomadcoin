@@ -30,9 +30,10 @@ func (t *Tx) setId() {
 
 func (t *Tx) sign() {
 	hash := t.Id
+	serverWallet := wallet.GetW()
 
 	for _, input := range t.Inputs {
-		input.Signature = wallet.HexSign(hash)
+		input.Signature = wallet.HexSign(hash, serverWallet)
 	}
 }
 

@@ -20,17 +20,17 @@ func TestToJSON(t *testing.T) {
 		}
 	})
 
-	t.Run("Should return a decodable gob", func(t *testing.T) {
+	t.Run("Should return a decodable JSON", func(t *testing.T) {
 		encoded := ToJSON(test)
 		decoded := testStruct{}
 		err := json.Unmarshal(encoded, &decoded)
 
 		if err != nil {
-			t.Error("Unable to decode Gob.")
+			t.Error("Unable to decode JSON.")
 		}
 
 		if decoded != test {
-			t.Error("Decoded gob doesn't match original object.")
+			t.Error("Decoded JSON doesn't match original object.")
 		}
 	})
 
@@ -50,7 +50,7 @@ func TestFromJSON(t *testing.T) {
 	test := testStruct{Test: "I am a test struct."}
 	encoded := []byte(`{"Test": "I am a test struct."}`)
 
-	t.Run("Should decode the json into the original object", func(t *testing.T) {
+	t.Run("Should decode the JSON into the original object", func(t *testing.T) {
 		decoded := testStruct{}
 		FromJSON(encoded, &decoded)
 
@@ -59,7 +59,7 @@ func TestFromJSON(t *testing.T) {
 		}
 
 		if decoded != test {
-			t.Error("Decoded gob doesn't match original object.")
+			t.Error("Decoded JSON doesn't match original object.")
 		}
 	})
 

@@ -13,11 +13,10 @@ type signature struct {
 	S *big.Int
 }
 
-func HexSign(hash string) string {
+func HexSign(hash string, w *wallet) string {
 	payloadBytes := utils.HexToBytes(hash)
-	privateKey := GetW().privateKey
 
-	r, s, err := ecdsa.Sign(rand.Reader, privateKey, payloadBytes)
+	r, s, err := ecdsa.Sign(rand.Reader, w.privateKey, payloadBytes)
 	utils.PanicError(err)
 
 	signHex := utils.BigIntsToHex(r, s)
