@@ -19,6 +19,8 @@ func handleMsg(message *Msg, p *peer) {
 		handleMinedBlock(message, p)
 	case MsgNewTx:
 		handleNewTx(message, p)
+	case MsgNewPeer:
+		handleNewPeer(message, p)
 	default:
 		handleUnknownMsg(message, p)
 	}
@@ -50,6 +52,23 @@ func handleNewTx(message *Msg, p *peer) {
 
 	fmt.Println("🤝 Received new transaction from", p.address)
 	blockchain.AddPeerTx(peerTx)
+}
+
+func handleNewPeer(message *Msg, p *peer) {
+	address := ""
+	utils.FromJSON(message.Payload, &address)
+
+	Peers.m.Lock()
+	_, peerExists := Peers.v[address]
+	Peers.m.Unlock()
+	if peerExists {
+		return
+	}
+
+	fmt.Println("🤝 Received new peer", address, "from", p.address)
+	ip := utils.SafeSplit(address, ":", 0)
+	port := utils.SafeSplit(address, ":", 1)
+	AddPeer(ip, port)
 }
 
 func handleUnknownMsg(message *Msg, p *peer) {

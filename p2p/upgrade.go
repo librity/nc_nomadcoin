@@ -12,7 +12,8 @@ func UpgradePeer(rw http.ResponseWriter, r *http.Request) {
 	juniorConn, err := upgrader.Upgrade(rw, r, nil)
 	utils.PanicError(err)
 
-	initPeer(ip, port, juniorConn)
+	newPeer := initPeer(ip, port, juniorConn)
+	go broadcastNewPeer(newPeer)
 }
 
 func buildUpgrader(r *http.Request) (*websocket.Upgrader, string, string) {

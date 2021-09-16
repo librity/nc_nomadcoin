@@ -101,7 +101,7 @@ Then open one of the demos in your web browser:
 ### Golang is awesome
 
 I really enjoy Go, it's probably my favorite language right now.
-I blows me away how easy it is to write and refactor code
+It blows me away how easy it is to write and refactor code
 using VSCode's Go extension.
 I'm catching over 95% of bugs and errors before compilation.
 I only ever need to worry about:

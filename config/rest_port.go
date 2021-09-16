@@ -1,6 +1,9 @@
 package config
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
 
 const (
 	DefaultRestPort = 5001
@@ -17,6 +20,12 @@ func GetRestPort() int {
 	}
 
 	return restPort
+}
+
+func GetRestPortStr() string {
+	port := fmt.Sprint(GetRestPort())
+
+	return port
 }
 
 func SetRestPort(port int) {

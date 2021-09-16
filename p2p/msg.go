@@ -14,6 +14,7 @@ const (
 	MsgAllBlocksResp
 	MsgMinedBlock
 	MsgNewTx
+	MsgNewPeer
 )
 
 type Msg struct {
@@ -40,6 +41,8 @@ func (m *Msg) KindToString() string {
 		return "MsgMinedBlock"
 	case MsgNewTx:
 		return "MsgNewTx"
+	case MsgNewPeer:
+		return "MsgNewPeer"
 	default:
 		return "UNKOWN"
 	}

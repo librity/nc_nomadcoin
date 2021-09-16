@@ -22,8 +22,7 @@ func addPeer(rw http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&payload)
 	utils.PanicError(err)
 
-	thisPort := cleanPort()
-	p2p.AddPeer(payload.IP, payload.Port, thisPort)
+	p2p.AddPeer(payload.IP, payload.Port)
 	rw.WriteHeader(http.StatusOK)
 }
 
