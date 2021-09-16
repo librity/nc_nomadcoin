@@ -32,9 +32,9 @@ func main() {
 }
 
 func randomCounter(label string, channel chan string) {
-	utils.SeedRandom()
+	utils.SeedRNG()
 	randomCount := rand.Intn(countCap)
-	utils.SeedRandom()
+	utils.SeedRNG()
 	randomDuration := rand.Intn(durationCap)
 	interval := time.Duration(randomDuration) * time.Millisecond
 

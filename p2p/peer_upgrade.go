@@ -35,5 +35,5 @@ func buildUpgrader(r *http.Request) (*websocket.Upgrader, string, string) {
 }
 
 func parseIP(RemoteAddr string) string {
-	return utils.SafeSplit(RemoteAddr, ":", 0)
+	return utils.GetChunk(RemoteAddr, ":", 0)
 }

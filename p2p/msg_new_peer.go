@@ -7,13 +7,13 @@ import (
 )
 
 type newPeerPayload struct {
-	ip, port string
+	IP, Port string
 }
 
 func sendNewPeer(p *peer, ip, port string) {
 	payload := newPeerPayload{
-		ip:   ip,
-		port: port,
+		IP:   ip,
+		Port: port,
 	}
 	message := makeMsgJSON(MsgNewPeer, payload)
 
@@ -24,7 +24,19 @@ func handleNewPeer(message *Msg, p *peer) {
 	payload := &newPeerPayload{}
 	utils.FromJSON(message.Payload, payload)
 
-	address := buildPeerAdr(payload.ip, payload.port)
+	address := buildPeerAdr(payload.IP, payload.Port)
+	if badPeerPayload(payload) {
+		fmt.Println("🤝 Received invalid peer", address, "from", p.address)
+		return
+	}
+
 	fmt.Println("🤝 Received new peer", address, "from", p.address)
-	AddPeer(payload.ip, payload.port)
+	AddPeer(payload.IP, payload.Port)
+}
+
+func badPeerPayload(payload *newPeerPayload) bool {
+	isBad := payload.IP == "" || payload.Port == ""
+	// TODO: Better peer validation
+
+	return isBad
 }

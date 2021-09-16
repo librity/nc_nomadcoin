@@ -36,12 +36,27 @@ A fully-featured blockchain and cryptocurrency using the Go programming language
 
 ## Getting Started <a name = "getting_started"></a>
 
-### Prerequisites
+### Go environment
 
-Install the latest version of `Go`, then install external dependencies:
+Install the latest version of `Go` with the `asdf` version manager:
 
 ```bash
-go get
+$ cd
+$ git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+$ cd ~/.asdf
+$ git checkout "$(git describe --abbrev=0 --tags)"
+
+# For Ubuntu or other linux distros
+$ echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc
+$ echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
+$ source ~/.bashrc
+
+$ asdf plugin-add golang https://github.com/kennyp/asdf-golang.git
+$ asdf install golang latest
+$ asdf list
+$ asdf global golang 1.17.1
+$ asdf current
+$ go help
 ```
 
 ### Installing
@@ -49,6 +64,8 @@ go get
 ```bash
 $ git clone https://github.com/librity/nc_nomadcoin
 $ cd nc_nomadcoin
+$ go get
+$ asdf reshim golang
 $ go run main.go both
 ```
 
@@ -63,6 +80,20 @@ $ go run -race main.go rest -port=5002
 $ go build -race && nc_nomadcoin rest -port=5001
 $ go build -race && nc_nomadcoin rest -port=5002
 ```
+
+### Godocs
+
+You can browse the documetation of all local packages and projects with the
+[Godocs](https://pkg.go.dev/golang.org/x/tools/godoc#section-readme)
+package:
+
+```bash
+$ go install golang.org/x/tools/godoc
+$ godoc -http=:6060
+```
+
+This will install the executable
+and start a server listening on http://localhost:6060
 
 ## Usage <a name = "usage"></a>
 
@@ -279,6 +310,7 @@ to successfully speculate on new cryptocurrencies._
 - https://github.com/gorilla/mux
 - https://github.com/gorilla/websocket
 - https://github.com/etcd-io/bbolt
+- https://golang.org/x/tools/godoc
 
 ## Docs <a name = "docs"></a>
 
@@ -300,6 +332,7 @@ to successfully speculate on new cryptocurrencies._
 - https://pkg.go.dev/os#WriteFile
 - https://pkg.go.dev/builtin#close
 - https://pkg.go.dev/std
+- https://pkg.go.dev/golang.org/x/tools/godoc
 - https://golang.org/doc/
 - https://golang.org/ref/spec#Variables
 - https://golang.org/ref/spec#Pointer_types
@@ -354,6 +387,9 @@ to successfully speculate on new cryptocurrencies._
 
 - https://gist.github.com/miguelmota/2a0c0e96c22bccc8740819d5d64ff8d0
 - https://stackoverflow.com/questions/14121422/de-and-encode-interface-with-gob
+- https://go.dev/blog/gob
+- https://gist.github.com/evalphobia/a2ba2636acbc112f68dcd89e8b81d349
+- https://developpaper.com/golang-gob-code-detailed-explanation-of-gob-package/
 
 ### Go HTTP
 
@@ -419,6 +455,7 @@ to successfully speculate on new cryptocurrencies._
 
 ### Cryptograhy
 
+- https://en.wikipedia.org/wiki/Hash_function
 - https://en.wikipedia.org/wiki/Cryptographic_hash_function
 - https://en.wikipedia.org/wiki/SHA-2
 - https://www.tutorialspoint.com/cryptography/cryptography_digital_signatures.htm
@@ -459,6 +496,13 @@ to successfully speculate on new cryptocurrencies._
 - https://www.favicon-generator.org/search/---/Coin
 - https://www.favicon.cc/?action=icon&file_id=138923
 - https://www.digitalocean.com/community/tutorials/how-to-add-a-favicon-to-your-website-with-html
+
+### ASDF Version Manager
+
+- https://asdf-vm.com/guide/getting-started.html
+- https://awesomeopensource.com/project/asdf-vm/asdf-plugins
+- https://github.com/kennyp/asdf-golang
+- https://gist.github.com/rubencaro/5ce32fb30bbfa70e7db6be14cf42a35c
 
 ### Golang's `http.server` architecture
 

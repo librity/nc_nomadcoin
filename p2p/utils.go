@@ -13,8 +13,8 @@ func buildPeerAdr(ip, port string) string {
 }
 
 func dismantlePeerAdr(address string) (string, string) {
-	ip := utils.SafeSplit(address, ":", 0)
-	port := utils.SafeSplit(address, ":", 1)
+	ip := utils.GetChunk(address, ":", 0)
+	port := utils.GetChunk(address, ":", 1)
 
 	return ip, port
 }

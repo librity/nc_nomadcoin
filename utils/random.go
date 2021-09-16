@@ -9,8 +9,9 @@ const (
 	alphanum = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 )
 
+// RandomString generates a rando alpha-numeric string.
 func RandomString(length int) string {
-	SeedRandom()
+	SeedRNG()
 
 	randStr := make([]byte, length)
 	for i := range randStr {
@@ -21,6 +22,7 @@ func RandomString(length int) string {
 	return string(randStr)
 }
 
-func SeedRandom() {
+// SeedRNG seeds the Random Number Generator with the current time.
+func SeedRNG() {
 	rand.Seed(time.Now().UnixNano())
 }

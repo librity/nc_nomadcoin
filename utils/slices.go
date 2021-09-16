@@ -2,6 +2,8 @@ package utils
 
 import "reflect"
 
+// Reverse reverses an arbitrary slice referenced by a pointer interface.
+//
 // Source: https://stackoverflow.com/questions/54858529/golang-reverse-a-arbitrary-slice
 func Reverse(slice interface{}) {
 	s := reflect.ValueOf(slice)
