@@ -62,11 +62,10 @@ func initPeer(ip, port string, conn *websocket.Conn) *peer {
 }
 
 func newPeer(ip, port string, conn *websocket.Conn) *peer {
-	address := fmt.Sprintf("%s:%s", ip, port)
 	peer := &peer{
 		ip:      ip,
 		port:    port,
-		address: address,
+		address: buildPeerAdr(ip, port),
 		conn:    conn,
 		inbox:   make(chan []byte),
 	}

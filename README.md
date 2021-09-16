@@ -24,14 +24,14 @@ A fully-featured blockchain and cryptocurrency using the Go programming language
 
 ### Features
 
-- [x] HTML Explorer
+- [ ] HTML Explorer
 - [x] REST API
 - [x] CLI
 - [x] Database Backend
 - [x] Mining
 - [x] Transactions
 - [x] Wallets
-- [ ] P2P (Websockets)
+- [x] P2P (Websockets)
 - [ ] Unit Testing
 
 ## Getting Started <a name = "getting_started"></a>
@@ -108,7 +108,8 @@ I only ever need to worry about:
 
 - Data races
 - Deadlocks
-- Uninitialized maps and pointers
+- Uninitialized `map`s and `*`pointers
+- Functions that receive `interface{}`s params
 
 Every other mistake gets heighlited the moment I type it.
 Golang only surprises me when it doesn't work.

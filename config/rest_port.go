@@ -23,9 +23,9 @@ func GetRestPort() int {
 }
 
 func GetRestPortStr() string {
-	port := fmt.Sprint(GetRestPort())
+	portStr := fmt.Sprint(GetRestPort())
 
-	return port
+	return portStr
 }
 
 func SetRestPort(port int) {

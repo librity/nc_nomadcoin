@@ -18,7 +18,7 @@ func UpgradePeer(rw http.ResponseWriter, r *http.Request) {
 
 func buildUpgrader(r *http.Request) (*websocket.Upgrader, string, string) {
 	ip := parseIP(r.RemoteAddr)
-	port := utils.GetQuery(r, "thisPort")
+	port := utils.GetQuery(r, "senderPort")
 	checkOrigin := func(r *http.Request) bool {
 		if ip == "" {
 			return false

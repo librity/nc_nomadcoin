@@ -33,9 +33,3 @@ func sendNewTx(p *peer, newTx *blockchain.Tx) {
 
 	p.inbox <- message
 }
-
-func sendNewPeer(p *peer, address string) {
-	message := makeMsgJSON(MsgNewPeer, address)
-
-	p.inbox <- message
-}

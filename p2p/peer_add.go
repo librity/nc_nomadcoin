@@ -9,10 +9,25 @@ import (
 )
 
 const (
-	WSURLformat = "ws://%s:%s/peers/upgrade?thisPort=%s"
+	WSURLformat = "ws://%s:%s/peers/upgrade?senderPort=%s"
 )
 
 func AddPeer(ip, port string) {
+	address := buildPeerAdr(ip, port)
+	fmt.Println("🤝 Adding peer", address)
+
+	Peers.m.Lock()
+	_, peerExists := Peers.v[address]
+	Peers.m.Unlock()
+	if peerExists {
+		fmt.Println("🤝 Already connected to peer", address)
+		return
+	}
+
+	addPeer(ip, port)
+}
+
+func addPeer(ip, port string) {
 	url := makeWSURL(ip, port)
 	seniorConn, _, err := websocket.DefaultDialer.Dial(url, nil)
 	utils.PanicError(err)
@@ -23,8 +38,8 @@ func AddPeer(ip, port string) {
 }
 
 func makeWSURL(ip, port string) string {
-	thisPort := config.GetRestPortStr()
-	url := fmt.Sprintf(WSURLformat, ip, port, thisPort)
+	senderPort := config.GetRestPortStr()
+	url := fmt.Sprintf(WSURLformat, ip, port, senderPort)
 
 	return url
 }
