@@ -16,12 +16,36 @@ func TestGetStrChunk(t *testing.T) {
 	}
 
 	testCases := []testCase{
-		{str: goofyStr, sep: ";;", index: 0, expected: "I"},
-		{str: goofyStr, sep: ";;", index: 2, expected: "A"},
-		{str: goofyStr, sep: ";;", index: 10, expected: ""},
-		{str: goofyStr, sep: ";;", index: -1, expected: ""},
-		{str: goofyStr, sep: "B", index: 0, expected: goofyStr},
-		{str: goofyStr, sep: "B", index: 1, expected: ""},
+		{
+			str:      goofyStr,
+			sep:      ";;",
+			index:    0,
+			expected: "I"},
+		{
+			str:      goofyStr,
+			sep:      ";;",
+			index:    2,
+			expected: "A"},
+		{
+			str:      goofyStr,
+			sep:      ";;",
+			index:    10,
+			expected: ""},
+		{
+			str:      goofyStr,
+			sep:      ";;",
+			index:    -1,
+			expected: ""},
+		{
+			str:      goofyStr,
+			sep:      "B",
+			index:    0,
+			expected: goofyStr},
+		{
+			str:      goofyStr,
+			sep:      "B",
+			index:    1,
+			expected: ""},
 	}
 
 	for _, tc := range testCases {

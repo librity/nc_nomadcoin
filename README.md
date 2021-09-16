@@ -461,6 +461,12 @@ to successfully speculate on new cryptocurrencies._
 - https://wavded.com/post/golang-deadlockish/
 - https://programming.guide/go/detect-deadlock.html
 
+### Go big.Int
+
+- https://medium.com/orbs-network/big-integers-in-go-14534d0e490d
+- https://blog.devgenius.io/big-int-in-go-handling-large-numbers-is-easy-157cb272dd4f
+- https://stackoverflow.com/questions/44696881/big-int-not-equal-to-one-received-after-big-setbytesbigint-bytes
+
 ### Cryptograhy
 
 - https://en.wikipedia.org/wiki/Hash_function
