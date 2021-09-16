@@ -95,6 +95,15 @@ $ godoc -http=:6060
 This will install the executable
 and start a server listening on http://localhost:6060
 
+### Testing
+
+Run all tests with coverage report:
+
+```bash
+$ go test -v -coverprofile cover.out ./...
+$ go tool cover -html=cover.out
+```
+
 ## Usage <a name = "usage"></a>
 
 ### CLI
