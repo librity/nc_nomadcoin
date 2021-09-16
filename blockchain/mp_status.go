@@ -16,8 +16,8 @@ func MempoolStatus() *MPStatus {
 
 func newMPStatus(m *mempool) *MPStatus {
 	MPStatus := &MPStatus{
-		Size:         len(m.transactions),
-		Transactions: m.transactions,
+		Size:         len(m.txs),
+		Transactions: m.getTxs(),
 	}
 
 	return MPStatus

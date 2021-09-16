@@ -98,6 +98,21 @@ Then open one of the demos in your web browser:
 
 ## Notes <a name = "notes"></a>
 
+### Golang is awesome
+
+I really enjoy Go, it's probably my favorite language right now.
+I blows me away how easy it is to write and refactor code
+using VSCode's Go extension.
+I'm catching over 95% of bugs and errors before compilation.
+I only ever need to worry about:
+
+- Data races
+- Deadlocks
+- Uninitialized maps and pointers
+
+Every other mistake gets heighlited the moment I type it.
+Golang only surprises me when it doesn't work.
+
 ### Go Routines and Channels
 
 - Reading from a channel without an active go routines will create a panic.
@@ -390,6 +405,16 @@ to successfully speculate on new cryptocurrencies._
 - https://yourbasic.org/golang/data-races-explained/
 - https://programming.guide/go/data-races-explained.html
 - https://programming.guide/go/detect-data-races.html
+
+### Go deadlocks
+
+- https://yourbasic.org/golang/detect-deadlock/
+- https://stackoverflow.com/questions/56051910/using-mutex-lock-still-deadlock
+- https://awesomeopensource.com/project/sasha-s/go-deadlock
+- https://github.com/sasha-s/go-deadlock
+- https://stackoverflow.com/questions/68144512/identifying-golang-deadlock-5-philosophers-problem
+- https://wavded.com/post/golang-deadlockish/
+- https://programming.guide/go/detect-deadlock.html
 
 ### Cryptograhy
 

@@ -7,8 +7,8 @@ import (
 )
 
 type mempool struct {
-	transactions []*Tx
-	m            sync.Mutex
+	txs map[string]*Tx
+	m   sync.Mutex
 }
 
 var (
@@ -42,14 +42,16 @@ func getMP() *mempool {
 }
 
 func initializeMP() {
-	mp = &mempool{}
+	mp = &mempool{
+		txs: make(map[string]*Tx),
+	}
 }
 
 func (m *mempool) addTx(tx *Tx) {
 	m.m.Lock()
 	defer m.m.Unlock()
 
-	m.transactions = append(m.transactions, tx)
+	m.txs[tx.Id] = tx
 }
 
 func (m *mempool) popAll() []*Tx {
@@ -58,9 +60,18 @@ func (m *mempool) popAll() []*Tx {
 
 	miner := wallet.GetAddress()
 	coinbase := makeCoinbaseTx(miner)
-	txs := m.transactions
+	txs := m.getTxs()
 	txs = append(txs, coinbase)
-	m.clear()
+	m.clearTxs()
+
+	return txs
+}
+
+func (m *mempool) getTxs() []*Tx {
+	txs := []*Tx{}
+	for _, tx := range m.txs {
+		txs = append(txs, tx)
+	}
 
 	return txs
 }
@@ -71,27 +82,17 @@ func (m *mempool) removeConfirmedTxs(peerBlock *Block) {
 
 	confirmedTxs := peerBlock.Transactions
 	for _, confirmedTx := range confirmedTxs {
-		isInMP, index := m.hasTx(confirmedTx.Id)
-		if isInMP {
-			m.removeTx(index)
+		_, txIsInMP := m.txs[confirmedTx.Id]
+		if txIsInMP {
+			m.removeTx(confirmedTx.Id)
 		}
 	}
 }
 
-func (m *mempool) hasTx(targetId string) (bool, int) {
-	for index, tx := range m.transactions {
-		if tx.Id == targetId {
-			return true, index
-		}
-	}
-
-	return false, -1
+func (m *mempool) removeTx(taretId string) {
+	delete(m.txs, taretId)
 }
 
-func (m *mempool) removeTx(index int) {
-	m.transactions = append(m.transactions[:index], m.transactions[index+1:]...)
-}
-
-func (m *mempool) clear() {
-	m.transactions = nil
+func (m *mempool) clearTxs() {
+	m.txs = make(map[string]*Tx)
 }

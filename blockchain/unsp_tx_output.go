@@ -62,7 +62,7 @@ func makeUnspOutputs(txs *[]*Tx, referencedTxs map[string]bool, address string) 
 }
 
 func outputIsOnMP(unspentOutput *UnspTxOutput) bool {
-	for _, transaction := range getMP().transactions {
+	for _, transaction := range getMP().txs {
 		for _, input := range transaction.Inputs {
 			sameTxId := input.TxId == unspentOutput.TxId
 			sameIndex := input.OutputIndex == unspentOutput.Index
