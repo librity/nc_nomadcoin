@@ -339,6 +339,7 @@ to successfully speculate on new cryptocurrencies._
 - https://pkg.go.dev/crypto/x509#MarshalECPrivateKey
 - https://pkg.go.dev/os#WriteFile
 - https://pkg.go.dev/builtin#close
+- https://pkg.go.dev/testing
 - https://pkg.go.dev/std
 - https://pkg.go.dev/golang.org/x/tools/godoc
 - https://golang.org/doc/
@@ -466,6 +467,15 @@ to successfully speculate on new cryptocurrencies._
 - https://medium.com/orbs-network/big-integers-in-go-14534d0e490d
 - https://blog.devgenius.io/big-int-in-go-handling-large-numbers-is-easy-157cb272dd4f
 - https://stackoverflow.com/questions/44696881/big-int-not-equal-to-one-received-after-big-setbytesbigint-bytes
+
+### Go testing
+
+- https://golangdocs.com/golang-unit-testing
+- https://stackoverflow.com/questions/32425558/how-to-verify-if-a-specific-function-is-called
+- https://www.youtube.com/watch?v=ndmB0bj7eyw
+- https://stackoverflow.com/questions/31595791/how-to-test-panics
+- https://pkg.go.dev/github.com/stretchr/testify/assert?utm_source=godoc
+- https://github.com/stretchr/testify
 
 ### Cryptograhy
 

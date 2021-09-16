@@ -7,6 +7,17 @@ import (
 
 func TestPanicError(t *testing.T) {
 
+	t.Run("Checks for panic using recover", func(t *testing.T) {
+		defer func() {
+			if r := recover(); r == nil {
+				t.Errorf("The code did not panic")
+			}
+		}()
+
+		err := errors.New("test")
+		PanicError(err)
+	})
+
 	t.Run("Calls panic function when error isn't nil", func(t *testing.T) {
 		oldPanicFn := panicFn
 		defer func() {

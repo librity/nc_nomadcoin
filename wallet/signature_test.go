@@ -20,13 +20,6 @@ var (
 	testWallet = makeTestWallet(testKeyHex)
 )
 
-func makeTestWallet(keyHex string) *wallet {
-	key := keyFromHex(keyHex)
-	testWallet := newWallet(key)
-
-	return testWallet
-}
-
 func TestHexSign(t *testing.T) {
 	signature := HexSign(testHash, testWallet)
 	_, err := hex.DecodeString(signature)

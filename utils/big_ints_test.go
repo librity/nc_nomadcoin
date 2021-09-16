@@ -28,6 +28,24 @@ func TestBigIntsFromHex(t *testing.T) {
 		}
 	})
 
+	t.Run("Should panic when hex isn't valid", func(t *testing.T) {
+		badHexes := []string{
+			"224c4ab3ef55080f2fd26c9268e5d134f7cafc0ab44badc2b721d4aaea88bf6ba86225643d2410d7309f5f3fe323fe317b16eb314356f5672ef4b9c9044a75a",
+			"224c4ab3ef55080f2fd26c9268e5d134f7cafc0ab44badc2b721d4aaea88bf6ba86225643d2410d7309f5f3fe323fe317b16eb314356f5672ef4b9c9044a75a55",
+			"224c4ab3ef55",
+			"-o2orfoksd-f 0-=1221",
+			"",
+		}
+
+		for _, bh := range badHexes {
+			test := func() {
+				BigIntsFromHex(bh)
+			}
+
+			ShouldPanic(t, test)
+		}
+	})
+
 }
 
 func TestBytesToBigInt(t *testing.T) {
