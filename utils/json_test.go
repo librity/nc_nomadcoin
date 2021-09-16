@@ -1,19 +1,18 @@
 package utils
 
 import (
-	"bytes"
-	"encoding/gob"
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"testing"
 )
 
-func TestToGob(t *testing.T) {
+func TestToJSON(t *testing.T) {
 	type testStruct struct{ Test string }
 	test := testStruct{Test: "I am a test struct."}
 
 	t.Run("Should return a slice of bytes", func(t *testing.T) {
-		result := ToGob(test)
+		result := ToJSON(test)
 		kind := reflect.TypeOf(result).Kind()
 
 		if kind != reflect.Slice {
@@ -22,9 +21,9 @@ func TestToGob(t *testing.T) {
 	})
 
 	t.Run("Should return a decodable gob", func(t *testing.T) {
-		encoded := ToGob(test)
+		encoded := ToJSON(test)
 		decoded := testStruct{}
-		err := gob.NewDecoder(bytes.NewReader(encoded)).Decode(&decoded)
+		err := json.Unmarshal(encoded, &decoded)
 
 		if err != nil {
 			t.Error("Unable to decode Gob.")
@@ -37,27 +36,23 @@ func TestToGob(t *testing.T) {
 
 }
 
-func ExampleToGob() {
+func ExampleToJSON() {
 	test := struct{ Test string }{Test: "I am a test struct."}
-	encoded := ToGob(test)
+	encoded := ToJSON(test)
 	decoded := struct{ Test string }{}
-	gob.NewDecoder(bytes.NewReader(encoded)).Decode(&decoded)
+	json.Unmarshal(encoded, &decoded)
 	fmt.Println(decoded)
 	// Output: {I am a test struct.}
 }
 
-func TestFromGob(t *testing.T) {
+func TestFromJSON(t *testing.T) {
 	type testStruct struct{ Test string }
 	test := testStruct{Test: "I am a test struct."}
-	encoded := []byte{
-		33, 255, 131, 3, 1, 1, 10, 116, 101, 115, 116, 83, 116,
-		114, 117, 99, 116, 1, 255, 132, 0, 1, 1, 1, 4, 84, 101, 115, 116, 1, 12,
-		0, 0, 0, 24, 255, 132, 1, 19, 73, 32, 97, 109, 32, 97, 32, 116, 101,
-		115, 116, 32, 115, 116, 114, 117, 99, 116, 46, 0}
+	encoded := []byte(`{"Test": "I am a test struct."}`)
 
-	t.Run("Should decode the gob into the original object", func(t *testing.T) {
+	t.Run("Should decode the json into the original object", func(t *testing.T) {
 		decoded := testStruct{}
-		FromGob(&decoded, encoded)
+		FromJSON(encoded, &decoded)
 
 		if !reflect.DeepEqual(test, decoded) {
 			t.Errorf("Should return a %s, got %s", reflect.TypeOf(test), reflect.TypeOf(decoded))
@@ -70,13 +65,11 @@ func TestFromGob(t *testing.T) {
 
 }
 
-func ExampleFromGob() {
+func ExampleFromJSON() {
 	test := struct{ Test string }{Test: "I am a test struct."}
-	var buffer bytes.Buffer
-	gob.NewEncoder(&buffer).Encode(test)
-	encoded := buffer.Bytes()
+	encoded, _ := json.Marshal(test)
 	decoded := struct{ Test string }{}
-	FromGob(&decoded, encoded)
+	FromJSON(encoded, &decoded)
 	fmt.Println(decoded)
 	// Output: {I am a test struct.}
 }
