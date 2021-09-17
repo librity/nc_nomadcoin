@@ -10,10 +10,10 @@ import (
 )
 
 const (
-	chainBucket     = "chain"
-	chainCheckpoint = "checkpoint"
+	chainBucket = "CHAIN"
+	chainKey    = "CHAIN_CHECKPOINT"
 
-	blocksBucket = "blocks"
+	blocksBucket = "BLOCKS"
 )
 
 var (

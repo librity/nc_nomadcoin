@@ -8,7 +8,7 @@ import (
 func saveChain(chain []byte) {
 	err := getDB().Update(func(transaction *bolt.Tx) error {
 		bucket := transaction.Bucket([]byte(chainBucket))
-		err := bucket.Put([]byte(chainCheckpoint), chain)
+		err := bucket.Put([]byte(chainKey), chain)
 
 		return err
 	})
@@ -21,7 +21,7 @@ func loadChain() []byte {
 
 	err := getDB().View(func(transaction *bolt.Tx) error {
 		bucket := transaction.Bucket([]byte(chainBucket))
-		chain = bucket.Get([]byte(chainCheckpoint))
+		chain = bucket.Get([]byte(chainKey))
 		return nil
 	})
 	utils.PanicError(err)
