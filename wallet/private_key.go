@@ -6,7 +6,6 @@ import (
 	"crypto/x509"
 	"fmt"
 	"io/fs"
-	"os"
 
 	"github.com/librity/nc_nomadcoin/utils"
 )
@@ -22,12 +21,12 @@ func keyToFile(key *ecdsa.PrivateKey, filePath string) {
 	keyBytes := keyToBytes(key)
 	secureFilePerm := fs.FileMode(0600)
 
-	err := os.WriteFile(filePath, keyBytes, secureFilePerm)
+	err := files.write(filePath, keyBytes, secureFilePerm)
 	utils.PanicError(err)
 }
 
 func keyFromFile(filePath string) (key *ecdsa.PrivateKey) {
-	keyBytes, err := os.ReadFile(filePath)
+	keyBytes, err := files.read(filePath)
 	utils.PanicError(err)
 
 	key = keyFromBytes(keyBytes)

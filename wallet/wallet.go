@@ -4,7 +4,6 @@ import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"fmt"
-	"os"
 )
 
 type wallet struct {
@@ -35,19 +34,12 @@ func GetAddress() string {
 }
 
 func initializeWallet() {
-	if walletFileExists() {
+	if files.walletExists() {
 		initializeWalletFromFile()
 		return
 	}
 
 	createWallet()
-}
-
-func walletFileExists() bool {
-	_, err := os.Stat(walletFilepath)
-	walletFileMissing := os.IsNotExist(err)
-
-	return !walletFileMissing
 }
 
 func initializeWalletFromFile() {

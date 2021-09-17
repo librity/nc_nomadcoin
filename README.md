@@ -521,12 +521,20 @@ to successfully speculate on new cryptocurrencies._
 - https://www.favicon.cc/?action=icon&file_id=138923
 - https://www.digitalocean.com/community/tutorials/how-to-add-a-favicon-to-your-website-with-html
 
-### ASDF Version Manager
+### ASDF version manager
 
 - https://asdf-vm.com/guide/getting-started.html
 - https://awesomeopensource.com/project/asdf-vm/asdf-plugins
 - https://github.com/kennyp/asdf-golang
 - https://gist.github.com/rubencaro/5ce32fb30bbfa70e7db6be14cf42a35c
+
+### Design patterns
+
+- http://blog.ralch.com/articles/design-patterns/golang-composite/
+- https://dev.to/stevensunflash/using-domain-driven-design-ddd-in-golang-3ee5
+- https://www.geeksforgeeks.org/composite-design-pattern/
+- https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/ch01.html
+- https://www.codeproject.com/articles/654670/layered-application-design-pattern
 
 ### Golang's `http.server` architecture
 
