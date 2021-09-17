@@ -3,13 +3,21 @@ package blockchain
 import (
 	"reflect"
 	"testing"
+
+	"github.com/librity/nc_nomadcoin/utils"
 )
+
+func makeFakeBlock() *Block {
+	fakeHash := utils.RandomHash()
+
+	return newBlock(fakeHash, 1, 1)
+}
 
 func TestCreateBlock(t *testing.T) {
 	storage = fakeStorageLayer{}
 
 	t.Run("Should return a *Block", func(t *testing.T) {
-		block := createBlock("GENSIS", 1, 1)
+		block := createBlock("GENESIS", 1, 1)
 		bType := reflect.TypeOf(block)
 		expectedType := reflect.TypeOf(&Block{})
 
@@ -22,11 +30,15 @@ func TestCreateBlock(t *testing.T) {
 		txId := "test"
 		fakeTx := makeFakeTx(txId)
 		getMP().txs[txId] = fakeTx
-		block := createBlock("GENSIS", 1, 1)
-		blockTx := block.Transactions[0]
+		block := createBlock("GENESIS", 1, 1)
 
+		blockTx := block.Transactions[0]
 		if blockTx != fakeTx {
 			t.Errorf("Expected %v, got %v", fakeTx, blockTx)
+		}
+
+		if blockTx.Id != txId {
+			t.Errorf("Expected %v, got %v", txId, blockTx.Id)
 		}
 
 		mpSize := len(getMP().txs)

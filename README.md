@@ -460,7 +460,9 @@ to successfully speculate on new cryptocurrencies._
 - https://stackoverflow.com/questions/32425558/how-to-verify-if-a-specific-function-is-called
 - https://www.youtube.com/watch?v=ndmB0bj7eyw
 - https://stackoverflow.com/questions/31595791/how-to-test-panics
+- https://stackoverflow.com/questions/24375966/does-go-test-run-unit-tests-concurrently
 - https://pkg.go.dev/github.com/stretchr/testify/assert?utm_source=godoc
+- https://stackoverflow.com/questions/31201858/how-to-run-golang-tests-sequentially
 - https://github.com/stretchr/testify
 
 ### Cryptograhy

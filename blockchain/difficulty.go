@@ -9,11 +9,11 @@ const (
 )
 
 func getDifficulty(chain *blockchain) int {
-	if chain.Leight == 0 {
+	if chain.Height == 0 {
 		return baseDifficulty
 	}
 
-	shouldRecalc := chain.Leight%blocksPerRecalc == 0
+	shouldRecalc := chain.Height%blocksPerRecalc == 0
 	if shouldRecalc {
 		return newDifficulty()
 	}

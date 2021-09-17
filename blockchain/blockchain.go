@@ -9,7 +9,7 @@ import (
 
 type blockchain struct {
 	LastHash  string
-	Leight    int
+	Height    int
 	Dificulty int
 	m         sync.Mutex
 }
@@ -22,7 +22,7 @@ var (
 // Stringer interface: https://pkg.go.dev/fmt#Stringer
 func (b *blockchain) String() string {
 	s := fmt.Sprintln("=== Blockchain ===") +
-		fmt.Sprintln("Height:", fmt.Sprint(b.Leight)) +
+		fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +
 		fmt.Sprintln("Last Hash:", b.LastHash) +
 		fmt.Sprintln("Current Dificulty:", b.Dificulty) +
 		fmt.Sprintln("")
@@ -58,7 +58,7 @@ func initializeBC() {
 }
 
 func (b *blockchain) addBlock() *Block {
-	block := createBlock(b.LastHash, b.Leight+1, getDifficulty(b))
+	block := createBlock(b.LastHash, b.Height+1, getDifficulty(b))
 	b.reference(block)
 
 	return block
@@ -66,7 +66,7 @@ func (b *blockchain) addBlock() *Block {
 
 func (b *blockchain) reference(block *Block) {
 	b.LastHash = block.Hash
-	b.Leight = block.Height
+	b.Height = block.Height
 	b.Dificulty = block.Difficulty
 	b.save()
 }
@@ -82,4 +82,14 @@ func (b *blockchain) restore(encoded []byte) {
 func clearBC() {
 	storage.ClearBlocks()
 	storage.ClearChain()
+}
+
+func newBC(lastHash string, height, difficulty int) *blockchain {
+	chain := &blockchain{
+		LastHash:  lastHash,
+		Height:    height,
+		Dificulty: difficulty,
+	}
+
+	return chain
 }
