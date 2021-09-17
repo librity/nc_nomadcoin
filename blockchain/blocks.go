@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/librity/nc_nomadcoin/db"
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
@@ -30,7 +29,7 @@ func GetBlocks() []*Block {
 }
 
 func FindBlock(hash string) (*Block, error) {
-	rawBlock := db.LoadBlock(hash)
+	rawBlock := storage.LoadBlock(hash)
 	if rawBlock == nil {
 		return nil, ErrBlockNotFound
 	}
@@ -66,7 +65,7 @@ func GetLastBlock() *Block {
 
 func Replace(blocks []*Block) {
 	chain := getBC()
-	resetBC()
+	clearBC()
 
 	for _, block := range blocks {
 		block.save()

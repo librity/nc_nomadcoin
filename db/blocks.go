@@ -5,7 +5,7 @@ import (
 	bolt "go.etcd.io/bbolt"
 )
 
-func SaveBlock(hash string, data []byte) {
+func saveBlock(hash string, data []byte) {
 	err := getDB().Update(func(transaction *bolt.Tx) error {
 		bucket := transaction.Bucket([]byte(blocksBucket))
 		err := bucket.Put([]byte(hash), data)
@@ -16,7 +16,7 @@ func SaveBlock(hash string, data []byte) {
 	utils.PanicError(err)
 }
 
-func LoadBlock(hash string) []byte {
+func loadBlock(hash string) []byte {
 	var rawBlock []byte
 
 	err := getDB().View(func(transaction *bolt.Tx) error {
@@ -29,6 +29,6 @@ func LoadBlock(hash string) []byte {
 	return rawBlock
 }
 
-func ClearBlocks() {
+func clearBlocks() {
 	resetBucket(blocksBucket)
 }

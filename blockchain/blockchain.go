@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/librity/nc_nomadcoin/db"
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
@@ -47,7 +46,7 @@ func initializeBC() {
 	bc.m.Lock()
 	defer bc.m.Unlock()
 
-	checkpoint := db.LoadChain()
+	checkpoint := storage.LoadChain()
 	if checkpoint == nil {
 		bc.addBlock()
 		fmt.Println("⛓️  Blockchain initialized succesfully.")
@@ -66,9 +65,6 @@ func (b *blockchain) addBlock() *Block {
 }
 
 func (b *blockchain) reference(block *Block) {
-	b.m.Lock()
-	defer b.m.Unlock()
-
 	b.LastHash = block.Hash
 	b.Leight = block.Height
 	b.Dificulty = block.Difficulty
@@ -76,14 +72,14 @@ func (b *blockchain) reference(block *Block) {
 }
 
 func (b *blockchain) save() {
-	db.SaveChain(utils.ToGob(b))
+	storage.SaveChain(utils.ToGob(b))
 }
 
 func (b *blockchain) restore(encoded []byte) {
 	utils.FromGob(b, encoded)
 }
 
-func resetBC() {
-	db.ClearBlocks()
-	db.ClearChain()
+func clearBC() {
+	storage.ClearBlocks()
+	storage.ClearChain()
 }

@@ -121,20 +121,6 @@ http://localhost:4000
 
 http://localhost:5001
 
-### Web Sockets Chat demo
-
-From the project's root run
-
-```bash
-$ go run examples/chat/*.go
-```
-
-Then open one of the demos in your web browser:
-
-- Ping demo: http://localhost:7000/static/ping_demo.html
-- Echo demo: http://localhost:7000/static/echo_demo.html
-- Broadcast demo: http://localhost:7000/static/broadcast_demo.html
-
 ## Notes <a name = "notes"></a>
 
 ### Golang is awesome

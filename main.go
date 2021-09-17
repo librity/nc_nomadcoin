@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	startup()
 	defer cleanExit()
 
 	// go p2p.PingForever()
@@ -28,6 +29,8 @@ func walletDemo() {
 	wallet := wallet.GetW()
 	wallet.Inspect()
 }
+
+func startup() {}
 
 func cleanExit() {
 	db.Close()

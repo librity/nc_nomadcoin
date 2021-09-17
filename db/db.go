@@ -54,7 +54,7 @@ func openDB() {
 }
 
 func createBuckets() {
-	err := db.Update(func(transaction *bolt.Tx) error {
+	err := getDB().Update(func(transaction *bolt.Tx) error {
 		_, err := transaction.CreateBucketIfNotExists([]byte(chainBucket))
 		utils.PanicError(err)
 

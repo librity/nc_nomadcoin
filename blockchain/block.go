@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/librity/nc_nomadcoin/db"
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
@@ -55,7 +54,7 @@ func (b *Block) loadTransactions() {
 }
 
 func (b *Block) save() {
-	db.SaveBlock(b.Hash, utils.ToGob(b))
+	storage.SaveBlock(b.Hash, utils.ToGob(b))
 }
 
 func (b *Block) inspect() {
@@ -73,8 +72,8 @@ func (b *Block) inspect() {
 
 func createBlock(prevHash string, height, difficulty int) *Block {
 	block := newBlock(prevHash, height, difficulty)
-	block.mine()
 	block.loadTransactions()
+	block.mine()
 	block.save()
 
 	return block
