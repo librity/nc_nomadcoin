@@ -11,26 +11,26 @@ type fileLayerI interface {
 	read(name string) ([]byte, error)
 }
 
-type fileLayerS struct{}
+type fileLayer struct{}
 
 var (
-	files fileLayerI = fileLayerS{}
+	files fileLayerI = fileLayer{}
 )
 
-func (fileLayerS) walletExists() bool {
+func (fileLayer) walletExists() bool {
 	_, err := os.Stat(walletFilepath)
 	walletFileMissing := os.IsNotExist(err)
 
 	return !walletFileMissing
 }
 
-func (fileLayerS) write(name string, data []byte, perm fs.FileMode) error {
+func (fileLayer) write(name string, data []byte, perm fs.FileMode) error {
 	err := os.WriteFile(name, data, perm)
 
 	return err
 }
 
-func (fileLayerS) read(name string) ([]byte, error) {
+func (fileLayer) read(name string) ([]byte, error) {
 	keyBytes, err := os.ReadFile(name)
 
 	return keyBytes, err
