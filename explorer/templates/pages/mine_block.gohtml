@@ -1,4 +1,4 @@
-{{ define "new_block" }}
+{{ define "mine_block" }}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,14 +8,9 @@
 
     <main>
       <form method="POST" action="/blocks">
-        <input
-          type="text"
-          name="blockData"
-          placeholder="Data for your block"
-          required
-        />
-
-        <button>Add Block</button>
+        <div align="center">
+          <button>Mine Block</button>
+        </div>
       </form>
     </main>
 

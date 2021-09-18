@@ -9,15 +9,9 @@ import (
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
-const (
-	staticDir   string = "explorer/static"
-	staticRoute string = "/static/"
-)
-
 var (
-	port    string         = utils.BuildPort(config.DefaultExplorerPort)
-	baseURL string         = "http://localhost" + port
-	handler *http.ServeMux = http.NewServeMux()
+	port    string = utils.BuildPort(config.DefaultExplorerPort)
+	baseURL string = "http://localhost" + port
 )
 
 func Start() {
@@ -31,23 +25,12 @@ func Start() {
 }
 
 func setEnvVars() {
-	portNum := config.GetRestPort()
+	portNum := config.GetExplorerPort()
 	port = utils.BuildPort(portNum)
 	baseURL = "http://localhost" + port
 }
 
-func loadFileServer() {
-	fileServer := http.FileServer(http.Dir(staticDir))
-	handler.Handle(staticRoute, http.StripPrefix(staticRoute, fileServer))
-}
-
-func loadRoutes() {
-	handler.HandleFunc("/", home)
-	handler.HandleFunc("/blocks", blocks)
-	handler.HandleFunc("/blocks/new", newBlock)
-}
-
 func listenOrDie() {
 	fmt.Printf("🧭 HTML Explorer listening on %s\n", baseURL)
-	log.Fatal(http.ListenAndServe(port, handler))
+	log.Fatal(http.ListenAndServe(port, router))
 }
