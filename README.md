@@ -349,9 +349,6 @@ to successfully speculate on new cryptocurrencies._
 - https://en.wikipedia.org/wiki/Adapter_pattern
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 - https://marketplace.visualstudio.com/items?itemName=humao.rest-client
-- https://javascript.info/websocket
-- https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
-- https://www.javatpoint.com/how-to-add-javascript-to-html
 - https://stackoverflow.com/questions/4279611/how-to-embed-a-video-into-github-readme-md
 
 ### Key-value DB
@@ -515,6 +512,13 @@ to successfully speculate on new cryptocurrencies._
 - https://www.favicon-generator.org/search/---/Coin
 - https://www.favicon.cc/?action=icon&file_id=138923
 - https://www.digitalocean.com/community/tutorials/how-to-add-a-favicon-to-your-website-with-html
+
+### Javascript
+
+- https://www.javatpoint.com/how-to-add-javascript-to-html
+- https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
+- https://javascript.info/websocket
+- https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
 
 ### ASDF version manager
 

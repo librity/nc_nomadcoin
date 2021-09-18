@@ -9,13 +9,10 @@ const (
 var templates *template.Template
 
 var templateFunctions template.FuncMap = template.FuncMap{
-	"increment": func(number int) int {
-		return number + 1
-	},
-
-	"add": func(a, b int) int {
-		return a + b
-	},
+	"increment":   increment,
+	"add":         add,
+	"unixToHuman": unixToHuman,
+	"blockURL":    blockURL,
 }
 
 func loadTemplates() {

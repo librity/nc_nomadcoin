@@ -11,24 +11,9 @@ type blocksData struct {
 	Blocks    []*blockchain.Block
 }
 
-func blocks(rw http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case "GET":
-		blocksIndex(rw, r)
-	case "POST":
-		createBlock(rw, r)
-	}
-}
-
 func blocksIndex(rw http.ResponseWriter, r *http.Request) {
 	blocks := blockchain.GetBlocks()
 	data := blocksData{"Blocks", blocks}
 
 	templates.ExecuteTemplate(rw, "blocks", data)
-}
-
-func createBlock(rw http.ResponseWriter, r *http.Request) {
-	blockchain.MineBlock()
-
-	http.Redirect(rw, r, "/blocks", http.StatusFound)
 }

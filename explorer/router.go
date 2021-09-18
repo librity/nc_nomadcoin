@@ -1,6 +1,10 @@
 package explorer
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/gorilla/mux"
+)
 
 const (
 	staticDir   string = "explorer/static"
@@ -8,7 +12,7 @@ const (
 )
 
 var (
-	router *http.ServeMux = http.NewServeMux()
+	router *mux.Router = mux.NewRouter()
 )
 
 func loadFileServer() {
@@ -19,6 +23,7 @@ func loadFileServer() {
 func loadRoutes() {
 	router.HandleFunc("/", home)
 
-	router.HandleFunc("/blocks", blocks)
-	router.HandleFunc("/blocks/mine", mineBlock)
+	router.HandleFunc("/blocks", blocksIndex).Methods("GET")
+	router.HandleFunc("/blocks", createBlock).Methods("POST")
+	router.HandleFunc("/blocks/mine", mineBlock).Methods("GET")
 }

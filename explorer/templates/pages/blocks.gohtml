@@ -8,11 +8,26 @@
     {{ template "header" .PageTitle }}
 
     <main>
-      {{ range.Blocks }}
+      <section>
+        <table>
+          <tr>
+            <th>Height</th>
+            <th>Hash</th>
+            <th>Difficulty</th>
+            <th>Created At</th>
+          </tr>
 
-      {{ template "block" . }}
+          {{
+            range.Blocks
+          }}
 
-      {{ end }}
+          {{ template "block_row" . }}
+
+          {{
+            end
+          }}
+        </table>
+      </section>
     </main>
 
     {{ template "footer" }}

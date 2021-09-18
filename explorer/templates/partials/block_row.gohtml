@@ -1,0 +1,10 @@
+{{ define "block_row" }}
+
+<tr>
+  <td>{{ .Height }}</td>
+  <td>{{ .Hash }}</td>
+  <td>{{ .Difficulty }}</td>
+  <td>{{ unixToHuman .Timestamp }}</td>
+</tr>
+
+{{ end }}
