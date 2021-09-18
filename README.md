@@ -19,7 +19,7 @@
 A fully-featured blockchain and cryptocurrency using the Go programming language.
 
 - [Take the course too!](https://nomadcoders.co/nomadcoin)
-- [Certificate of Completion]()
+- [Certificate of Completion](https://nomadcoders.co/certs/1c9ad49b-75bf-4fdf-abca-45d10d7aebca)
 - [Original code](https://github.com/nomadcoders/nomadcoin)
 
 ### Features
@@ -32,7 +32,14 @@ A fully-featured blockchain and cryptocurrency using the Go programming language
 - [x] Transactions
 - [x] Wallets
 - [x] P2P (Websockets)
-- [ ] Unit Testing
+- [x] Unit Testing
+
+### Future
+
+- [ ] Finish README Notes
+- [ ] Verify Transactions
+- [ ] Verify Peer Blocks
+- [ ] Fully Tested
 
 ## Getting Started <a name = "getting_started"></a>
 

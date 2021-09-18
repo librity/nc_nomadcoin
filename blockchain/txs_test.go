@@ -27,18 +27,17 @@ func TestFindTx(t *testing.T) {
 
 	t.Run("Should return the correct *Tx", func(t *testing.T) {
 		blockControl := 0
+		fakeBlocks := []*Block{
+			{Hash: "3", PreviousHash: "2"},
+			{Hash: "2", PreviousHash: "1",
+				Transactions: []*Tx{makeFakeTx("test")}},
+			{Hash: "1", PreviousHash: ""},
+		}
 		storage = fakeStorageLayer{
 			fakeLoadBlock: func() []byte {
-				fakeBlocks := []*Block{
-					{Hash: "3", PreviousHash: "2"},
-					{Hash: "2", PreviousHash: "1",
-						Transactions: []*Tx{makeFakeTx("test")}},
-					{Hash: "1", PreviousHash: ""},
-				}
+				defer func() { blockControl++ }()
 
-				chosenBlock := fakeBlocks[blockControl]
-				blockControl++
-				return utils.ToGob(chosenBlock)
+				return utils.ToGob(fakeBlocks[blockControl])
 			},
 		}
 		chain := &blockchain{LastHash: "3"}
@@ -51,14 +50,6 @@ func TestFindTx(t *testing.T) {
 		if tx.Id != "test" {
 			t.Errorf("Expected %v, got %v", "test", tx.Id)
 		}
-	})
-
-}
-
-func Test(t *testing.T) {
-
-	t.Run("", func(t *testing.T) {
-
 	})
 
 }

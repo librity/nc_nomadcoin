@@ -26,17 +26,16 @@ func TestGetBlocks(t *testing.T) {
 
 	t.Run("Should return all blocks in sequence", func(t *testing.T) {
 		blockControl := 0
+		fakeBlocks := []*Block{
+			{Hash: "3", PreviousHash: "2"},
+			{Hash: "2", PreviousHash: "1"},
+			{Hash: "1", PreviousHash: ""},
+		}
 		storage = fakeStorageLayer{
 			fakeLoadBlock: func() []byte {
-				fakeBlocks := []*Block{
-					{Hash: "3", PreviousHash: "2"},
-					{Hash: "2", PreviousHash: "1"},
-					{Hash: "1", PreviousHash: ""},
-				}
+				defer func() { blockControl++ }()
 
-				chosenBlock := fakeBlocks[blockControl]
-				blockControl++
-				return utils.ToGob(chosenBlock)
+				return utils.ToGob(fakeBlocks[blockControl])
 			},
 		}
 		chain := &blockchain{LastHash: "3"}

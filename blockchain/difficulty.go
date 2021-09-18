@@ -15,34 +15,36 @@ func getDifficulty(chain *blockchain) int {
 
 	shouldRecalc := chain.Height%blocksPerRecalc == 0
 	if shouldRecalc {
-		return newDifficulty()
+		return newDifficulty(chain)
 	}
 
 	return chain.Dificulty
 }
 
-func newDifficulty() int {
-	currentDificulty := getBC().Dificulty
-	actualTime := timeSinceLastRecalc()
+func newDifficulty(chain *blockchain) int {
+	currentDificulty := chain.Dificulty
+	actualTime := timeSinceLastRecalc(chain)
 
 	if tooEasy(actualTime) {
 		return currentDificulty + 1
 	}
 
 	if tooHard(actualTime) {
-		return currentDificulty - 1
+		if currentDificulty > baseDifficulty {
+			return currentDificulty - 1
+		}
 	}
 
 	return currentDificulty
 }
 
-func timeSinceLastRecalc() int64 {
-	blocks := GetLastNBlocks(blocksPerRecalc)
+func timeSinceLastRecalc(chain *blockchain) int64 {
+	blocks := getLastNBlocks(chain, blocksPerRecalc)
 	lastBlock := blocks[0]
 	lastRecalcBlock := blocks[blocksPerRecalc-1]
+
 	actualTime := lastBlock.Timestamp - lastRecalcBlock.Timestamp
 	actualTime = actualTime / 60
-
 	return actualTime
 }
 
