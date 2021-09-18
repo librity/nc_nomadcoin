@@ -1,0 +1,20 @@
+{{ define "txs_show" }}
+
+<!DOCTYPE html>
+<html lang="en">
+  {{ template "head" .PageTitle }}
+
+  <body>
+    {{ template "header" .PageTitle }}
+
+    <main>
+
+          {{ template "tx" .Tx }}
+
+    </main>
+
+    {{ template "footer" }}
+  </body>
+</html>
+
+{{ end }}

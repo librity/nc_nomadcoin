@@ -24,7 +24,7 @@ A fully-featured blockchain and cryptocurrency using the Go programming language
 
 ### Features
 
-- [ ] HTML Explorer
+- [x] HTML Explorer
 - [x] REST API
 - [x] CLI
 - [x] Database Backend

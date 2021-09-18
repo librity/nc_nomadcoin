@@ -28,4 +28,6 @@ func loadRoutes() {
 	router.HandleFunc("/blocks/{hash:[0-9a-f]+}", blocksShow).Methods("GET")
 	router.HandleFunc("/blocks", blocksCreate).Methods("POST")
 	router.HandleFunc("/blocks/mine", blocksMine).Methods("GET")
+
+	router.HandleFunc("/transactions/{id:[0-9a-f]+}", txsShow).Methods("GET")
 }

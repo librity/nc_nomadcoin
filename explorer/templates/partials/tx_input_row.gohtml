@@ -1,0 +1,9 @@
+{{ define "tx_input_row" }}
+
+<td>
+  <a href="{{ txURL .TxId }}">{{ .TxId }}</a>
+</td>
+<td>{{ .OutputIndex }}</td>
+<td>{{ .Signature }}</td>
+
+{{ end }}
