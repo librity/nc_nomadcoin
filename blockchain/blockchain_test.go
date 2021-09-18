@@ -8,9 +8,13 @@ import (
 )
 
 func makeFakeBC() *blockchain {
-	lastHash := utils.RandomHash()
+	chain := &blockchain{
+		LastHash:  utils.RandomHash(),
+		Height:    1,
+		Dificulty: 1,
+	}
 
-	return newBC(lastHash, 1, 1)
+	return chain
 }
 
 func TestGetBC(t *testing.T) {
@@ -53,14 +57,6 @@ func TestGetBC(t *testing.T) {
 		if result.Height != 2 {
 			t.Errorf("Expected %v, got %v", 2, result.Height)
 		}
-	})
-
-}
-
-func Test(t *testing.T) {
-
-	t.Run("", func(t *testing.T) {
-
 	})
 
 }

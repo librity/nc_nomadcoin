@@ -7,9 +7,13 @@ var (
 )
 
 func GetTxs() []*Tx {
+	return getTxs(getBC())
+}
+
+func getTxs(chain *blockchain) []*Tx {
 	txs := []*Tx{}
 
-	for _, block := range GetBlocks() {
+	for _, block := range getBlocks(chain) {
 		txs = append(txs, block.Transactions...)
 	}
 
@@ -17,7 +21,11 @@ func GetTxs() []*Tx {
 }
 
 func FindTx(targetId string) (*Tx, error) {
-	for _, tx := range GetTxs() {
+	return findTx(getBC(), targetId)
+}
+
+func findTx(chain *blockchain, targetId string) (*Tx, error) {
+	for _, tx := range getTxs(chain) {
 		if tx.Id == targetId {
 			return tx, nil
 		}

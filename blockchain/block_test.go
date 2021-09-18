@@ -8,9 +8,15 @@ import (
 )
 
 func makeFakeBlock() *Block {
-	fakeHash := utils.RandomHash()
+	fakeBlock := &Block{
+		Height:       1,
+		PreviousHash: "",
+		Hash:         utils.RandomHash(),
+		Difficulty:   1,
+		NOnce:        0,
+	}
 
-	return newBlock(fakeHash, 1, 1)
+	return fakeBlock
 }
 
 func TestCreateBlock(t *testing.T) {
