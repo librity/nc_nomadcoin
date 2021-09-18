@@ -29,7 +29,7 @@ func TestFindTx(t *testing.T) {
 		fakeBlocks := []*Block{
 			{Hash: "3", PreviousHash: "2"},
 			{Hash: "2", PreviousHash: "1",
-				Transactions: []*Tx{makeFakeTx("test")}},
+				Txs: []*Tx{makeFakeTx("test")}},
 			{Hash: "1", PreviousHash: ""},
 		}
 		storage = fakeStorageLayer{

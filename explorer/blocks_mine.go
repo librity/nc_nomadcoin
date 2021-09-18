@@ -4,12 +4,12 @@ import (
 	"net/http"
 )
 
-type mineBlockData struct {
+type blocksMineData struct {
 	PageTitle string
 }
 
-func mineBlock(rw http.ResponseWriter, r *http.Request) {
-	data := mineBlockData{"Mine Block"}
+func blocksMine(rw http.ResponseWriter, r *http.Request) {
+	data := blocksMineData{"Mine Block"}
 
-	templates.ExecuteTemplate(rw, "mine_block", data)
+	templates.ExecuteTemplate(rw, "blocks_mine", data)
 }

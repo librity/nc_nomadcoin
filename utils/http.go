@@ -6,8 +6,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// GetParam gets the route parameter of index "key".
-func GetParam(r *http.Request, key string) string {
+// GetRoute gets the route parameter of index "key".
+func GetRoute(r *http.Request, key string) string {
 	params := mux.Vars(r)
 	value := params[key]
 

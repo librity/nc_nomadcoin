@@ -14,7 +14,7 @@ type Block struct {
 	Difficulty   int    `json:"difficulty"`
 	NOnce        int    `json:"nOnce"`
 	Timestamp    int64  `json:"timestamp"`
-	Transactions []*Tx  `json:"transactions"`
+	Txs          []*Tx  `json:"transactions"`
 }
 
 func MineBlock() *Block {
@@ -40,7 +40,7 @@ func (b *Block) mine() {
 }
 
 func (b *Block) loadTransactions() {
-	b.Transactions = getMP().popAll()
+	b.Txs = getMP().popAll()
 }
 
 func (b *Block) save() {
@@ -56,7 +56,7 @@ func (b *Block) inspect() {
 	fmt.Println("Difficulty:", b.Difficulty)
 	fmt.Println("NOnce:", b.NOnce)
 	fmt.Println("Timestamp:", b.Timestamp)
-	fmt.Println("Transactions:", b.Transactions)
+	fmt.Println("Transactions:", b.Txs)
 	fmt.Println("---")
 }
 

@@ -5,6 +5,9 @@
   <td>{{ .Hash }}</td>
   <td>{{ .Difficulty }}</td>
   <td>{{ unixToHuman .Timestamp }}</td>
+  <td>
+    <a href="{{ blockURL .Hash }}">...</a>
+  </td>
 </tr>
 
 {{ end }}

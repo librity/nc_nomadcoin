@@ -14,7 +14,7 @@ func getTxs(chain *blockchain) []*Tx {
 	txs := []*Tx{}
 
 	for _, block := range getBlocks(chain) {
-		txs = append(txs, block.Transactions...)
+		txs = append(txs, block.Txs...)
 	}
 
 	return txs

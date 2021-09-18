@@ -34,7 +34,7 @@ func serverWlt(rw http.ResponseWriter, r *http.Request) {
 
 func wlt(rw http.ResponseWriter, r *http.Request) {
 	details := utils.GetQuery(r, "details")
-	address := utils.GetParam(r, "address")
+	address := utils.GetRoute(r, "address")
 
 	switch details {
 	case "true":

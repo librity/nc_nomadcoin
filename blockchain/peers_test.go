@@ -14,7 +14,7 @@ func TestAddPeerBlock(t *testing.T) {
 		PreviousHash: "2",
 		Difficulty:   4,
 		Height:       3,
-		Transactions: []*Tx{
+		Txs: []*Tx{
 			tx,
 		},
 	}

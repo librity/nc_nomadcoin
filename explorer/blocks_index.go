@@ -6,14 +6,14 @@ import (
 	"github.com/librity/nc_nomadcoin/blockchain"
 )
 
-type blocksData struct {
+type blocksIndexData struct {
 	PageTitle string
 	Blocks    []*blockchain.Block
 }
 
 func blocksIndex(rw http.ResponseWriter, r *http.Request) {
 	blocks := blockchain.GetBlocks()
-	data := blocksData{"Blocks", blocks}
+	data := blocksIndexData{"Blocks", blocks}
 
-	templates.ExecuteTemplate(rw, "blocks", data)
+	templates.ExecuteTemplate(rw, "blocks_index", data)
 }

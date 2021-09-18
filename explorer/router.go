@@ -21,9 +21,11 @@ func loadFileServer() {
 }
 
 func loadRoutes() {
-	router.HandleFunc("/", home)
+	router.HandleFunc("/", home).Methods("GET")
+	router.HandleFunc("/404", notFound).Methods("GET")
 
 	router.HandleFunc("/blocks", blocksIndex).Methods("GET")
-	router.HandleFunc("/blocks", createBlock).Methods("POST")
-	router.HandleFunc("/blocks/mine", mineBlock).Methods("GET")
+	router.HandleFunc("/blocks/{hash:[0-9a-f]+}", blocksShow).Methods("GET")
+	router.HandleFunc("/blocks", blocksCreate).Methods("POST")
+	router.HandleFunc("/blocks/mine", blocksMine).Methods("GET")
 }

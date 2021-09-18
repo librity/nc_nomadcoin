@@ -24,7 +24,7 @@ func createBlock(rw http.ResponseWriter, r *http.Request) {
 }
 
 func block(rw http.ResponseWriter, r *http.Request) {
-	hash := utils.GetParam(r, "hash")
+	hash := utils.GetRoute(r, "hash")
 	encoder := json.NewEncoder(rw)
 
 	block, err := blockchain.FindBlock(hash)

@@ -80,7 +80,7 @@ func (m *mempool) removeConfirmedTxs(peerBlock *Block) {
 	m.m.Lock()
 	defer m.m.Unlock()
 
-	confirmedTxs := peerBlock.Transactions
+	confirmedTxs := peerBlock.Txs
 	for _, confirmedTx := range confirmedTxs {
 		_, txIsInMP := m.txs[confirmedTx.Id]
 		if txIsInMP {

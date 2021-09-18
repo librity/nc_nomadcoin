@@ -37,7 +37,7 @@ func TestCreateBlock(t *testing.T) {
 		getMP().txs[txId] = fakeTx
 		block := createBlock("GENESIS", 1, 1)
 
-		blockTx := block.Transactions[0]
+		blockTx := block.Txs[0]
 		utils.FailIfDifferent(t, fakeTx, blockTx)
 		utils.FailIfDifferent(t, txId, blockTx.Id)
 

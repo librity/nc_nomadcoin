@@ -1,0 +1,11 @@
+{{ define "transaction_row" }}
+
+<tr>
+  <td>{{ .Id }}</td>
+  <td>{{ unixToHuman .Timestamp }}</td>
+  <td>
+    <a href="{{ txURL .Id }}">...</a>
+  </td>
+</tr>
+
+{{ end }}

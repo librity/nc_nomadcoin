@@ -1,4 +1,4 @@
-{{ define "blocks" }}
+{{ define "blocks_index" }}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,10 +15,11 @@
             <th>Hash</th>
             <th>Difficulty</th>
             <th>Created At</th>
+            <th>Details</th>
           </tr>
 
           {{
-            range.Blocks
+            range .Blocks
           }}
 
           {{ template "block_row" . }}

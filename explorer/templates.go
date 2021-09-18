@@ -9,10 +9,13 @@ const (
 var templates *template.Template
 
 var templateFunctions template.FuncMap = template.FuncMap{
+	"debug":       debug,
 	"increment":   increment,
 	"add":         add,
 	"unixToHuman": unixToHuman,
+	"homeURL":     homeURL,
 	"blockURL":    blockURL,
+	"txURL":       txURL,
 }
 
 func loadTemplates() {
