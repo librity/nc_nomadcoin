@@ -20,6 +20,7 @@ func Replace(blocks []*Block) {
 }
 
 func (b *blockchain) replace(blocks []*Block) {
+	// TODO: Verify blocks
 	b.reset()
 
 	for _, block := range blocks {
