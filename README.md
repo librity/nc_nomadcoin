@@ -19,7 +19,7 @@
 A fully-featured blockchain and cryptocurrency using the Go programming language.
 
 - [Take the course too!](https://nomadcoders.co/nomadcoin)
-- [Certificate of Completion](https://nomadcoders.co/certs/1c9ad49b-75bf-4fdf-abca-45d10d7aebca)
+- [Certificate of Completion](https://nomadcoders.co/certs/36d6a10c-265c-47ef-85c3-93c34bede4dc)
 - [Original code](https://github.com/nomadcoders/nomadcoin)
 
 ### Features

@@ -23,16 +23,6 @@ func MineBlock() *Block {
 	return block
 }
 
-func AddPeerBlock(peerBlock *Block) {
-	// TODO: Verify block
-
-	chain := getBC()
-	peerBlock.save()
-	chain.reference(peerBlock)
-
-	getMP().removeConfirmedTxs(peerBlock)
-}
-
 func (b *Block) mine() {
 	target := strings.Repeat("0", b.Difficulty)
 

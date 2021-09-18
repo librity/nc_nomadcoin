@@ -25,7 +25,7 @@ func TestGetDifficulty(t *testing.T) {
 				return utils.ToGob(fakeBlocks[blockControl])
 			},
 		}
-		chain := &blockchain{LastHash: "5", Dificulty: baseDifficulty}
+		chain := &blockchain{LastHash: "5", Difficulty: baseDifficulty}
 
 		type testCase struct {
 			height   int
@@ -41,11 +41,11 @@ func TestGetDifficulty(t *testing.T) {
 		for _, tc := range testCases {
 			chain.Height = tc.height
 			result := getDifficulty(chain)
-			chain.Dificulty = result
+			chain.Difficulty = result
 
 			if result != tc.expected {
 				t.Log(tc)
-				t.Errorf("Expected %v, got %v", tc.expected, result)
+				utils.ErrorDifferent(t, tc.expected, result)
 			}
 		}
 	})
@@ -73,7 +73,7 @@ func TestGetDifficulty(t *testing.T) {
 				return utils.ToGob(fakeBlocks[blockControl])
 			},
 		}
-		chain := &blockchain{LastHash: "11", Dificulty: baseDifficulty + 1}
+		chain := &blockchain{LastHash: "11", Difficulty: baseDifficulty + 1}
 
 		type testCase struct {
 			height   int
@@ -88,20 +88,12 @@ func TestGetDifficulty(t *testing.T) {
 		for _, tc := range testCases {
 			chain.Height = tc.height
 			result := getDifficulty(chain)
-			chain.Dificulty = result
+			chain.Difficulty = result
 
 			if result != tc.expected {
 				t.Log(tc)
-				t.Errorf("Expected %v, got %v", tc.expected, result)
+				utils.ErrorDifferent(t, tc.expected, result)
 			}
 		}
 	})
-}
-
-func Test(t *testing.T) {
-
-	t.Run("", func(t *testing.T) {
-
-	})
-
 }

@@ -12,24 +12,16 @@ func TestHexHash(t *testing.T) {
 
 	t.Run("Hash is deterministic", func(t *testing.T) {
 		firstCall := HexHash(test)
-		t.Logf(firstCall)
-
-		if firstCall != expectedHash {
-			t.Errorf("Expectd \"%s\", got \"%s\"", expectedHash, firstCall)
-		}
+		FailIfDifferent(t, expectedHash, firstCall)
 
 		secondCall := HexHash(test)
-		if secondCall != firstCall {
-			t.Errorf("Expectd \"%s\", got \"%s\"", firstCall, secondCall)
-		}
+		FailIfDifferent(t, firstCall, secondCall)
 	})
 
 	t.Run("Hash is properly hex encoded", func(t *testing.T) {
 		hash := HexHash(test)
 		_, err := hex.DecodeString(hash)
-		if err != nil {
-			t.Error("Hash should be hex encoded")
-		}
+		FailIfDifferent(t, nil, err)
 	})
 }
 

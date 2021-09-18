@@ -16,3 +16,13 @@ func ShouldPanic(t *testing.T, panicFunc func()) {
 
 	t.Errorf("Should have panicked on function call.")
 }
+
+func FailIfDifferent(t *testing.T, expected interface{}, result interface{}) {
+	if expected != result {
+		ErrorDifferent(t, expected, result)
+	}
+}
+
+func ErrorDifferent(t *testing.T, expected interface{}, result interface{}) {
+	t.Errorf("Expected %v, got %v", expected, result)
+}

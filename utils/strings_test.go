@@ -50,10 +50,7 @@ func TestGetStrChunk(t *testing.T) {
 
 	for _, tc := range testCases {
 		result := GetStrChunk(tc.str, tc.sep, tc.index)
-
-		if result != tc.expected {
-			t.Errorf("Expectd \"%s\", got \"%s\"", tc.expected, result)
-		}
+		FailIfDifferent(t, tc.expected, result)
 	}
 
 }

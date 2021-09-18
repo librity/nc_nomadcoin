@@ -27,9 +27,8 @@ func TestCreateBlock(t *testing.T) {
 		bType := reflect.TypeOf(block)
 		expectedType := reflect.TypeOf(&Block{})
 
-		if bType != expectedType {
-			t.Errorf("Expected %v, got %v", expectedType, bType)
-		}
+		utils.FailIfDifferent(t, expectedType, bType)
+
 	})
 
 	t.Run("Should load transactions from the mempool", func(t *testing.T) {
@@ -39,13 +38,8 @@ func TestCreateBlock(t *testing.T) {
 		block := createBlock("GENESIS", 1, 1)
 
 		blockTx := block.Transactions[0]
-		if blockTx != fakeTx {
-			t.Errorf("Expected %v, got %v", fakeTx, blockTx)
-		}
-
-		if blockTx.Id != txId {
-			t.Errorf("Expected %v, got %v", txId, blockTx.Id)
-		}
+		utils.FailIfDifferent(t, fakeTx, blockTx)
+		utils.FailIfDifferent(t, txId, blockTx.Id)
 
 		mpSize := len(getMP().txs)
 		if mpSize != 0 {

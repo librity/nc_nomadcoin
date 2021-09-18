@@ -16,13 +16,12 @@ func TestFindTx(t *testing.T) {
 		chain := &blockchain{LastHash: fakeBlock.Hash}
 
 		tx, err := findTx(chain, "test")
-		if err != ErrTxNotFound {
-			t.Errorf("Expected %v, got %v", ErrTxNotFound, err)
+		utils.FailIfDifferent(t, ErrTxNotFound, err)
+
+		if nil != tx {
+			utils.ErrorDifferent(t, nil, tx)
 		}
 
-		if tx != nil {
-			t.Errorf("Expected %v, got %v", nil, tx)
-		}
 	})
 
 	t.Run("Should return the correct *Tx", func(t *testing.T) {
@@ -43,13 +42,9 @@ func TestFindTx(t *testing.T) {
 		chain := &blockchain{LastHash: "3"}
 
 		tx, err := findTx(chain, "test")
-		if err != nil {
-			t.Errorf("Expected %v, got %v", nil, err)
-		}
+		utils.FailIfDifferent(t, nil, err)
+		utils.FailIfDifferent(t, "test", tx.Id)
 
-		if tx.Id != "test" {
-			t.Errorf("Expected %v, got %v", "test", tx.Id)
-		}
 	})
 
 }

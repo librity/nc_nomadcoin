@@ -18,11 +18,11 @@ func getDifficulty(chain *blockchain) int {
 		return newDifficulty(chain)
 	}
 
-	return chain.Dificulty
+	return chain.Difficulty
 }
 
 func newDifficulty(chain *blockchain) int {
-	currentDificulty := chain.Dificulty
+	currentDificulty := chain.Difficulty
 	actualTime := timeSinceLastRecalc(chain)
 
 	if tooEasy(actualTime) {

@@ -9,9 +9,9 @@ import (
 
 func makeFakeBC() *blockchain {
 	chain := &blockchain{
-		LastHash:  utils.RandomHash(),
-		Height:    1,
-		Dificulty: 1,
+		LastHash:   utils.RandomHash(),
+		Height:     1,
+		Difficulty: 1,
 	}
 
 	return chain
@@ -26,13 +26,9 @@ func TestGetBC(t *testing.T) {
 		}
 
 		result := getBC()
-		if result != bc {
-			t.Errorf("Expected %v, got %v", bc, result)
-		}
+		utils.FailIfDifferent(t, bc, result)
+		utils.FailIfDifferent(t, 1, result.Height)
 
-		if result.Height != 1 {
-			t.Errorf("Expected %v, got %v", 1, result.Height)
-		}
 	})
 
 	t.Run("Should restore blockchain when it does exist", func(t *testing.T) {
@@ -41,22 +37,18 @@ func TestGetBC(t *testing.T) {
 		storage = fakeStorageLayer{
 			fakeLoadChain: func() []byte {
 				chain := &blockchain{
-					LastHash:  lastHash,
-					Height:    2,
-					Dificulty: 1,
+					LastHash:   lastHash,
+					Height:     2,
+					Difficulty: 1,
 				}
 				return utils.ToGob(chain)
 			},
 		}
 
 		result := getBC()
-		if result.LastHash != lastHash {
-			t.Errorf("Expected %v, got %v", lastHash, result.LastHash)
-		}
+		utils.FailIfDifferent(t, lastHash, result.LastHash)
+		utils.FailIfDifferent(t, 2, result.Height)
 
-		if result.Height != 2 {
-			t.Errorf("Expected %v, got %v", 2, result.Height)
-		}
 	})
 
 }

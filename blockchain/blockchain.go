@@ -8,10 +8,10 @@ import (
 )
 
 type blockchain struct {
-	LastHash  string
-	Height    int
-	Dificulty int
-	m         sync.Mutex
+	LastHash   string
+	Height     int
+	Difficulty int
+	m          sync.Mutex
 }
 
 var (
@@ -24,7 +24,7 @@ func (b *blockchain) String() string {
 	s := fmt.Sprintln("=== Blockchain ===") +
 		fmt.Sprintln("Height:", fmt.Sprint(b.Height)) +
 		fmt.Sprintln("Last Hash:", b.LastHash) +
-		fmt.Sprintln("Current Dificulty:", b.Dificulty) +
+		fmt.Sprintln("Current Dificulty:", b.Difficulty) +
 		fmt.Sprintln("")
 
 	return s
@@ -67,7 +67,7 @@ func (b *blockchain) addBlock() *Block {
 func (b *blockchain) reference(block *Block) {
 	b.LastHash = block.Hash
 	b.Height = block.Height
-	b.Dificulty = block.Difficulty
+	b.Difficulty = block.Difficulty
 	b.save()
 }
 
@@ -79,16 +79,16 @@ func (b *blockchain) restore(encoded []byte) {
 	utils.FromGob(b, encoded)
 }
 
-func clearBC() {
+func (b *blockchain) reset() {
 	storage.ClearBlocks()
 	storage.ClearChain()
 }
 
 func newBC(lastHash string, height, difficulty int) *blockchain {
 	chain := &blockchain{
-		LastHash:  lastHash,
-		Height:    height,
-		Dificulty: difficulty,
+		LastHash:   lastHash,
+		Height:     height,
+		Difficulty: difficulty,
 	}
 
 	return chain

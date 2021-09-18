@@ -3,6 +3,8 @@ package wallet
 import (
 	"reflect"
 	"testing"
+
+	"github.com/librity/nc_nomadcoin/utils"
 )
 
 func TestGetW(t *testing.T) {
@@ -32,9 +34,8 @@ func TestGetW(t *testing.T) {
 
 		dResult := testW.privateKey.D
 		dExpected := testWallet.privateKey.D
-		if dResult.Cmp(dExpected) != 0 {
-			t.Errorf("Expected %v, got %v", dExpected, dResult)
-		}
+		utils.FailIfDifferent(t, 0, dResult.Cmp(dExpected))
+
 	})
 
 }
@@ -49,9 +50,8 @@ func TestGetAddress(t *testing.T) {
 
 		expected := "c544a8f9319ad8e2688a4c66c94cb6ed434b86058ad1489d4d152ff6fc47943718ce246f35ef03c8b3dce4e39bf409a3016830a5b1eef6c441453951586b2903"
 		result := GetAddress()
-		if result != expected {
-			t.Errorf("Expected %v, got %v", expected, result)
-		}
+		utils.FailIfDifferent(t, expected, result)
+
 	})
 
 }

@@ -19,13 +19,9 @@ func TestBigIntsFromHex(t *testing.T) {
 	t.Run("Should return the expected big ints", func(t *testing.T) {
 		a, b := BigIntsFromHex(intsHex)
 
-		if a.Cmp(expectedA) != 0 {
-			t.Errorf("Expected %v, got %v", expectedA, a)
-		}
+		FailIfDifferent(t, 0, a.Cmp(expectedA))
+		FailIfDifferent(t, 0, b.Cmp(expectedB))
 
-		if b.Cmp(expectedB) != 0 {
-			t.Errorf("Expected %v, got %v", expectedB, b)
-		}
 	})
 
 	t.Run("Should panic when hex isn't valid", func(t *testing.T) {
@@ -72,13 +68,9 @@ func TestBytesToBigInt(t *testing.T) {
 		for _, tc := range testCases {
 			result, err := BytesToBigInt(tc.bytes)
 
-			if err != nil {
-				t.Error("Returned error with valid byte slice", tc.bytes)
-			}
+			FailIfDifferent(t, nil, err)
+			FailIfDifferent(t, 0, result.Cmp(tc.expected))
 
-			if result.Cmp(tc.expected) != 0 {
-				t.Errorf("Expected %v, got %v", tc.expected, result)
-			}
 		}
 	})
 
@@ -91,9 +83,8 @@ func TestBytesToBigInt(t *testing.T) {
 		for _, bb := range badBytes {
 			_, err := BytesToBigInt(bb)
 
-			if err != ErrBigIntBadBytes {
-				t.Error("Didn't return ErrBigIntBadBytes with bad bytes", bb)
-			}
+			FailIfDifferent(t, ErrBigIntBadBytes, err)
+
 		}
 	})
 }

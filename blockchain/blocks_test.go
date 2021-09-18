@@ -19,9 +19,8 @@ func TestGetBlocks(t *testing.T) {
 		blocks := getBlocks(chain)
 		blocksType := reflect.TypeOf(blocks)
 		expectedType := reflect.TypeOf([]*Block{})
-		if blocksType != expectedType {
-			t.Errorf("Expected %v, got %v", expectedType, blocksType)
-		}
+		utils.FailIfDifferent(t, expectedType, blocksType)
+
 	})
 
 	t.Run("Should return all blocks in sequence", func(t *testing.T) {
@@ -42,13 +41,9 @@ func TestGetBlocks(t *testing.T) {
 
 		blocks := getBlocks(chain)
 		blocksLen := len(blocks)
-		if blocksLen != 3 {
-			t.Errorf("Expected %v, got %v", 3, blocksLen)
-		}
+		utils.FailIfDifferent(t, 3, blocksLen)
+		utils.FailIfDifferent(t, "3", blocks[0].Hash)
 
-		if blocks[0].Hash != "3" {
-			t.Errorf("Expected %v, got %v", "3", blocks[0].Hash)
-		}
 	})
 
 }
@@ -63,13 +58,9 @@ func TestFindBlock(t *testing.T) {
 		}
 
 		block, err := FindBlock(fakeBlock.Hash)
-		if err != nil {
-			t.Errorf("Expected %v, got %v", nil, err)
-		}
+		utils.FailIfDifferent(t, nil, err)
+		utils.FailIfDifferent(t, fakeBlock.Hash, block.Hash)
 
-		if block.Hash != fakeBlock.Hash {
-			t.Errorf("Expected %v, got %v", fakeBlock.Hash, block.Hash)
-		}
 	})
 
 	t.Run("Should return ErrBlockNotFound when block doesn't exist", func(t *testing.T) {
@@ -78,9 +69,8 @@ func TestFindBlock(t *testing.T) {
 		}
 
 		_, err := FindBlock("test")
-		if err != ErrBlockNotFound {
-			t.Errorf("Expected %v, got %v", ErrBlockNotFound, err)
-		}
+		utils.FailIfDifferent(t, ErrBlockNotFound, err)
+
 	})
 
 }
