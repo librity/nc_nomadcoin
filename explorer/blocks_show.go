@@ -19,6 +19,6 @@ func blocksShow(rw http.ResponseWriter, r *http.Request) {
 		http.Redirect(rw, r, "/404", http.StatusFound)
 	}
 
-	data := blocksShowData{"Block", block}
+	data := blocksShowData{"Show Block", block}
 	templates.ExecuteTemplate(rw, "blocks_show", data)
 }

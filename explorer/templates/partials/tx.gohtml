@@ -5,11 +5,11 @@
     <h2>Details</h2>
   </header>
 
-    <ul>
-      <li><b>ID:</b> {{ .Id }}</li>
+  <ul>
+    <li><b>ID:</b> {{ .Id }}</li>
 
-      <li><b>Created At:</b> {{ unixToHuman .Timestamp }}</li>
-    </ul>
+    <li><b>Created At:</b> {{ unixToHuman .Timestamp }}</li>
+  </ul>
 </section>
 
 <section>
@@ -17,24 +17,24 @@
     <h2>Inputs</h2>
   </header>
 
-    <table>
-      <tr>
-        <th>Index</th>
-        <th>Transaction</th>
-        <th>Output Index</th>
-        <th>Signature</th>
-      </tr>
+  <table>
+    <tr>
+      <th>Index</th>
+      <th>Transaction</th>
+      <th>Output Index</th>
+      <th>Signature</th>
+    </tr>
 
-      {{ range $index, $input := .Inputs }}
-      <tr>
-        <td>{{ $index }}</td>
-        {{ template "tx_input_row" $input }}
-      </tr>
+    {{ range $index, $input := .Inputs }}
+    <tr>
+      <td>{{ $index }}</td>
+      {{ template "tx_input_row" $input }}
+    </tr>
 
-      {{
-        end
-      }}
-    <table>
+    {{
+      end
+    }}
+  </table>
 </section>
 
 <section>
@@ -42,24 +42,24 @@
     <h2>Outputs</h2>
   </header>
 
-    <table>
-      <tr>
-        <th>Index</th>
-        <th>Address</th>
-        <th>Amount</th>
-      </tr>
+  <table>
+    <tr>
+      <th>Index</th>
+      <th>Address</th>
+      <th>Amount</th>
+    </tr>
 
-      {{ range $index, $outputs := .Outputs }}
+    {{ range $index, $outputs := .Outputs }}
 
-      <tr>
-        <td>{{ $index }}</td>
-        {{ template "tx_output_row" $outputs }}
-      </tr>
+    <tr>
+      <td>{{ $index }}</td>
+      {{ template "tx_output_row" $outputs }}
+    </tr>
 
-      {{
-        end
-      }}
-    <table>
+    {{
+      end
+    }}
+  </table>
 </section>
 
 {{ end }}

@@ -1,0 +1,53 @@
+{{ define "wallets_show" }}
+
+<!DOCTYPE html>
+<html lang="en">
+  {{ template "head" .PageTitle }}
+
+  <body>
+    {{ template "header" .PageTitle }}
+
+    <main>
+      <section>
+        <header>
+          <h2>Details</h2>
+        </header>
+
+        <ul>
+          <li><b>Address:</b> {{ .Address }}</li>
+
+          <li><b>Balance:</b> {{ .Balance }} $NC</li>
+        </ul>
+      </section>
+
+      <section>
+        <header>
+          <h2>Unspent Outputs</h2>
+        </header>
+
+        <table>
+          <tr>
+            <th>Index</th>
+            <th>Transaction</th>
+            <th>Output Index</th>
+            <th>Amount</th>
+          </tr>
+
+          {{ range $index, $unspent_tx_output := .UnspTxOutputs }}
+          <tr>
+            <td>{{ $index }}</td>
+            {{ template "unspent_tx_output_row" $unspent_tx_output }}
+          </tr>
+
+          {{
+            end
+          }}
+        </table>
+      </section>
+    </main>
+
+    {{ template "footer" }}
+  </body>
+</html>
+
+{{ end }}

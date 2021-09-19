@@ -5,23 +5,23 @@
     <h2>Details</h2>
   </header>
 
-    <ul>
-      <li><b>Height:</b> {{ .Height }}</li>
+  <ul>
+    <li><b>Height:</b> {{ .Height }}</li>
 
-      {{ if .PreviousHash }}
-      <li><b>Previous hash:</b> {{ .PreviousHash }}</li>
-      {{
-        end
-      }}
+    {{ if .PreviousHash }}
+    <li><b>Previous hash:</b> {{ .PreviousHash }}</li>
+    {{
+      end
+    }}
 
-      <li><b>Hash:</b> {{ .Hash }}</li>
+    <li><b>Hash:</b> {{ .Hash }}</li>
 
-      <li><b>Difficulty:</b> {{ .Difficulty }}</li>
+    <li><b>Difficulty:</b> {{ .Difficulty }}</li>
 
-      <li><b>NOnce:</b> {{ .NOnce }}</li>
+    <li><b>NOnce:</b> {{ .NOnce }}</li>
 
-      <li><b>Created At:</b> {{ unixToHuman .Timestamp }}</li>
-    </ul>
+    <li><b>Created At:</b> {{ unixToHuman .Timestamp }}</li>
+  </ul>
 </section>
 
 <section>
@@ -29,23 +29,23 @@
     <h2>Transactions</h2>
   </header>
 
-    <table>
-      <tr>
-        <th>ID</th>
-        <th>Created At</th>
-        <th>Details</th>
-      </tr>
-      
-      {{
-        range.Txs
-      }}
-      
-      {{ template "tx_row" . }}
-      
-      {{
-        end
-      }}
-    <table>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Created At</th>
+      <th>Details</th>
+    </tr>
+
+    {{
+      range.Txs
+    }}
+
+    {{ template "tx_row" . }}
+
+    {{
+      end
+    }}
+  </table>
 </section>
 
 {{ end }}

@@ -1,0 +1,9 @@
+{{ define "unspent_tx_output_row" }}
+
+<td>
+  <a href="{{ txURL .TxId }}">{{ .TxId }}</a>
+</td>
+<td>{{ .Index }}</td>
+<td>{{ .Amount }}</td>
+
+{{ end }}

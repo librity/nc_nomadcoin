@@ -19,6 +19,6 @@ func txsShow(rw http.ResponseWriter, r *http.Request) {
 		http.Redirect(rw, r, "/404", http.StatusFound)
 	}
 
-	data := txsShowData{"Transaction", tx}
+	data := txsShowData{"Show Transaction", tx}
 	templates.ExecuteTemplate(rw, "txs_show", data)
 }
