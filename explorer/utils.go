@@ -35,3 +35,7 @@ func blockURL(hash string) string {
 func txURL(hash string) string {
 	return baseURL + "/transactions/" + hash
 }
+
+func walletURL(hash string) string {
+	return baseURL + "/wallets/" + hash
+}

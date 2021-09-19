@@ -15,14 +15,14 @@ func loadRoutes() {
 	router.HandleFunc("/blocks", createBlock).Methods("POST")
 	router.HandleFunc("/blocks/{hash:[0-9a-f]+}", block).Methods("GET")
 
-	// router.HandleFunc("/wallet", wltIndex).Methods("GET")
-	router.HandleFunc("/wallet/server", serverWlt).Methods("GET")
-	router.HandleFunc("/wallet/{address:[0-9a-f]+}", wlt).Methods("GET")
+	// router.HandleFunc("/wallets", wltIndex).Methods("GET")
+	router.HandleFunc("/wallets/server", serverWlt).Methods("GET")
+	router.HandleFunc("/wallets/{address:[0-9a-f]+}", wlt).Methods("GET")
 
 	router.HandleFunc("/mempool", mempool).Methods("GET")
 
 	// router.HandleFunc("/transactions", transactionsIndex).Methods("GET")
-	router.HandleFunc("/transactions", createTransaction).Methods("POST")
+	router.HandleFunc("/transactions", createTx).Methods("POST")
 
 	router.HandleFunc("/peers", peersIndex).Methods("GET")
 	router.HandleFunc("/peers", addPeer).Methods("POST")

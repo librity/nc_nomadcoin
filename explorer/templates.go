@@ -16,6 +16,7 @@ var templateFunctions template.FuncMap = template.FuncMap{
 	"homeURL":     homeURL,
 	"blockURL":    blockURL,
 	"txURL":       txURL,
+	"walletURL":   walletURL,
 }
 
 func loadTemplates() {

@@ -1,0 +1,38 @@
+{{ define "wallets_index" }}
+
+<!DOCTYPE html>
+<html lang="en">
+  {{ template "head" .PageTitle }}
+
+  <body>
+    {{ template "header" .PageTitle }}
+
+    <main>
+      <section>
+        <table>
+          <tr>
+            <th></th>
+            <th>Address</th>
+            <th>Details</th>
+          </tr>
+
+          {{ range $index, $address := .Addresses }}
+
+          <tr>
+            <td>{{ $index }}</td>
+            <td>{{ $address }}</td>
+            <td>
+                <a href="{{ walletURL $address }}">...</a>
+            </td>
+          </tr>
+      
+          {{ end }}
+        </table>
+      </section>
+    </main>
+
+    {{ template "footer" }}
+  </body>
+</html>
+
+{{ end }}

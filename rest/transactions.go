@@ -14,7 +14,7 @@ type txPayload struct {
 	Amount uint
 }
 
-func createTransaction(rw http.ResponseWriter, r *http.Request) {
+func createTx(rw http.ResponseWriter, r *http.Request) {
 	payload := txPayload{}
 	err := json.NewDecoder(r.Body).Decode(&payload)
 	utils.PanicError(err)

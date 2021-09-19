@@ -10,9 +10,7 @@
 
     {{ if .PreviousHash }}
     <li><b>Previous hash:</b> {{ .PreviousHash }}</li>
-    {{
-      end
-    }}
+{{ end }}
 
     <li><b>Hash:</b> {{ .Hash }}</li>
 
@@ -42,9 +40,7 @@
 
     {{ template "tx_row" . }}
 
-    {{
-      end
-    }}
+{{ end }}
   </table>
 </section>
 

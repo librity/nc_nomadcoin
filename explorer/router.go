@@ -31,6 +31,7 @@ func loadRoutes() {
 
 	router.HandleFunc("/transactions/{id:[0-9a-f]+}", txsShow).Methods("GET")
 
+	router.HandleFunc("/wallets", walletsIndex).Methods("GET")
 	router.HandleFunc("/wallets/server", walletsServer).Methods("GET")
 	router.HandleFunc("/wallets/{address:[0-9a-f]+}", walletsShow).Methods("GET")
 }
