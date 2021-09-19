@@ -20,6 +20,12 @@ type wltDetailsResp struct {
 	UnspTxOutputs []*blockchain.UnspTxOutput `json:"unspTxOutputs"`
 }
 
+func wltIndex(rw http.ResponseWriter, r *http.Request) {
+	addresses := blockchain.GetAddresses()
+
+	json.NewEncoder(rw).Encode(addresses)
+}
+
 func serverWlt(rw http.ResponseWriter, r *http.Request) {
 	details := utils.GetQuery(r, "details")
 	address := wallet.GetAddress()

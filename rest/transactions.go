@@ -9,6 +9,12 @@ import (
 	"github.com/librity/nc_nomadcoin/utils"
 )
 
+func txIndex(rw http.ResponseWriter, r *http.Request) {
+	txs := blockchain.GetTxs()
+
+	json.NewEncoder(rw).Encode(txs)
+}
+
 type txPayload struct {
 	To     string
 	Amount uint
