@@ -186,12 +186,12 @@ hashFunction("ri3j9rj2302j0ginvin0n00ivwn0inv0u") => UNDEFINED
 ```
 
 Many examples exists: MD5, SHA-X, Whirlpool, BLAKEX, etc.
-We use SHA-256.
+Like Bitcoin, we use SHA-256.
 
 ### Blockchain
 
 ```go
-newBlockHash := hashFunction(NOnce + data + previousBlockHash + timestamp + ...)
+newBlockHash := hashFunction(NOnce + previousBlockHash + timestamp + ...)
 ```
 
 `data` could be anything, usually transactions and smart contracts.
@@ -199,6 +199,14 @@ Any alteration to a previous block's data will
 avalanche obvious changes to the next blocks' hashes.
 This makes it so any node in the network can locally verify the integrity
 of the blockchain.
+
+Bitcoin has its own
+[Block hashing algorithm](https://en.bitcoin.it/wiki/Block_hashing_algorithm),
+where a header of 80 bytes (containing bitcoin version number,
+the previous block hash, the hash of the block's transactions, the timestamp,
+the difficulty, and the NOnce) is hashed.
+In our implementation we transform the entire block instance
+to Golang's default string representation and hash that.
 
 ### Mining (Proof of Work)
 
@@ -208,7 +216,8 @@ The objective of mining is to change the value of the _NOnce_ so that
 the block has a hash that start with a determined number of zeros.
 
 The amount of zeroes required to mine a block determines the difficulty
-of the blockchain, and is adjusted by some mechanism determined by the developer.
+of the blockchain, and is adjusted by some mechanism
+determined by the developer.
 This consensus mechanisms is called _Proof of Work_,
 and it's the one used by most cryptocurrencies.
 The other major one is _Proof of stake_.
@@ -287,16 +296,59 @@ We will use Elliptic-curve cryptography
 with the [NIST P-256](https://neuromancer.sk/std/nist/P-256) curve,
 while Bitcoin uses [Secp256k1](https://en.bitcoin.it/wiki/Secp256k1).
 
-### Elliptic Curve Digital Signature Algorithm (ECDSA)
+### Elliptic Curve Cryptography
 
-Public key is the (x,y) coordinates of a point in an elliptic curve:
+We start with some Elliptic curve defined along some equation in a finite field
+with parameters `d` and `b`.
+There's a lot of research that goes into finding curves
+without any backdoors and that are hard to brute force.
 
 <p align="center">
-    <img src=".github/ecc.png" />
+    <img src=".github/ecdsa_curve.png" />
 </p>
 
-y^{2}=x^{3}+ax+b
-latex:y^2 = x^3 + ax + b \mod p
+Because Elliptic curves are Algebraic groups,
+we can add to arbitrary curve points `P` and `Q` and get curve point `R`:
+
+<p align="center">
+  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\inline&space;{\displaystyle&space;{\begin{aligned}P&space;&=&space;(x_{p},&space;y_{p})\\Q&space;&=&space;(x_{q},&space;y_{q})\\\lambda&space;&={\frac{y_{q}-y_{p}}{x_{q}-x_{p}}}\\x_{r}&=\lambda^{2}-x_{p}-x_{q}\\y_{r}&=\lambda(x_{p}-x_{r})-y_{p}\\R&space;&=&space;(x_{r},&space;y_{r})\\\end{aligned}}}&space;&space;" title="\inline {\displaystyle {\begin{aligned}P &= (x_{p}, y_{p})\\Q &= (x_{q}, y_{q})\\\lambda &={\frac{y_{q}-y_{p}}{x_{q}-x_{p}}}\\x_{r}&=\lambda^{2}-x_{p}-x_{q}\\y_{r}&=\lambda(x_{p}-x_{r})-y_{p}\\R &= (x_{r}, y_{r})\\\end{aligned}}} " />
+</p>
+
+If we make `P = Q`, `R` will equal the mirror(negative) of the interception
+of the the tangent line at `P` with the curve, or `2P`:
+
+<p align="center">
+    <img src=".github/ecdsa_scalar.png" />
+</p>
+
+We can then add some arbitrary point `G` to itself as many `d` times as we want,
+and we will always end up with another point in the curve `dG`.
+We've just invented scalar multiplication of an elliptic curve point:
+
+<p align="center">
+    <img src=".github/ecdsa_g.png" />
+</p>
+
+The bigger `d` gets, the more points in the curve we end up hitting
+before reaching `dG`.
+We end up bouncing around the Elliptic curve in a pseudo-random manner,
+much like the modular arithmetic of Diffie–Hellman key exchange algorithm.
+The advantage of this is that it's computationally impractical
+to calculate the value of `d` from `dG` for a large-enough `d`,
+and it's very easy for a computer to generate `dG` from `d` and `G`.
+
+When you generate a Private ECDSA key, you are picking a random number `d`
+between zero and a very large prime `n`.
+The computer then traverses the curve by adding `G` to itself `d` times,
+generating the Public Key `dG` of coordinates `(x,y)`.
+
+With these two asymmetric keys we can securely:
+
+- [Exchange secrets over an insecure channel](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman)
+- [Encrypt and Decrypt arbitrary data](https://en.wikipedia.org/wiki/Integrated_Encryption_Scheme)
+- [Sign and Verify arbitrary data](https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm)
+
+### Elliptic Curve Digital Signature Algorithm (ECDSA)
 
 ### Data races
 
@@ -427,6 +479,7 @@ to successfully speculate on new cryptocurrencies._
 - https://github.com/LarryRuane/minesim
 - https://mining-simulator.netlify.app/
 - https://www.blockchain.com/explorer
+- https://github.com/tensor-programming/golang-blockchain/tree/part_10
 - https://www.youtube.com/playlist?list=PLmL13yqb6OxdEgSoua2WuqHKBuIqvll0x
 
 ### Go
@@ -574,13 +627,15 @@ to successfully speculate on new cryptocurrencies._
 - https://www.tutorialspoint.com/cryptography/cryptography_digital_signatures.htm
 - https://en.wikipedia.org/wiki/Cryptocurrency_wallet
 
-### Elliptic curves cryptography
+### Elliptic curve cryptography
 
 - https://en.wikipedia.org/wiki/Elliptic-curve_cryptography
+- https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman
 - https://en.wikipedia.org/wiki/Elliptic_curve
 - https://en.wikipedia.org/wiki/Characteristic_(algebra)
 - https://en.wikipedia.org/wiki/Field_(mathematics)
 - https://en.wikipedia.org/wiki/Elliptic_curve_point_multiplication
+- https://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity
 - https://www.johannes-bauer.com/compsci/ecc
 
 ### Elliptic Curve Digital Signature Algorithm - ECDSA
@@ -612,6 +667,9 @@ to successfully speculate on new cryptocurrencies._
 
 ### Bitcoin
 
+- https://www.coindesk.com/markets/2017/02/19/bitcoin-hash-functions-explained/
+- https://en.bitcoin.it/wiki/Block_hashing_algorithm
+- https://en.bitcoin.it/wiki/Hashcash
 - https://bitcoinmagazine.com/technical/overview-bitcoins-cryptography
 - http://blog.ezyang.com/2011/06/the-cryptography-of-bitcoin/
 - https://en.bitcoin.it/wiki/Secp256k1
