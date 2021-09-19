@@ -90,7 +90,7 @@ $ go build -race && nc_nomadcoin rest -port=5002
 
 ### Godocs
 
-You can browse the documetation of all local packages and projects with the
+You can browse the documentation of all local packages and projects with the
 [Godocs](https://pkg.go.dev/golang.org/x/tools/godoc#section-readme)
 package:
 
@@ -116,17 +116,31 @@ $ go test -v -coverprofile cover.out ./... && go tool cover -html=cover.out
 
 ```bash
 $ go run main.go rest -port=PORT                # Start the REST API (recommended)
-$ go run main.go explorer -port=PORT            # Start the HTLM Explorer
+$ go run main.go explorer -port=PORT            # Start the HTML Explorer
 $ go run main.go both -ePort=PORT -rPort=PORT   # Start both REST API and HTML Explorer
 ```
 
-### HTLM Explorer
+### HTML Explorer
 
-http://localhost:4000
+A simple webserver that lets you browse all the blocks,
+transactions and wallets.
+
+- http://localhost:4000
+
+<p align="center">
+    <img src=".github/explorer_demo.png" />
+</p>
 
 ### REST API
 
-http://localhost:5001
+Has the same functionality of the HTML Explorer.
+It also lets you create transactions, mine blocks, and list connected peers.
+
+- http://localhost:5001
+
+<p align="center">
+    <img src=".github/rest_demo.png" />
+</p>
 
 ## Notes <a name = "notes"></a>
 
@@ -143,7 +157,7 @@ I only ever need to worry about:
 - Uninitialized `map`s and `*`pointers
 - Functions that receive `interface{}`s params
 
-Every other mistake gets heighlited the moment I type it.
+Every other mistake gets highlighted the moment I type it.
 Golang only surprises me when it doesn't work.
 
 ### Go Routines and Channels
@@ -154,7 +168,7 @@ Golang only surprises me when it doesn't work.
 - Closing a closed channel will create a panic.
 - Sending to a closed channel will create a panic.
 - Channels can be Read-only (`<-chan`) or Send-only (`chan<-`).
-- Both sending and receiveing are blocking operations
+- Both sending and receiving are blocking operations
   for unbuffered channels.
 - Buffered channels have a non-blocking queue of messages
   (`make(chan int, BUFFER_SIZE)`).
@@ -171,14 +185,36 @@ hashFunction("sexyy") => "ri3j9rj2302j0ginvin0n00ivwn0inv0u"
 hashFunction("ri3j9rj2302j0ginvin0n00ivwn0inv0u") => UNDEFINED
 ```
 
+Many examples exists: MD5, SHA-X, Whirlpool, BLAKEX, etc.
+We use SHA-256.
+
 ### Blockchain
 
 ```go
-newBlockHash := hashFunction(data + previousBlockHash + timestamp + ...)
+newBlockHash := hashFunction(NOnce + data + previousBlockHash + timestamp + ...)
 ```
 
-`data` could be anything. Any alteration to a previous block's data will
+`data` could be anything, usually transactions and smart contracts.
+Any alteration to a previous block's data will
 avalanche obvious changes to the next blocks' hashes.
+This makes it so any node in the network can locally verify the integrity
+of the blockchain.
+
+### Mining (Proof of Work)
+
+The only thing a miner is allowed to change in a block
+(besides adding transactions) is a special number called _NOnce_.
+The objective of mining is to change the value of the _NOnce_ so that
+the block has a hash that start with a determined number of zeros.
+
+The amount of zeroes required to mine a block determines the difficulty
+of the blockchain, and is adjusted by some mechanism determined by the developer.
+This consensus mechanisms is called _Proof of Work_,
+and it's the one used by most cryptocurrencies.
+The other major one is _Proof of stake_.
+You can play with this mining simulator to get a better idea:
+
+- https://mining-simulator.netlify.app/
 
 ### Accounting model
 
@@ -259,6 +295,9 @@ Public key is the (x,y) coordinates of a point in an elliptic curve:
     <img src=".github/ecc.png" />
 </p>
 
+y^{2}=x^{3}+ax+b
+latex:y^2 = x^3 + ax + b \mod p
+
 ### Data races
 
 Data races can occur when:
@@ -282,8 +321,31 @@ to guarantee that only one routine access it at a time.
 
 ### Peer 2 Peer
 
-Nodes broadcast changes in the blockchain
-through [Web Sockets](https://github.com/gorilla/websocket).
+This the most important part of understanding blockchain.
+Bitcoin is fundamentally a peer 2 peer protocol that allows
+a decentralized network to agree on the data that will be added
+to a write-only database.
+
+We use [Web Sockets](https://github.com/gorilla/websocket)
+to connect the peers and broadcast new transactions and mined blocks.
+
+When node Jr. connects to node Sr., node Jr. send the last block it has.
+Node Sr. then checks whether Jr. is ahead, behind or on the same block as Jr.
+Whichever one's ahead end up sending a copy of their blockchain to the other.
+Then they share a list of the other nodes they're connected to,
+and initiate this handshake again.
+
+When someone creates a transaction in a node it broadcasts
+to all the other nodes, creating a "Global Mempool".
+Each node then receives the transaction and verifies the transaction's
+signature: if it's valid the transaction is added to the Mempool
+and relayed to the other nodes.
+
+The nodes then try to mine the next block, and the one that get's lucky
+broadcasts the block to all other.
+The other nodes verify the new block's nonce and transactions:
+if it's valid it is added to the local blockchain
+and relayed to the other nodes.
 
 ### Cryptocurrency Investment Advice
 
@@ -292,7 +354,7 @@ This what I've gathered from all my research, merely my opinion.
 - Only bet what you can afford to loose.
 - Don't bet on anything you don't understand.
 - Don't bet on anything you haven't read the code.
-- Don't bet on new currencies if you don't undertand
+- Don't bet on new currencies if you don't understand
   the problems they're trying to solve
   and what they're doing differently.
 - A blockchain is only as good as its dev community.
@@ -365,6 +427,7 @@ to successfully speculate on new cryptocurrencies._
 - https://github.com/LarryRuane/minesim
 - https://mining-simulator.netlify.app/
 - https://www.blockchain.com/explorer
+- https://www.youtube.com/playlist?list=PLmL13yqb6OxdEgSoua2WuqHKBuIqvll0x
 
 ### Go
 
@@ -469,32 +532,92 @@ to successfully speculate on new cryptocurrencies._
 - https://stackoverflow.com/questions/31201858/how-to-run-golang-tests-sequentially
 - https://github.com/stretchr/testify
 
-### Cryptograhy
+### Go crypto
+
+- https://golang.org/src/crypto/
+- https://golangdocs.com/the-crypto-rand-package-in-golang
+- https://www.thepolyglotdeveloper.com/2018/02/encrypt-decrypt-data-golang-application-crypto-packages/
+- https://kashifsoofi.github.io/cryptography/aes-in-go-using-crypto-package/
+- https://golangdocs.com/rsa-encryption-decryption-in-golang
+- https://yourbasic.org/golang/crypto-rand-int/
+- https://golang.hotexamples.com/examples/crypto.ecdsa/-/Verify/golang-verify-function-examples.html
+- https://teemukanstren.com/2018/04/16/trying-to-learn-ecdsa-and-golang/
+- https://golang.hotexamples.com/examples/crypto.ecdsa/-/Sign/golang-sign-function-examples.html
+- https://www.youtube.com/watch?v=jgTqR8PuWuU
+
+### Hash Functions
 
 - https://en.wikipedia.org/wiki/Hash_function
 - https://en.wikipedia.org/wiki/Cryptographic_hash_function
 - https://en.wikipedia.org/wiki/SHA-2
-- https://www.tutorialspoint.com/cryptography/cryptography_digital_signatures.htm
+
+### Encryption
+
+- https://en.wikipedia.org/wiki/End-to-end_encryption
+- https://en.wikipedia.org/wiki/Encryption
+- https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
+- https://en.wikipedia.org/wiki/RSA_(cryptosystem)
+- https://www.youtube.com/watch?v=O4xNJsjtN6E
+
+### Public-key cryptography
+
 - https://en.wikipedia.org/wiki/Public-key_cryptography
 - https://www.youngwonks.com/blog/Public-Key-and-Private-Key-Encryption-Explained
-- https://en.wikipedia.org/wiki/End-to-end_encryption
-- https://en.wikipedia.org/wiki/Cryptocurrency_wallet
+- https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
+- https://www.youtube.com/watch?v=NmM9HA2MQGI
+- https://www.youtube.com/watch?v=Yjrfm_oRO0w
+
+### Digital signatures
+
 - https://en.wikipedia.org/wiki/Digital_signature
-- https://en.wikipedia.org/wiki/Encryption
-- https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm
+- https://en.wikipedia.org/wiki/Digital_Signature_Algorithm
+- https://www.tutorialspoint.com/cryptography/cryptography_digital_signatures.htm
+- https://en.wikipedia.org/wiki/Cryptocurrency_wallet
+
+### Elliptic curves cryptography
+
 - https://en.wikipedia.org/wiki/Elliptic-curve_cryptography
+- https://en.wikipedia.org/wiki/Elliptic_curve
+- https://en.wikipedia.org/wiki/Characteristic_(algebra)
+- https://en.wikipedia.org/wiki/Field_(mathematics)
+- https://en.wikipedia.org/wiki/Elliptic_curve_point_multiplication
+- https://www.johannes-bauer.com/compsci/ecc
+
+### Elliptic Curve Digital Signature Algorithm - ECDSA
+
+- https://www.desmos.com/calculator/kkj2efqk5x
+- https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm
 - https://safecurves.cr.yp.to/
 - https://www.reddit.com/r/crypto/comments/7rithm/what_does_p256_stand_for/
 - https://neuromancer.sk/std/nist/P-256
 - https://askinglot.com/what-is-nist-p256
 - https://askinglot.com/open-detail/108766
 - https://csrc.nist.gov/publications/detail/fips/186/3/archive/2009-06-25
+- https://cryptobook.nakov.com/digital-signatures/ecdsa-sign-verify-messages
+- https://www.hypr.com/elliptic-curve-digital-signature-algorithm/
+- https://www.maximintegrated.com/en/design/technical-documents/tutorials/5/5767.html
+- https://kjur.github.io/jsrsasign/sample/sample-ecdsa.html
+- https://wizardforcel.gitbooks.io/practical-cryptography-for-developers-book/content/digital-signatures/ecdsa-sign-verify-messages.html
+
+### ECDSA Videos
+
+- https://www.youtube.com/watch?v=NF1pwjL9-DE
+- https://www.youtube.com/watch?v=nybVFJVXbww
+- https://www.youtube.com/watch?v=QzUThXGRFBU
+- https://www.youtube.com/watch?v=dCvB-mhkT0w
+- https://www.youtube.com/watch?v=gAtBM06xwaw
+- https://www.youtube.com/watch?v=-UcCMjQab4w
+- https://www.youtube.com/watch?v=qxmmv2iBRXs
+- https://www.youtube.com/watch?v=muIv8I6v1aE
 
 ### Bitcoin
 
 - https://bitcoinmagazine.com/technical/overview-bitcoins-cryptography
 - http://blog.ezyang.com/2011/06/the-cryptography-of-bitcoin/
 - https://en.bitcoin.it/wiki/Secp256k1
+- https://www.youtube.com/channel/UCW7L2NGmFUEsZoPReKW_4iQ/videos
+- https://www.youtube.com/playlist?list=PLR7Zbyu8bxEUDkPc8SG34TiDARfCAohoL
+- https://www.youtube.com/watch?v=duAcEElZpNk
 
 ### Accounting models
 
