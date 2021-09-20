@@ -36,7 +36,7 @@ A fully-featured blockchain and cryptocurrency using the Go programming language
 
 ### Future
 
-- [ ] Finish README Notes
+- [x] Finish README Notes
 - [ ] Verify Transactions
 - [ ] Verify Peer Blocks
 - [ ] Fully Tested
@@ -323,7 +323,7 @@ of the the tangent line at `P` with the curve, or `2P`:
 </p>
 
 We can then add some arbitrary point `G` to itself as many `d` times as we want,
-and we will always end up with another point in the curve `dG`.
+and we will always end up with another point in the curve `d . G`.
 We've just invented scalar multiplication of an elliptic curve point:
 
 <p align="center">
@@ -331,18 +331,18 @@ We've just invented scalar multiplication of an elliptic curve point:
 </p>
 
 The bigger `d` gets, the more points in the curve we end up hitting
-before reaching `dG`.
+before reaching `d . G`.
 We end up bouncing around the Elliptic curve in a pseudo-random manner,
 much like the modular arithmetic of Diffie–Hellman key exchange algorithm.
 The advantage of this is that it's computationally impractical
-to calculate the value of `d` from `dG` for a large-enough `d`,
-and it's very easy for a computer to generate `dG` from `d` and `G`.
+to calculate the value of `d` from `d . G` for a large-enough `d`,
+and it's very easy for a computer to generate `d . G` from `d` and `G`.
 This is very similar to a hash function,
 in that the output is practically non-invertible:
 
 ```go
-scalarTimeCurvePoint(G, d) => x, y
-inverseScalarTimeCurvePoint(x, y) => UNDEFINED
+ellipticCurveScalarMultiplication(G, d) => x, y
+inversEellipticCurveScalarMultiplication(x, y) => UNDEFINED
 ```
 
 <p align="center">
@@ -363,34 +363,85 @@ With these two asymmetric keys we can securely:
 
 There's some miscellaneous mathematical trickery to make this
 more secure and/or efficient, but this is fundamentally how it works.
-We often divide the curve over a finite field `n`,
+We often project the curve over a finite field `n`,
 which is a very large prime number.
 This means that we perform the scalar multiplication of the points,
 then take the modulus `n` of the result.
 This turn it into a map of discrete values, or affine points:
 
 <p align="center">
-  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}R&space;&=&space;(P&space;&plus;&space;Q){\bmod&space;{\,}}n\\K&space;&=&space;(dG){\bmod&space;{\,}}n\\\end{aligned}}}&space;&space;" title="\bg_white \inline {\displaystyle {\begin{aligned}R &= (P + Q){\bmod {\,}}n\\K &= (dG){\bmod {\,}}n\\\end{aligned}}} " />
+  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}R&space;&=&space;(P&space;&plus;&space;Q){\bmod&space;{\,}}n\\K&space;&=&space;(d&space;\cdot&space;G){\bmod&space;{\,}}n\\\end{aligned}}}" title="\bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}R &= (P + Q){\bmod {\,}}n\\K &= (d \cdot G){\bmod {\,}}n\\\end{aligned}}}" />
 </p>
 
 <p align="center">
-    <img src=".github/ecdsa_field.svg" />
+    <img src=".github/ecdsa_field.png" />
 </p>
 
 ### Elliptic Curve Digital Signature Algorithm (ECDSA)
 
+Alice wants to send a message `M` to Bob.
+They both agree on an Elliptic curve `E`, a generator point `G` on the curve,
+and a very large prime number `n`.
+
 1. Generate Keys
 
-Alice and Bob pick an Elliptic curve `E`, a generator point `G` on the curve,
-and a very large prime number `n`.
 Alice generates the Private key `a`
-by picking a very large number between 0 and `n`.
-She then generates the Public key `scalarTimeCurvePoint(G, a) = (x, y)`
-and sends it to Bob.
+by picking a very large number between 1 and `n-1`.
+She then generates the Public key `P` and sends it to Bob.
+
+<p align="center">
+  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}P&space;&=&space;a&space;\cdot&space;G\\\end{aligned}}}" title="\bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}P &= a \cdot G\\\end{aligned}}}" />
+</p>
 
 2. Sign
 
+Alice calculates the message hash `e` and transforms it into a number `z`
+by taking the leftmost bits of `e`.
+
+<p align="center">
+  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}e&space;&=&space;{\textrm&space;{HASH}}(M)\\z&space;&=&space;{\textrm&space;{HASHTOINT}}(e)\\\end{aligned}}}" title="\bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}e &= {\textrm {HASH}}(M)\\z &= {\textrm {HASHTOINT}}(e)\\\end{aligned}}}" />
+</p>
+
+She then picks another random number `k` (between 1 and `n-1`)
+and multiplies it with `G` modulus `n` to get the coordinate `r`,
+the first part of the signature.
+
+<p align="center">
+  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}(k&space;\cdot&space;G){\bmod&space;{\,}}n&space;&=&space;(r,&space;\_)\\\end{aligned}}}" title="\bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}(k \cdot G){\bmod {\,}}n &= (r, \_)\\\end{aligned}}}" />
+</p>
+
+The second part of the signature `s` is a combination of `k`, `r`, `z` and
+the private key `a`:
+
+<p align="center">
+  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}s&space;&=&space;k^{-1}&space;(z&plus;r*a)\,{\bmod&space;{\,}}n\\\end{aligned}}}" title="\bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}s &= k^{-1} (z+r*a)\,{\bmod {\,}}n\\\end{aligned}}}" />
+</p>
+
+Alice then sends Bob the message `M`, the hash `e` and the signature `(r, s)`.
+
 3. Verify
+
+Bob does some basic verifications of the public key `P`,
+like checking that it's on the curve and it's not the Identity Element `O`.
+He then checks that `r` and `s` are integers between 1 and `n-1`,
+and that `e` is the hash of `M`.
+
+He then calculates `z` from `e` the same way Alice did,
+and uses it to calculate `u1` and `u2`:
+
+<p align="center">
+  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}u_{1}&space;&=&space;zs^{-1}\,{\bmod&space;{\,}}n\\u_{2}&space;&=&space;rs^{-1}\,{\bmod&space;{\,}}n\\\end{aligned}}}" title="\bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}u_{1} &= zs^{-1}\,{\bmod {\,}}n\\u_{2} &= rs^{-1}\,{\bmod {\,}}n\\\end{aligned}}}" />
+</p>
+
+And with the public key `P` calculates
+the coordinate `x1` of the signature point:
+if `x1` is congruent to `r` modulo `n`
+(which means the same as `x1` and `r` differ by a multiple of `n`)
+then the signature is valid.
+
+<p align="center">
+  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}(x_{1},y_{1})&space;&=&space;u_{1}\times&space;G&plus;u_{2}\times&space;Q_{A}\\x_{1}&space;&\equiv&space;r&space;{\pmod&space;{n}}\\x_{1}&space;\,{\bmod&space;{\,}}n&space;&=&space;r&space;\,{\bmod&space;{\,}}n\\\end{aligned}}}" title="\bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}(x_{1},y_{1}) &= u_{1}\times G+u_{2}\times Q_{A}\\x_{1} &\equiv r {\pmod {n}}\\x_{1} \,{\bmod {\,}}n &= r \,{\bmod {\,}}n\\\end{aligned}}}" />
+</p>
 
 ### Data races
 
@@ -696,6 +747,7 @@ to successfully speculate on new cryptocurrencies._
 
 - https://www.desmos.com/calculator/kkj2efqk5x
 - https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm
+- https://asecuritysite.com/encryption/ecd2
 - https://safecurves.cr.yp.to/
 - https://www.reddit.com/r/crypto/comments/7rithm/what_does_p256_stand_for/
 - https://neuromancer.sk/std/nist/P-256
