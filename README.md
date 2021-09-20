@@ -133,7 +133,7 @@ transactions and wallets.
 
 ### REST API
 
-Has the same functionality of the HTML Explorer.
+It has the same functionality of the HTML Explorer.
 It also lets you create transactions, mine blocks, and list connected peers.
 
 - http://localhost:5001
@@ -182,7 +182,7 @@ Deterministic, easy to compute, hard to invert:
 hashFunction("sexy") => "dsdj21321wq0wjdw0jw9djcosaniqij0"
 hashFunction("sexy") => "dsdj21321wq0wjdw0jw9djcosaniqij0"
 hashFunction("sexyy") => "ri3j9rj2302j0ginvin0n00ivwn0inv0u"
-hashFunction("ri3j9rj2302j0ginvin0n00ivwn0inv0u") => UNDEFINED
+inverseHashFunction("ri3j9rj2302j0ginvin0n00ivwn0inv0u") => UNDEFINED
 ```
 
 Many examples exists: MD5, SHA-X, Whirlpool, BLAKEX, etc.
@@ -298,27 +298,28 @@ while Bitcoin uses [Secp256k1](https://en.bitcoin.it/wiki/Secp256k1).
 
 ### Elliptic Curve Cryptography
 
-We start with some Elliptic curve defined along some equation in a finite field
-with parameters `d` and `b`.
-There's a lot of research that goes into finding curves
-without any backdoors and that are hard to brute force.
+We start with some Elliptic curve `E`, a set of point defined by an equation:
 
 <p align="center">
     <img src=".github/ecdsa_curve.png" />
 </p>
 
+The overall shape of the curve is determined by the real numbers `a` and `b`.
+There's a lot of active research that goes into finding curves
+without any backdoors and that are hard to brute force.
+
 Because Elliptic curves are Algebraic groups,
-we can add to arbitrary curve points `P` and `Q` and get curve point `R`:
+we can add two arbitrary curve points `P` and `Q` and get the curve point `R`:
 
 <p align="center">
-  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\inline&space;{\displaystyle&space;{\begin{aligned}P&space;&=&space;(x_{p},&space;y_{p})\\Q&space;&=&space;(x_{q},&space;y_{q})\\\lambda&space;&={\frac{y_{q}-y_{p}}{x_{q}-x_{p}}}\\x_{r}&=\lambda^{2}-x_{p}-x_{q}\\y_{r}&=\lambda(x_{p}-x_{r})-y_{p}\\R&space;&=&space;(x_{r},&space;y_{r})\\\end{aligned}}}&space;&space;" title="\inline {\displaystyle {\begin{aligned}P &= (x_{p}, y_{p})\\Q &= (x_{q}, y_{q})\\\lambda &={\frac{y_{q}-y_{p}}{x_{q}-x_{p}}}\\x_{r}&=\lambda^{2}-x_{p}-x_{q}\\y_{r}&=\lambda(x_{p}-x_{r})-y_{p}\\R &= (x_{r}, y_{r})\\\end{aligned}}} " />
+  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}P&space;&=&space;(x_{p},&space;y_{p})\\Q&space;&=&space;(x_{q},&space;y_{q})\\\lambda&space;&={\frac{y_{q}-y_{p}}{x_{q}-x_{p}}}\\x_{r}&=\lambda^{2}-x_{p}-x_{q}\\y_{r}&=\lambda(x_{p}-x_{r})-y_{p}\\R&space;&=&space;(x_{r},&space;y_{r})\\\end{aligned}}}&space;&space;" title="\bg_white \inline {\displaystyle {\begin{aligned}P &= (x_{p}, y_{p})\\Q &= (x_{q}, y_{q})\\\lambda &={\frac{y_{q}-y_{p}}{x_{q}-x_{p}}}\\x_{r}&=\lambda^{2}-x_{p}-x_{q}\\y_{r}&=\lambda(x_{p}-x_{r})-y_{p}\\R &= (x_{r}, y_{r})\\\end{aligned}}} " />
 </p>
 
 If we make `P = Q`, `R` will equal the mirror(negative) of the interception
 of the the tangent line at `P` with the curve, or `2P`:
 
 <p align="center">
-    <img src=".github/ecdsa_scalar.png" />
+    <img src=".github/ecdsa_tangent.png" />
 </p>
 
 We can then add some arbitrary point `G` to itself as many `d` times as we want,
@@ -326,7 +327,7 @@ and we will always end up with another point in the curve `dG`.
 We've just invented scalar multiplication of an elliptic curve point:
 
 <p align="center">
-    <img src=".github/ecdsa_g.png" />
+    <img src=".github/ecdsa_scalar.png" />
 </p>
 
 The bigger `d` gets, the more points in the curve we end up hitting
@@ -336,11 +337,23 @@ much like the modular arithmetic of Diffie–Hellman key exchange algorithm.
 The advantage of this is that it's computationally impractical
 to calculate the value of `d` from `dG` for a large-enough `d`,
 and it's very easy for a computer to generate `dG` from `d` and `G`.
+This is very similar to a hash function,
+in that the output is practically non-invertible:
 
+```go
+scalarTimeCurvePoint(G, d) => x, y
+inverseScalarTimeCurvePoint(x, y) => UNDEFINED
+```
+
+<p align="center">
+    <img src=".github/ecdsa_trapdoor.svg" />
+</p>
+
+These "trapdoor function" are the basis of secure cryptography schemes.
 When you generate a Private ECDSA key, you are picking a random number `d`
 between zero and a very large prime `n`.
 The computer then traverses the curve by adding `G` to itself `d` times,
-generating the Public Key `dG` of coordinates `(x,y)`.
+generating the Public Key `K` of coordinates `(x,y)`.
 
 With these two asymmetric keys we can securely:
 
@@ -348,7 +361,36 @@ With these two asymmetric keys we can securely:
 - [Encrypt and Decrypt arbitrary data](https://en.wikipedia.org/wiki/Integrated_Encryption_Scheme)
 - [Sign and Verify arbitrary data](https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm)
 
+There's some miscellaneous mathematical trickery to make this
+more secure and/or efficient, but this is fundamentally how it works.
+We often divide the curve over a finite field `n`,
+which is a very large prime number.
+This means that we perform the scalar multiplication of the points,
+then take the modulus `n` of the result.
+This turn it into a map of discrete values, or affine points:
+
+<p align="center">
+  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}R&space;&=&space;(P&space;&plus;&space;Q){\bmod&space;{\,}}n\\K&space;&=&space;(dG){\bmod&space;{\,}}n\\\end{aligned}}}&space;&space;" title="\bg_white \inline {\displaystyle {\begin{aligned}R &= (P + Q){\bmod {\,}}n\\K &= (dG){\bmod {\,}}n\\\end{aligned}}} " />
+</p>
+
+<p align="center">
+    <img src=".github/ecdsa_field.svg" />
+</p>
+
 ### Elliptic Curve Digital Signature Algorithm (ECDSA)
+
+1. Generate Keys
+
+Alice and Bob pick an Elliptic curve `E`, a generator point `G` on the curve,
+and a very large prime number `n`.
+Alice generates the Private key `a`
+by picking a very large number between 0 and `n`.
+She then generates the Public key `scalarTimeCurvePoint(G, a) = (x, y)`
+and sends it to Bob.
+
+2. Sign
+
+3. Verify
 
 ### Data races
 
@@ -598,18 +640,29 @@ to successfully speculate on new cryptocurrencies._
 - https://golang.hotexamples.com/examples/crypto.ecdsa/-/Sign/golang-sign-function-examples.html
 - https://www.youtube.com/watch?v=jgTqR8PuWuU
 
+### Cryptography
+
+- https://en.wikipedia.org/wiki/Computational_complexity_theory#Intractability
+- https://en.wikipedia.org/wiki/Trapdoor_function
+- https://en.wikipedia.org/wiki/Finite_field
+- https://en.wikipedia.org/wiki/Modular_arithmetic
+- https://en.wikipedia.org/wiki/Integer_factorization
+
 ### Hash Functions
 
 - https://en.wikipedia.org/wiki/Hash_function
 - https://en.wikipedia.org/wiki/Cryptographic_hash_function
 - https://en.wikipedia.org/wiki/SHA-2
+- https://en.wikipedia.org/wiki/One-way_function
 
 ### Encryption
 
 - https://en.wikipedia.org/wiki/End-to-end_encryption
 - https://en.wikipedia.org/wiki/Encryption
-- https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
 - https://en.wikipedia.org/wiki/RSA_(cryptosystem)
+- https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
+- https://en.wikipedia.org/wiki/Galois/Counter_Mode
+- https://en.wikipedia.org/wiki/Block_cipher
 - https://www.youtube.com/watch?v=O4xNJsjtN6E
 
 ### Public-key cryptography
@@ -634,6 +687,7 @@ to successfully speculate on new cryptocurrencies._
 - https://en.wikipedia.org/wiki/Elliptic_curve
 - https://en.wikipedia.org/wiki/Characteristic_(algebra)
 - https://en.wikipedia.org/wiki/Field_(mathematics)
+- https://en.wikipedia.org/wiki/Discrete_logarithm
 - https://en.wikipedia.org/wiki/Elliptic_curve_point_multiplication
 - https://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity
 - https://www.johannes-bauer.com/compsci/ecc
