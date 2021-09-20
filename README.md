@@ -461,7 +461,7 @@ We'd probably still be using that garbage if it wasn't for our lord and savior
 [Edward Snowden](https://en.wikipedia.org/wiki/Edward_Snowden).
 
 <p align="center">
-    <img src=".github/ed_snow.webp" />
+    <img src=".github/ed_snow.webp" width="350" />
 </p>
 
 ### Data races
