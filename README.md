@@ -445,6 +445,24 @@ then the signature is valid.
   <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}(x_{1},y_{1})&space;&=&space;u_{1}\cdot&space;G&space;&plus;&space;u_{2}&space;\cdot&space;Q_{A}\\x_{1}&space;&\equiv&space;r&space;{\pmod&space;{n}}\\x_{1}&space;\,{\bmod&space;{\,}}n&space;&=&space;r&space;\,{\bmod&space;{\,}}n\\\end{aligned}}}" title="\bg_white \bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}(x_{1},y_{1}) &= u_{1}\cdot G + u_{2} \cdot Q_{A}\\x_{1} &\equiv r {\pmod {n}}\\x_{1} \,{\bmod {\,}}n &= r \,{\bmod {\,}}n\\\end{aligned}}}" />
 </p>
 
+If we didn't project the curve `E` on a field `n`
+(if we didn't modulate the operations),
+the private key `a` would be recoverable from the signature `(r, s)`,
+the hash `e` and the value of `k`.
+This is also why we pick a new random value of `k` for every signature.
+
+How we securely generate random values of `a` and `k` is an important problem,
+and one that's exploitable by back doors like the one in
+[Dual_EC_DRBG](https://en.wikipedia.org/wiki/Dual_EC_DRBG),
+a random number generator that the NSA (((probably))) bugged.
+
+We'd probably still be using that garbage if it wasn't for our lord and savior
+[Edward Snowden](https://en.wikipedia.org/wiki/Edward_Snowden).
+
+<p align="center">
+    <img src=".github/ed_snow.webp" />
+</p>
+
 ### Data races
 
 Data races can occur when:
@@ -744,6 +762,7 @@ to successfully speculate on new cryptocurrencies._
 - https://en.wikipedia.org/wiki/Elliptic_curve_point_multiplication
 - https://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity
 - https://www.johannes-bauer.com/compsci/ecc
+- https://github.com/Amogh-Bharadwaj/Elliptic-Curve-Cryptography
 
 ### Elliptic Curve Digital Signature Algorithm - ECDSA
 
