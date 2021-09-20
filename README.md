@@ -298,7 +298,7 @@ while Bitcoin uses [Secp256k1](https://en.bitcoin.it/wiki/Secp256k1).
 
 ### Elliptic Curve Cryptography
 
-We start with some Elliptic curve `E`, a set of point defined by an equation:
+We start with some Elliptic curve `E`, a set of points defined by an equation:
 
 <p align="center">
     <img src=".github/ecdsa_curve.png" />
@@ -331,12 +331,13 @@ We've just invented scalar multiplication of an elliptic curve point:
 </p>
 
 The bigger `d` gets, the more points in the curve we end up hitting
-before reaching `d . G`.
-We end up bouncing around the Elliptic curve in a pseudo-random manner,
+before reaching the point `d . G`.
+This bouncing around the curve looks very pseudo-random,
 much like the modular arithmetic of Diffie–Hellman key exchange algorithm.
-The advantage of this is that it's computationally impractical
-to calculate the value of `d` from `d . G` for a large-enough `d`,
-and it's very easy for a computer to generate `d . G` from `d` and `G`.
+
+The point of this is that it's computationally impractical
+to calculate the value of `d` from `d . G`, given a large-enough `d`.
+It's also very easy for a computer to generate `d . G` from `d` and `G`.
 This is very similar to a hash function,
 in that the output is practically non-invertible:
 
@@ -349,7 +350,7 @@ inversEellipticCurveScalarMultiplication(x, y) => UNDEFINED
     <img src=".github/ecdsa_trapdoor.svg" />
 </p>
 
-These "trapdoor function" are the basis of secure cryptography schemes.
+These "trapdoor function" are the basis of asymmetric cryptography schemes.
 When you generate a Private ECDSA key, you are picking a random number `d`
 between zero and a very large prime `n`.
 The computer then traverses the curve by adding `G` to itself `d` times,
@@ -363,6 +364,7 @@ With these two asymmetric keys we can securely:
 
 There's some miscellaneous mathematical trickery to make this
 more secure and/or efficient, but this is fundamentally how it works.
+
 We often project the curve over a finite field `n`,
 which is a very large prime number.
 This means that we perform the scalar multiplication of the points,
@@ -383,7 +385,7 @@ Alice wants to send a message `M` to Bob.
 They both agree on an Elliptic curve `E`, a generator point `G` on the curve,
 and a very large prime number `n`.
 
-1. Generate Keys
+#### Generate Keys
 
 Alice generates the Private key `a`
 by picking a very large number between 1 and `n-1`.
@@ -393,7 +395,7 @@ She then generates the Public key `P` and sends it to Bob.
   <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}P&space;&=&space;a&space;\cdot&space;G\\\end{aligned}}}" title="\bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}P &= a \cdot G\\\end{aligned}}}" />
 </p>
 
-2. Sign
+#### Sign
 
 Alice calculates the message hash `e` and transforms it into a number `z`
 by taking the leftmost bits of `e`.
@@ -419,7 +421,7 @@ the private key `a`:
 
 Alice then sends Bob the message `M`, the hash `e` and the signature `(r, s)`.
 
-3. Verify
+#### Verify
 
 Bob does some basic verifications of the public key `P`,
 like checking that it's on the curve and it's not the Identity Element `O`.
@@ -440,7 +442,7 @@ if `x1` is congruent to `r` modulo `n`
 then the signature is valid.
 
 <p align="center">
-  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}(x_{1},y_{1})&space;&=&space;u_{1}\times&space;G&plus;u_{2}\times&space;Q_{A}\\x_{1}&space;&\equiv&space;r&space;{\pmod&space;{n}}\\x_{1}&space;\,{\bmod&space;{\,}}n&space;&=&space;r&space;\,{\bmod&space;{\,}}n\\\end{aligned}}}" title="\bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}(x_{1},y_{1}) &= u_{1}\times G+u_{2}\times Q_{A}\\x_{1} &\equiv r {\pmod {n}}\\x_{1} \,{\bmod {\,}}n &= r \,{\bmod {\,}}n\\\end{aligned}}}" />
+  <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}(x_{1},y_{1})&space;&=&space;u_{1}\cdot&space;G&space;&plus;&space;u_{2}&space;\cdot&space;Q_{A}\\x_{1}&space;&\equiv&space;r&space;{\pmod&space;{n}}\\x_{1}&space;\,{\bmod&space;{\,}}n&space;&=&space;r&space;\,{\bmod&space;{\,}}n\\\end{aligned}}}" title="\bg_white \bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}(x_{1},y_{1}) &= u_{1}\cdot G + u_{2} \cdot Q_{A}\\x_{1} &\equiv r {\pmod {n}}\\x_{1} \,{\bmod {\,}}n &= r \,{\bmod {\,}}n\\\end{aligned}}}" />
 </p>
 
 ### Data races
