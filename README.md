@@ -404,7 +404,8 @@ by taking the leftmost bits of `e`.
   <img src="https://latex.codecogs.com/png.image?\dpi{150}&space;\bg_white&space;\inline&space;\bg_white&space;\inline&space;{\displaystyle&space;{\begin{aligned}e&space;&=&space;{\textrm&space;{HASH}}(M)\\z&space;&=&space;{\textrm&space;{HASHTOINT}}(e)\\\end{aligned}}}" title="\bg_white \inline \bg_white \inline {\displaystyle {\begin{aligned}e &= {\textrm {HASH}}(M)\\z &= {\textrm {HASHTOINT}}(e)\\\end{aligned}}}" />
 </p>
 
-She then picks another random number `k` (between 1 and `n-1`)
+She then picks another random number `k` between 1 and `n-1`
+(called the NOnce because it's only used once),
 and multiplies it with `G` modulus `n` to get the coordinate `r`,
 the first part of the signature.
 
