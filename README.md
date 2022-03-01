@@ -457,7 +457,7 @@ and one that's exploitable by back doors like the one in
 [Dual_EC_DRBG](https://en.wikipedia.org/wiki/Dual_EC_DRBG),
 a random number generator that the NSA (((probably))) bugged.
 
-We'd probably still be using that garbage if it wasn't for our lord and savior
+We'd probably still be using that garbage if it wasn't for The Brave
 [Edward Snowden](https://en.wikipedia.org/wiki/Edward_Snowden).
 
 <p align="center">
@@ -515,7 +515,12 @@ and relayed to the other nodes.
 
 ### Cryptocurrency Investment Advice
 
-This what I've gathered from all my research, merely my opinion.
+```diff
+- THIS IS NOT INVESTMENT ADVICE.
+- I'M NOT RESPONSIBLE FOR YOUR BAD DECISIONS.
+```
+
+This what I've gathered from all my research, merely my opinion:
 
 - Only bet what you can afford to loose.
 - Don't bet on anything you don't understand.
@@ -532,7 +537,7 @@ This what I've gathered from all my research, merely my opinion.
 
 _To his credit, it's pretty unreasonable to expect someone
 without any technical knowledge
-to successfully speculate on new cryptocurrencies._
+to successfully speculate on shitcoins._
 
 ## Libs <a name = "libs"></a>
 
