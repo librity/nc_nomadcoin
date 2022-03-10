@@ -455,9 +455,9 @@ This is also why we pick a new random value of `k` for every signature.
 How we securely generate random values of `a` and `k` is an important problem,
 and one that's exploitable by back doors like the one in
 [Dual_EC_DRBG](https://en.wikipedia.org/wiki/Dual_EC_DRBG),
-a random number generator that the NSA (((probably))) bugged.
+a random number generator the NSA bugged.
 
-We'd probably still be using that garbage if it wasn't for The Brave
+Many devices would still be using that garbage if not for
 [Edward Snowden](https://en.wikipedia.org/wiki/Edward_Snowden).
 
 <p align="center">
